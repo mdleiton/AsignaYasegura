@@ -1,0 +1,33 @@
+@charset "utf-8";
+/* CSS Document */
+
+html {
+	width:100%; height:100%; 
+	background:url(imagenes/fondo.png) center center fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
+body {
+	
+}
+#titulo {
+	min-height: 50px;
+	max-height: 250px;
+	font-size: 40px;
+	text-align:center;
+}
+#contenido {
+	text-align:left;
+}
+#institucion {
+	text-align:left;
+	margin: auto;
+}
+#pdp {
+	text-align:center;
+	font-style: oblique;
+}
+
+
