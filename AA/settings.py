@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'AsignaYasegura',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -74,14 +75,10 @@ WSGI_APPLICATION = 'AA.wsgi.application'
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
 DATABASES = {
-    'default': {
+     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'AsignaYasegura.sqlite3'),
-    },
-    'INEC': {
-     'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'INEC.sqlite3'),
-    }
+    }, 
 }
 
 

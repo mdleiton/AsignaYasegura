@@ -1,0 +1,22 @@
+uso de git
+- clonar respositorio
+git clone https://github.com/mdleiton/AsignaYasegura.git
+
+-actualizar repositorio (cuando otro suba al repositorio algo.)
+git pull
+
+--subir algo
+git add .
+git commit -m "describir lo que se agrego"
+git push origin master
+/*escribir su user y password de su cuenta de git*/
+
+
+
+
+
+ejecutar .sql de registros
+sqlite3 INEC.sqlite3 < registros.sql
+pueden visualizar la base de datos con
+https://sqliteonline.com/#
+agregar el .sqlite3 en esa pagina
