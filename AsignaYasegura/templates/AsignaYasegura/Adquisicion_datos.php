@@ -1,18 +1,17 @@
+{% load static %}
 <html>
 	<head>
 		<title>Adquisición de datos</title>
-		<LINK rel=stylesheet type="text/css" href="nuevo.css">
+		<link rel=stylesheet type="text/css" href="{% static 'css/nuevo.css'  %}" >
 		<meta name="author" content="Triviño Juan" />
         <div id=titulo>
-        	<img src="imagenes/21769831_379017482518757_1986918513_n.png" align="left">
-            <img src="imagenes/21850202_379017485852090_1048059339_n.png" align="right" width="250" height="125">
+        	<img src="{% static 'img/21769831_379017482518757_1986918513_n.png'  %}"  align="left">
+            <img src="{% static 'img/21850202_379017485852090_1048059339_n.png'  %}" align="right" width="250" height="125">
 			<br><font color="#000066"><strong>ADQUISICIÓN DE DATOS</strong></font><br>
     	</div>
         <script>
-			function controla(f)
-			{
-				if(f.checked==false)
-				{
+			function controla(f){
+				if(f.checked==false){
 					document.getElementById('contr1').checked=false;
 					document.getElementById('contr1').disabled=true;
 					document.getElementById('contr2').checked=false;
@@ -49,9 +48,7 @@
 					document.getElementById('contr17').disabled=true;
 					document.getElementById('contr18').checked=false;
 					document.getElementById('contr18').disabled=true;
-				}
-				else
-				{
+				}else{
 					document.getElementById('contr1').disabled=false;
 					document.getElementById('contr2').disabled=false;
 					document.getElementById('contr3').disabled=false;
@@ -59,10 +56,8 @@
 			}
 		</script>
         <script>
-			function controlb(f)
-			{
-				if(f.checked==false)
-				{
+			function controlb(f){
+				if(f.checked==false){
 					document.getElementById('contr4').checked=false;
 					document.getElementById('contr4').disabled=true;
 					document.getElementById('contr5').checked=false;
@@ -94,8 +89,7 @@
 					document.getElementById('contr18').checked=false;
 					document.getElementById('contr18').disabled=true;
 				}
-				else
-				{
+				else{
 					document.getElementById('contr4').disabled=false;
 					document.getElementById('contr5').disabled=false;
 					document.getElementById('contr6').disabled=false;
@@ -118,7 +112,7 @@
 	<body>
     <br><br><br>
     <div id=izquierda style="float:left">
-    	<form action=calculo.php method=get>
+    	<form action="{% url 'AsignaYasegura:calcular_capacidad' %}" method=get>
     	<div id=institucion>
 			<br><font color="#CC0000"><strong>Información general de la Institución Educativa</strong></font><br><br>
             <table>
@@ -126,7 +120,7 @@
             	<tr><td>Distrito:</td><td><select name=distrito>
             	<option value="1 - Ximena 1"> 1 - Ximena 1</option>
             	<option value="2 - Ximena 2"> 2 - Ximena 2</option>
-            	<option value="3 - Antigua Dirección Provincial de Educación-Colegio Vicente Rocafuerte"> 3 - Antigua Dirección 	Provincial de Educación-Colegio Vicente Rocafuerte</option>
+            	<option value="3 - Antigua Dirección Provincial de Educación-Colegio Vicente Rocafuerte"> 3 - Antigua Dirección Provincial de Educación-Colegio Vicente Rocafuerte</option>
             	<option value="4 - Portete"> 4 - Portete</option>
             	<option value="5 - Tarqui-Tenguel"> 5 - Tarqui-Tenguel</option>
             	<option value="6 - Bellavista-Mapasingue"> 6 - Bellavista-Mapasingue</option>
@@ -137,8 +131,8 @@
             	<option value="23 - Samborondón"> 23 - Samborondón</option>
             	<option value="24 - Durán"> 24 - Durán</option></select></td></tr>
     			<tr><td>Dirección:</td><td><input type=text name=direccion size="35"></td></tr>
-                <tr><td>Tipo de instrucción:</td><td>Primaria <input type="checkbox" name="tipo[]" value="primaria">
-                	Secundaria <input type="checkbox" name="tipo[]" value="secundaria" onClick="controla(this)"></td></tr>
+                <tr><td>Tipo de instrucción:</td><td>Primaria <input type="checkbox" name="tipo[]" value="primaria"  required >
+                	Secundaria <input type="checkbox" name="tipo[]" value="secundaria" onClick="controla(this)" ></td></tr>
             </table>
         </div>
         <div id=oferta>
@@ -169,24 +163,22 @@
       	 <did id=rector>
         	<br><font color="#CC0000"><strong>Datos del representante legal de la Institución</strong></font><br><br>
             <table>
-            	<tr><td>Nombre de el/la director/a:</td><td><input type=text name=nombrerector size="60"></td></tr>
-                <tr><td>Número de cédula:</td><td><input type=text name=cedularector></td></tr>
-                <tr><td>Número de teléfono:</td><td><input type=text name=numerorector></td></tr>
-                <tr><td>Correo electrónico:</td><td><input type=text name=correorector size="50"></td></tr>
+            	<tr><td>Nombre de el/la director/a:</td><td><input type=text name=nombrerector size="60" required></td></tr>
+                <tr><td>Número de cédula:</td><td><input type=text name=cedularector required></td></tr>
+                <tr><td>Número de teléfono:</td><td><input type=text name=numerorector required></td></tr>
+                <tr><td>Correo electrónico:</td><td><input type=text name=correorector size="50" required></td></tr>
             </table>
         </div> 
         <div id=complementaria>
         	<br><font color="#CC0000"><strong>Información complementaria</strong></font><br><br>
             <table>
-            	<tr><td>Número de aulas disponibles:</td><td><input type=value name=aulas></td></tr>
-                <tr><td>Jornada vespertina:</td><td>Sí<input type="radio" name="jornada" value="si"></td><td>No<input type="radio" name="jornada" value="No"></td></tr>
+            	<tr><td>Número de aulas disponibles:</td><td><input type=value name=aulas required></td></tr>
+                <tr><td>Jornada vespertina:</td><td>Sí<input type="radio" name="jornada" value="si" ></td><td>No<input type="radio" name="jornada" value="No"></td></tr>
             </table>
             <br><br>
             <input type=submit value=Aceptar>     <input type=reset value=Cancelar>
 		</form>
         </div>  
-    </div>
-    <div id=pdp>
     </div>
 	</body>
 </html>

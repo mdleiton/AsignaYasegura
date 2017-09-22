@@ -92,17 +92,18 @@
 			<label for="inputPassword"  class="sr-only">Contraseña</label>
 			<input type="password" name="password" id="pass" class="form-control" placeholder="contrasena" required>
             <br/>
-			<div>
-                <label class="radio-inline" style="font-weight: bold;">
-                    <input name="tipologin" type="radio" value="admin" checked="checked">Administrador</label>
-                <label class="radio-inline" style="font-weight: bold;">
-                    <input name="tipologin" type="radio" value="digitador">Digitador</label>
-                <label class="radio-inline" style="font-weight: bold;">
+			<div class="right-block text-center">
+                <label class="col-md-3 col-xs-11 radio-inline block-center" style="font-weight: bold;">
+                    <input name="tipologin" type="radio" value="admin" checked="checked">Admin           </label>
+                <label class="col-md-3 col-xs-11 radio-inline block-center " style="font-weight: bold;">
+                    <input name="tipologin" type="radio" value="digitador">Digitador       </label>
+                <label class="col-md-5 col-xs-11 radio-inline  block-center" style="font-weight: bold;">
                     <input name="tipologin" type="radio" value="padre">Padre de familia</label>
             </div>
             <br/>
+            <br/>
             <button id="entrar" class="btn btn-danger btn-block" type="submit">Ingresar</button>
-            <br/> 
+        
 		</form>       
 {% endif %} 
 {% if error %}

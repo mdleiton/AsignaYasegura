@@ -1,0 +1,55 @@
+{% extends "AsignaYasegura/base.html" %}
+{% load static %}
+{% block title %} Registro digitador {% endblock %} 
+
+{% block extra-style %}
+<link href="{% static 'css/formulario.css'  %}" rel="stylesheet">
+{% endblock %}
+{% block menu%}
+      <li ><a href="{% url 'AsignaYasegura:Menu_Admin' %}">Avance de Procesos</a></li>
+      <li class="dropdown active">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Digitadores <b class="caret"></b></a>
+        <ul class="dropdown-menu">
+           <li class="active"><a href="{% url 'AsignaYasegura:digitador_registrar' %}">Registrar Digitador</a></li>
+          <li><a href="#">Eliminar digitador</a></li>
+          <li><a href="#">Editar Informacion digitador</a></li>
+        </ul>
+      </li>
+      <li><a href="#">Ejecutar Asignacion de cupos</a></li>
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Casos especiales <b class="caret"></b></a>
+        <ul class="dropdown-menu">
+          <li><a href="#">Por zonas</a></li>
+          <li><a href="#">Por regiones</a></li>
+          <li><a href="#">General</a></li>
+        </ul>
+      </li>
+{% endblock %}
+
+{% block content %} 
+<div class="container">
+    <form class="form-signin" action="{% url 'AsignaYasegura:digitador_registrar' %}" method="post">
+        <H1 class="text-center">Registro de  digitador </H1>
+        <div class="text-center" >
+            {% if mjsexitoso %}
+                {{mjsexitoso|capfirst}}
+            {% endif %}
+        </div>
+        <div id="formulario" class="text-center">
+            {% csrf_token %}
+            {{ form.as_p }}
+        </div>
+        <br/><br/>
+        <div class="bock-center text-center">
+            <center><input class="btn btn-primary" type="submit" value="Añadir digitador" />
+            <a type="button" href="{% url 'AsignaYasegura:Menu_Admin' %}" class="btn btn-primary btn-danger">Cancelar</a>
+            </center>
+        </div>
+        <div id="formulario" class="text-center">
+        {% if error %}
+            <h2>{{error }}</h2>
+        {% endif %} 
+        </div>
+    </form>
+</div>
+{% endblock %}

@@ -1,48 +1,27 @@
-INSERT INTO distrito( codigo, nombre, zona )
-VALUES ( 'c1','ximena 1','8');
-INSERT INTO distrito( codigo, nombre, zona )
-VALUES ( 'c2','ximena 2','8');
-INSERT INTO distrito( codigo, nombre, zona )
-VALUES ( 'c3','Antigua direccion provincial de educacion','8');
-INSERT INTO distrito( codigo, nombre, zona )
-VALUES ( 'c4','Portete','8');
-INSERT INTO distrito( codigo, nombre, zona )
-VALUES ( 'c5','Tarqui','8');
-INSERT INTO distrito( codigo, nombre, zona )
-VALUES ( 'c6','Bellavista-mapasingue','8');
-INSERT INTO distrito( codigo, nombre, zona )
-VALUES ( 'c7','Vergeles','8');
-INSERT INTO distrito( codigo, nombre, zona )
-VALUES ( 'c8','Monte siani','8');
-INSERT INTO distrito( codigo, nombre, zona )
-VALUES ( 'c9','Chongon','8');
-INSERT INTO distrito( codigo, nombre, zona )
-VALUES ( 'c10','Gomez rendon','8');
-INSERT INTO distrito( codigo, nombre, zona )
-VALUES ( 'c23','Samborondon','8');
-INSERT INTO distrito( codigo, nombre, zona )
-VALUES ( 'c24','Duran','8');
-INSERT INTO OfertaAcademica( nombre)
-VALUES ( 'Bachillerato General Unificado');
-INSERT INTO OfertaAcademica( nombre)
-VALUES ( 'Bachillerato Internacional');
-INSERT INTO OfertaAcademica( nombre)
-VALUES ( 'Bachillerato Tecnico');
-INSERT INTO OfertaAcademica( nombre, codigo)
-VALUES ( 'Produccion agropcuaria','3');
-INSERT INTO OfertaAcademica( nombre,codigo)
-VALUES ('Conservacion y manejo de recursos naturales','3');
-INSERT INTO OfertaAcademica( nombre,codigo)
-VALUES ( 'Industrialización de productos alimenticios','3');
-INSERT INTO OfertaAcademica( nombre,codigo)
-VALUES ( 'Promotor en recreación y deporte','3');
-INSERT INTO OfertaAcademica( nombre,codigo)
-VALUES ( 'Electromecánica automotriz','3');
-INSERT INTO OfertaAcademica( nombre,codigo)
-VALUES ( 'Chapisteria y pintura','3');
-INSERT INTO OfertaAcademica( nombre,codigo)
-VALUES ( 'Climatización','3');
-INSERT INTO OfertaAcademica( nombre,codigo)
-VALUES ( 'Electrónica de consumo','3');
-INSERT INTO OfertaAcademica( nombre,codigo)
-VALUES ( 'Aplicacion de proyectos de produccion','3');
+INSERT INTO AsignaYasegura_distrito( codigo, nombre, zona ) VALUES ( 'c1','ximena 1','8');
+INSERT INTO AsignaYasegura_distrito( codigo, nombre, zona ) VALUES ( 'c2','ximena 2','8');
+INSERT INTO AsignaYasegura_distrito( codigo, nombre, zona ) VALUES ( 'c3','Antigua direccion provincial de educacion','8');
+INSERT INTO AsignaYasegura_distrito( codigo, nombre, zona ) VALUES ( 'c4','Portete','8');
+INSERT INTO AsignaYasegura_distrito( codigo, nombre, zona ) VALUES ( 'c5','Tarqui','8');
+INSERT INTO AsignaYasegura_distrito( codigo, nombre, zona ) VALUES ( 'c6','Bellavista-mapasingue','8');
+INSERT INTO AsignaYasegura_distrito( codigo, nombre, zona ) VALUES ( 'c7','Vergeles','8');
+INSERT INTO AsignaYasegura_distrito( codigo, nombre, zona ) VALUES ( 'c8','Monte siani','8');
+INSERT INTO AsignaYasegura_distrito( codigo, nombre, zona ) VALUES ( 'c9','Chongon','8');
+INSERT INTO AsignaYasegura_distrito( codigo, nombre, zona ) VALUES ( 'c10','Gomez rendon','8');
+INSERT INTO AsignaYasegura_distrito( codigo, nombre, zona ) VALUES ( 'c23','Samborondon','8');
+INSERT INTO AsignaYasegura_distrito( codigo, nombre, zona ) VALUES ( 'c24','Duran','8');
+INSERT INTO AsignaYasegura_ofertaacademica( nombre) VALUES ( 'Bachillerato General Unificado');
+INSERT INTO AsignaYasegura_ofertaacademica( nombre) VALUES ( 'Bachillerato Internacional');
+INSERT INTO AsignaYasegura_ofertaacademica( nombre) VALUES ( 'Bachillerato Tecnico');
+INSERT INTO AsignaYasegura_carrerastecnicas( nombre,ofertaacademica_id ) VALUES ( 'Produccion agropcuaria','3');
+INSERT INTO AsignaYasegura_carrerastecnicas( nombre,ofertaacademica_id ) VALUES ('Conservacion y manejo de recursos naturales','3');
+INSERT INTO AsignaYasegura_carrerastecnicas( nombre,ofertaacademica_id ) VALUES ( 'Industrialización de productos alimenticios','3');
+INSERT INTO AsignaYasegura_carrerastecnicas( nombre,ofertaacademica_id ) VALUES ( 'Promotor en recreación y deporte','3');
+INSERT INTO AsignaYasegura_carrerastecnicas( nombre,ofertaacademica_id ) VALUES ( 'Electromecanica automotriz','3');
+INSERT INTO AsignaYasegura_carrerastecnicas( nombre,ofertaacademica_id ) VALUES ( 'Chapisteria y pintura','3');
+INSERT INTO AsignaYasegura_carrerastecnicas( nombre,ofertaacademica_id ) VALUES ( 'Climatizacion','3');
+INSERT INTO AsignaYasegura_carrerastecnicas( nombre,ofertaacademica_id ) VALUES ( 'Electronica de consumo','3');
+INSERT INTO AsignaYasegura_carrerastecnicas( nombre,ofertaacademica_id ) VALUES ( 'Aplicacion de proyectos de produccion','3');
+INSERT INTO AsignaYasegura_roles(rol,descripcion) values('administrador','registra a los digitadores y ejecuta la opcion asignacion ');
+INSERT INTO AsignaYasegura_roles(rol,descripcion) values('padre de familia','registra a sus hijos y puede ver el colegio asignado para cada hijo.');
+INSERT INTO AsignaYasegura_roles(rol,descripcion) values('digitador','registra la informacion y capacidades de cada una de las instituciones educativas');

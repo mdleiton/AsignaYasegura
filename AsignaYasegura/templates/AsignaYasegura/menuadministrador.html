@@ -1,0 +1,81 @@
+{% extends "AsignaYasegura/base.html" %}
+{% load static %}
+{% block title %} Menu Administrador {% endblock %} 
+
+{% block menu%}
+      <li class="active"><a href="{% url 'AsignaYasegura:Menu_Admin' %}">Avance de Procesos</a></li>
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Digitadores <b class="caret"></b></a>
+        <ul class="dropdown-menu">
+           <li><a href="{% url 'AsignaYasegura:digitador_registrar' %}">Registrar Digitador</a></li>
+          <li><a href="#">Eliminar digitador</a></li>
+          <li><a href="#">Editar Informacion digitador</a></li>
+        </ul>
+      </li>
+      <li><a href="#">Ejecutar Asignacion de cupos</a></li>
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Casos especiales <b class="caret"></b></a>
+        <ul class="dropdown-menu">
+          <li><a href="#">Por zonas</a></li>
+          <li><a href="#">Por regiones</a></li>
+          <li><a href="#">General</a></li>
+        </ul>
+      </li>
+{% endblock %}
+
+{% block content %} 
+<div class="row text-center">
+	<div class="container">
+	<h1>Calendario de actividades Asignación de cupos Periodo 2017-2018</h1>
+	<div class="block-center ">
+	<table class="table table-responsive table-striped table-hover table-bordered ">
+  		<thead>
+		    <tr>
+		      <th>#</th>
+		      <th>Fecha inicio-fin</th>
+		      <th>Actividad</th>
+		      <th> Involucrados</th>
+		    </tr>
+		 </thead>
+		<tbody>
+			<tr>
+			  <th scope="row">1</th>
+			  <td>	</td>
+			  <td>	</td>
+			  <td>	</td>
+			</tr>
+			<tr>
+			  <th scope="row">2</th>
+			  <td>	</td>
+			  <td>	</td>
+			  <td>	</td>
+			</tr>
+			<tr>
+			  <th scope="row">3</th>
+			  <td>	</td>
+			  <td>	</td>
+			  <td>	</td>
+			</tr>
+			<tr>
+			  <th scope="row">4</th>
+			  <td>	</td>
+			  <td>	</td>
+			  <td>	</td>
+			</tr>
+		</tbody>
+	</table>
+	</div>
+</div>
+</div>
+
+<div class="row text-center">
+	<h1>Porcentaje de avance de registro de Institución</h1>	
+	<br/><br/><br/><br/><br/><br/>
+</div>
+
+<div class="row text-center">
+	<h1>Cantidad de alumnos registrados</h1>	
+	<br/><br/><br/><br/><br/><br/>
+</div>
+
+{% endblock %}
