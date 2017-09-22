@@ -12,12 +12,12 @@ def login(request):
             if(user.is_superuser and user.is_staff and tipologin=="admin"):
                 auth_login(request, user)
                 return render(request,'AsignaYasegura/menuadministrador.html')
-            elif((not user.is_superuser or  not user.is_staff) and tipologin=="digitador" ):
+            elif(user.is_superuser and user.is_staff and tipologin=="digitador" ):
                 auth_login(request, user)
-                return render(request,'AsignaYasegura/menuDigitador.html')
+                return render(request,'AsignaYasegura/menudigitador.html')
             elif((not user.is_superuser or  not user.is_staff) and tipologin=="padre" ):
                 auth_login(request, user)
-                return render(request,'AsignaYasegura/menuPadre.html')
+                return render(request,'AsignaYasegura/menupadre.html')
             else:
                 return render(request,'AsignaYasegura/index.html',{'error':"incorrecto : nombre de usuario , contraseña o tipo de usuario"})
         else:
@@ -36,6 +36,8 @@ def nopermitido(request):
 def MenuAdmin(request):
     if (request.user.is_authenticated and request.user.is_superuser and request.user.is_staff):
         return render(request,'AsignaYasegura/menuadministrador.html')
+    else:
+         return render_to_response('AsignaYasegura/nopermitido.html')
 
 def Digitador_registrar(request):
     if (request.user.is_authenticated and request.user.is_superuser and request.user.is_staff):
