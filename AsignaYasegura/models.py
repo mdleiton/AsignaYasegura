@@ -24,6 +24,14 @@ class Roles(models.Model):
 	def __str__(self):
 		return 'Rol: {}:{}'.format(self.rol, self.descripcion)
 
+class Permiso(models.Model):
+	id_permiso=models.AutoField(primary_key=True)
+	permiso=models.CharField(max_length=35)
+	descripcion=models.CharField(max_length=100)
+	
+	def __str__(self):
+		return 'Permiso: {}:{}'.format(self.permiso, self.descripcion)
+
 class Usuariorol(models.Model):
 	id_usuario_rol=models.AutoField(primary_key=True)
 	usuario=models.ForeignKey('Usuario')
@@ -31,6 +39,14 @@ class Usuariorol(models.Model):
 
 	def __str__(self):
 		return 'UsuarioRol: {}:{}'.format(self.rol, self.usuario)
+
+class Usuariopermisos(models.Model):
+	id_usuario_permiso=models.AutoField(primary_key=True)
+	usuario=models.ForeignKey('Usuario')
+	permiso=models.ForeignKey('Permiso')
+
+	def __str__(self):
+		return 'UsuarioPermiso: {}:{}'.format(self.permiso, self.usuario)
 
 class Institucion(models.Model):
 	id_institucion= models.AutoField(primary_key=True)

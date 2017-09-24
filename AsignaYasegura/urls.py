@@ -9,15 +9,19 @@ urlpatterns = [
     url(r'^$', views.login, name="login"),url(r'^login/$', views.login),
     url(r'^logout/$', views.logout, name="logout"),
     url(r'^nopermitido/$', views.nopermitido, name="nopermitido"),
-   
+    url(r'menu/$', views.Menu, name="Menu"),
+    
     #opciones administrador
-    url(r'menuadmin/$', views.MenuAdmin, name="Menu_Admin"),
     url(r'registrardigitador/$', views.Digitador_registrar, name="digitador_registrar"),
+    url(r'verdigitador/$', views.Digitador_ver, name="digitador_ver"),
+    url(r'editardigitador/$', views.Digitador_editar, name="digitador_editar"),    
+    url(r'^editardigitador/(?P<item>\d+)$', views.Digitador_editarU, name='digitador_editarU'),
+    url(r'eliminardigitador/$', views.Digitador_eliminar, name="digitador_eliminar"),
+    url(r'^eliminardigitador/(?P<item>\d+)$', views.Digitador_eliminarU, name='digitador_eliminarU'),
+    
 
     #opciones digitador
-    url(r'menudigitador/$', views.MenuDigitador, name="Menu_Digitador"),
 	url(r'adquisiciondatos/$', views.Adquisicion_datos, name="Adquisicion_datos"),
 	url(r'calcularcapacidad/$', views.Calcular_capacidad, name="calcular_capacidad"),
-	
 
 ]

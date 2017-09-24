@@ -6,16 +6,25 @@
 <link href="{% static 'css/formulario.css'  %}" rel="stylesheet">
 {% endblock %}
 {% block menu%}
-      <li ><a href="{% url 'AsignaYasegura:Menu_Admin' %}">Avance de Procesos</a></li>
+      <li ><a href="{% url 'AsignaYasegura:Menu' %}">Avance de Procesos</a></li>
       <li class="dropdown active">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Digitadores <b class="caret"></b></a>
         <ul class="dropdown-menu">
            <li class="active"><a href="{% url 'AsignaYasegura:digitador_registrar' %}">Registrar Digitador</a></li>
+           <li><a href="/verdigitador/">Ver Información/permisos digitadores</a></li>
+           <li><a href="{% url 'AsignaYasegura:digitador_editar' %}" >Editar Información/permisos digitadores</a></li>
           <li><a href="#">Eliminar digitador</a></li>
-          <li><a href="#">Editar Informacion digitador</a></li>
+          
         </ul>
       </li>
-      <li><a href="#">Ejecutar Asignacion de cupos</a></li>
+            <li><a href="#">Ejecutar Asignación de cupos</a></li>
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Estudiantes <b class="caret"></b></a>
+        <ul class="dropdown-menu">
+           <li><a href="#">Registrar padres de familia</a></li>
+            <li><a href="#">Registrar Estudiantes</a></li>
+        </ul>
+      </li>
       <li class="dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Casos especiales <b class="caret"></b></a>
         <ul class="dropdown-menu">
@@ -42,7 +51,7 @@
         <br/><br/>
         <div class="bock-center text-center">
             <center><input class="btn btn-primary" type="submit" value="Añadir digitador" />
-            <a type="button" href="{% url 'AsignaYasegura:Menu_Admin' %}" class="btn btn-primary btn-danger">Cancelar</a>
+            <a type="button" href="{% url 'AsignaYasegura:Menu' %}" class="btn btn-primary btn-danger">Cancelar</a>
             </center>
         </div>
         <div id="formulario" class="text-center">

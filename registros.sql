@@ -15,8 +15,8 @@ INSERT INTO AsignaYasegura_ofertaacademica( nombre) VALUES ( 'Bachillerato Inter
 INSERT INTO AsignaYasegura_ofertaacademica( nombre) VALUES ( 'Bachillerato Tecnico');
 INSERT INTO AsignaYasegura_carrerastecnicas( nombre,ofertaacademica_id ) VALUES ( 'Produccion agropcuaria','3');
 INSERT INTO AsignaYasegura_carrerastecnicas( nombre,ofertaacademica_id ) VALUES ('Conservacion y manejo de recursos naturales','3');
-INSERT INTO AsignaYasegura_carrerastecnicas( nombre,ofertaacademica_id ) VALUES ( 'Industrialización de productos alimenticios','3');
-INSERT INTO AsignaYasegura_carrerastecnicas( nombre,ofertaacademica_id ) VALUES ( 'Promotor en recreación y deporte','3');
+INSERT INTO AsignaYasegura_carrerastecnicas( nombre,ofertaacademica_id ) VALUES ( 'IndustrializaciÃ³n de productos alimenticios','3');
+INSERT INTO AsignaYasegura_carrerastecnicas( nombre,ofertaacademica_id ) VALUES ( 'Promotor en recreaciÃ³n y deporte','3');
 INSERT INTO AsignaYasegura_carrerastecnicas( nombre,ofertaacademica_id ) VALUES ( 'Electromecanica automotriz','3');
 INSERT INTO AsignaYasegura_carrerastecnicas( nombre,ofertaacademica_id ) VALUES ( 'Chapisteria y pintura','3');
 INSERT INTO AsignaYasegura_carrerastecnicas( nombre,ofertaacademica_id ) VALUES ( 'Climatizacion','3');
@@ -25,3 +25,6 @@ INSERT INTO AsignaYasegura_carrerastecnicas( nombre,ofertaacademica_id ) VALUES 
 INSERT INTO AsignaYasegura_roles(rol,descripcion) values('administrador','registra a los digitadores y ejecuta la opcion asignacion ');
 INSERT INTO AsignaYasegura_roles(rol,descripcion) values('padre de familia','registra a sus hijos y puede ver el colegio asignado para cada hijo.');
 INSERT INTO AsignaYasegura_roles(rol,descripcion) values('digitador','registra la informacion y capacidades de cada una de las instituciones educativas');
+INSERT INTO AsignaYasegura_permiso(permiso,descripcion) VALUES ( 'Registrar padres/estudiantes','permite registrar padres de familias de escasos recursos');
+INSERT INTO AsignaYasegura_permiso(permiso,descripcion) VALUES ( 'Registrar instituciones','permite registrar instituciones/capacidades de las escuelas');
+INSERT INTO AsignaYasegura_permiso(permiso,descripcion) VALUES ( 'Inspecciones','permite inspeccionar instituciones de las escuelas');

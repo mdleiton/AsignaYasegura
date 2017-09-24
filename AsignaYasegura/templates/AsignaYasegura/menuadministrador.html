@@ -3,16 +3,24 @@
 {% block title %} Menu Administrador {% endblock %} 
 
 {% block menu%}
-      <li class="active"><a href="{% url 'AsignaYasegura:Menu_Admin' %}">Avance de Procesos</a></li>
+      <li class="active"><a href="{% url 'AsignaYasegura:Menu' %}">Avance de Procesos</a></li>
       <li class="dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Digitadores <b class="caret"></b></a>
         <ul class="dropdown-menu">
            <li><a href="{% url 'AsignaYasegura:digitador_registrar' %}">Registrar Digitador</a></li>
-          <li><a href="#">Eliminar digitador</a></li>
-          <li><a href="#">Editar Informacion digitador</a></li>
+            <li><a href="/verdigitador/">Ver Información/permisos digitadores</a></li>
+            <li><a href="{% url 'AsignaYasegura:digitador_editar' %}" >Editar Información/permisos digitadores</a></li>
+          	<li><a href="#">Eliminar digitador</a></li>
         </ul>
       </li>
-      <li><a href="#">Ejecutar Asignacion de cupos</a></li>
+      <li><a href="#">Ejecutar Asignación de cupos</a></li>
+     <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Estudiantes <b class="caret"></b></a>
+        <ul class="dropdown-menu">
+        	 <li><a href="#">Registrar padres de familia</a></li>
+           	<li><a href="#">Registrar Estudiantes</a></li>
+        </ul>
+      </li>
       <li class="dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Casos especiales <b class="caret"></b></a>
         <ul class="dropdown-menu">
