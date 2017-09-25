@@ -68,7 +68,7 @@ def Menu(request):
     usuario=Usuario.objects.filter(usuario=request.user)[0]
     if(request.user.is_superuser and request.user.is_staff and "administrador"==Usuariorol.objects.filter(usuario=usuario)[0].rol.rol):
         print(request.user.password)
-        return render(request,'AsignaYasegura/menuadministrador.html',{'usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username,'contrasena':request.user.password})})
+        return render(request,'AsignaYasegura/menuadministrador.html',{'usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})
     elif(request.user.is_superuser and request.user.is_staff and "digitador"==Usuariorol.objects.filter(usuario=usuario)[0].rol.rol ):
         return render(request,'AsignaYasegura/menudigitador.html')
     elif(request.user.is_superuser and request.user.is_staff and "padre de familia"==Usuariorol.objects.filter(usuario=usuario)[0].rol.rol ):
@@ -178,10 +178,9 @@ def Admin_editarInfo(request):
         form = AdminForm(request.POST or None)
         print(request.POST)
         if request.method=='POST':
-            if form.is_valid():
-                form.save()
-                #u.set_password('new password')
-                return redirect('/')
+            Usuario.objects.filter(pk=usuario1.ci).update(ci= request.POST['ci'],nombre =request.POST['nombre'],apellidos = request.POST['apellidos'],usuario = request.user,direccion=request.POST['direccion'],telefono=request.POST['telefono'],correo=request.POST['correo'])
+            #u.set_password('new password')
+            return redirect('AsignaYasegura:Menu')
         return render(request,'AsignaYasegura/nopermitido.html')
     else:
         return render(request,'AsignaYasegura/nopermitido.html')
