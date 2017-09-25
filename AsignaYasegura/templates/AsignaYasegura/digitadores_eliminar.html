@@ -12,8 +12,8 @@
         <ul class="dropdown-menu">
            <li><a href="{% url 'AsignaYasegura:digitador_registrar' %}">Registrar Digitador</a></li>
             <li ><a href="/verdigitador/">Ver Información/permisos digitadores</a></li>
-            <li class="active" ><a href="{% url 'AsignaYasegura:digitador_editar' %}">Editar Información/permisos digitadores</a></li>
-            <li><a href="{% url 'AsignaYasegura:digitador_eliminar' %}">Eliminar digitador</a></li>
+            <li ><a href="{% url 'AsignaYasegura:digitador_editar' %}">Editar Información/permisos digitadores</a></li>
+            <li class="active" ><a href="{% url 'AsignaYasegura:digitador_eliminar' %}">Eliminar digitador</a></li>
         </ul>
       </li>
       <li><a href="{% url 'AsignaYasegura:Admin_ejecutar' %}">Ejecutar Asignación de cupos</a></li>
@@ -37,7 +37,7 @@
         <th>Registrar padres/estudiantes</th>
         <th>Registrar instituciones</th>
         <th>Inspecciones</th>
-        <th>EDITAR</th>
+        <th>ELIMINAR</th>
 {% endblock %}
 {%block elementostablas%}
         <td>{{ forloop.counter   }}</td>
@@ -49,6 +49,6 @@
         <td>{{ registro.padres_estudiantes}}</td>
         <td>{{ registro.Registrar_instituciones}}</td >
         <td>{{ registro.Inspecciones }}</td>
-        <td><a class="btn btn-primary"   href="{% url 'AsignaYasegura:digitador_editarU'  registro.ci %}" 
-          value="Editar" class="btn btn-primary btn-sm"  >editar</a></td>
+        <td><a class="btn btn-danger"   href="{% url 'AsignaYasegura:digitador_eliminarU'  registro.ci %}" 
+          value="Editar"  >Eliminar</a></td>
         {% endblock %}

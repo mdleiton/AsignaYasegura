@@ -5,7 +5,7 @@ from django.db import models,connection
 from django.utils import timezone
 
 class Usuario(models.Model):
-    ci= models.CharField(max_length=10)
+    ci= models.CharField(max_length=10,primary_key=True)
     nombre = models.CharField(max_length=35)
     apellidos = models.CharField(max_length=35)
     usuario = models.OneToOneField(User)
@@ -30,7 +30,7 @@ class Permiso(models.Model):
 	descripcion=models.CharField(max_length=100)
 	
 	def __str__(self):
-		return 'Permiso: {}:{}'.format(self.permiso, self.descripcion)
+		return 'Permiso: {}'.format(self.permiso)
 
 class Usuariorol(models.Model):
 	id_usuario_rol=models.AutoField(primary_key=True)

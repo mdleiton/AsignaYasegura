@@ -17,6 +17,7 @@ git push origin master
 
 ejecutar .sql de registros
 sqlite3 INEC.sqlite3 < registros.sql
+sqlite3 AsignaYasegura.sqlite3 < registros.sql
 pueden visualizar la base de datos con
 https://sqliteonline.com/#
 agregar el .sqlite3 en esa pagina

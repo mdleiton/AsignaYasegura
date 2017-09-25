@@ -1,3 +1,5 @@
+INSERT INTO AsignaYasegura_usuario(ci,nombre,apellidos,usuario_id,direccion,telefono,correo) VALUES('0923261382','mauricio','leiton',1,'data de villamil','0989389265','mau_leiton96@hotmail.com');
+INSERT INTO AsignaYasegura_usuariorol(usuario_id,rol_id) VALUES ('0923261382',1);
 INSERT INTO AsignaYasegura_distrito( codigo, nombre, zona ) VALUES ( 'c1','ximena 1','8');
 INSERT INTO AsignaYasegura_distrito( codigo, nombre, zona ) VALUES ( 'c2','ximena 2','8');
 INSERT INTO AsignaYasegura_distrito( codigo, nombre, zona ) VALUES ( 'c3','Antigua direccion provincial de educacion','8');

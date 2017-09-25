@@ -1,0 +1,54 @@
+{% extends "AsignaYasegura/base.html" %}
+{% load static %}
+{% block title %} Editar {{tipo_objeto}} {% endblock %} 
+{% block extra-style %}
+<link href="{% static 'css/formulario.css'  %}" rel="stylesheet">
+{% endblock %}
+{% block menu%}
+      <li ><a href="{% url 'AsignaYasegura:Menu' %}">Avance de Procesos</a></li>
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Digitadores <b class="caret"></b></a>
+        <ul class="dropdown-menu">
+           <li><a href="{% url 'AsignaYasegura:digitador_registrar' %}">Registrar Digitador</a></li>
+            <li ><a href="/verdigitador/">Ver Información/permisos digitadores</a></li>
+            <li class="active" ><a href="{% url 'AsignaYasegura:digitador_editar' %}">Editar Información/permisos digitadores</a></li>
+            <li><a href="{% url 'AsignaYasegura:digitador_eliminar' %}">Eliminar digitador</a></li>
+        </ul>
+      </li>
+      <li><a hhref="{% url 'AsignaYasegura:Admin_ejecutar' %}">Ejecutar Asignación de cupos</a></li>
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Casos especiales <b class="caret"></b></a>
+        <ul class="dropdown-menu">
+          <li><a href="#">Por zonas</a></li>
+          <li><a href="#">Por regiones</a></li>
+          <li><a href="#">General</a></li>
+        </ul>
+      </li>
+{% endblock %}
+
+{% block content %} 
+<div class="container">
+    <form class="form-signin" method="post">
+        <H1 class="text-center"> Actualizar registro de {{tipo_objeto}} </H1>
+        <div class="text-center" >
+            {% if mjs %}
+                {{mjs|capfirst}}
+            {% endif %}
+        </div>	
+        <div id="formulario">
+            {% csrf_token %}
+            {{ form.as_p }}
+        </div>
+        <br/><br/><br/><br/><br/>
+        <div class="row">
+            <div class="col-lg-12 text-center" >
+                <input class="btn btn-primary" type="submit" value="Actualizar datos" />
+                <a class="btn btn-primary btn-danger" href="{% url 'AsignaYasegura:digitador_editar' %}">cancelar</a>
+            </div>
+        </div>
+        {% if error %}
+            <h2>{{error }}</h2>
+        {% endif %} 
+    </form>
+</div>
+{% endblock %}

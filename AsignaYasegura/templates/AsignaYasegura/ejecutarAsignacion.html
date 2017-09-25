@@ -1,0 +1,88 @@
+{% extends "AsignaYasegura/base.html" %}
+{% load static %}
+{% block title %} Menu Administrador {% endblock %} 
+
+{% block menu%}
+      <li ><a href="{% url 'AsignaYasegura:Menu' %}">Avance de Procesos</a></li>
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Digitadores <b class="caret"></b></a>
+        <ul class="dropdown-menu">
+           <li><a href="{% url 'AsignaYasegura:digitador_registrar' %}">Registrar Digitador</a></li>
+            <li><a href="/verdigitador/">Ver Información/permisos digitadores</a></li>
+            <li><a href="{% url 'AsignaYasegura:digitador_editar' %}" >Editar Información/permisos digitadores</a></li>
+          	<li><a href="{% url 'AsignaYasegura:digitador_eliminar' %}">Eliminar digitador</a></li>
+        </ul>
+      </li>
+      <li class="active"><a href="{% url 'AsignaYasegura:Admin_ejecutar' %}">Ejecutar Asignación de cupos</a></li>
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Casos especiales <b class="caret"></b></a>
+        <ul class="dropdown-menu">
+          <li><a href="#">Por zonas</a></li>
+          <li><a href="#">Por regiones</a></li>
+          <li><a href="#">General</a></li>
+        </ul>
+      </li>
+{% endblock %}
+
+{% block content %} 
+<div class="text-center" >
+  {% if mjsexitoso %}
+      {{mjsexitoso|capfirst}}
+  {% endif %}
+  {% if error %}
+    {{error }}
+  {% endif %} 
+</div>
+<div class="row text-center">
+	<div class="container">
+    <form method="post" action="{% url 'AsignaYasegura:Admin_ejecutar' %}">
+       {% csrf_token %}
+      <h1>Datos generales previo a la inicialización del proceso:</h1>
+      <br/>
+      <div class="row">
+        <div class="col-md-offset-2 col-md-6 text-left">
+          <label>Cantidad de estudiantes registrados: </label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-offset-2 col-md-6 text-left">
+          <label>Cantidad de Instituciones registrados: </label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-offset-2 col-md-6 text-left">
+          <label>Cantidad de cupos disponibles: </label>
+        </div>
+      </div>
+      <br/>
+      <fieldset>
+        <legend>Requisitos para ejecutar la acción</legend>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-6 text-left">
+              <input type="checkbox" id="requisito1" name="completoinstiticiones" value="completoinstiticiones" required>
+          <label for="requisito1" >Registro completo de información/capacidad de estudiantes</label>
+             </div>
+          </div>
+        <div>
+        <div class="form-group">
+          <div class="col-md-offset-2 col-md-6 text-left">  
+            <input type="checkbox" id="requisito2" name="finregistroestudiantes" value="finregistroestudiantes" required>
+            <label for="requisito2">Fecha fin registro estudiantes</label>
+          </div>
+        </div>
+        <br/><br/>
+        <div class="form-group">
+          <div class="col-md-12 text-center">  
+            <button type="submit">Iniciar asignación de cupos</button>
+          </div>
+        </div>        
+        <br/>
+    </fieldset>
+
+
+    </form>
+	
+	</div>
+</div>
+
+{% endblock %}
