@@ -22,3 +22,14 @@ class UsuariosListForm(forms.ModelForm):
         model = Usuario
         fields = "__all__"
         exclude = ['usuario',]
+
+class AdminForm(forms.ModelForm):
+    usuario=forms.CharField(max_length=20)
+    contrasena=forms.CharField(max_length=200,widget=forms.PasswordInput)
+    widgets = {
+            'contrasena': forms.PasswordInput(),
+        }
+    class Meta:
+        model = Usuario
+        fields = "__all__" 
+        exclude = ['usuario',]

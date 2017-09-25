@@ -13,11 +13,13 @@ git push origin master
 
 
 
-
-
-ejecutar .sql de registros
+1. borrar el archivo AsignaYasegura.sql
+2. python3.6 manage.py migrate
+3. python manage.py createsuperuser --username=mauricio --email=mdleiton@espol.edu.ec
+4. ejecutar .sql de registros
 sqlite3 INEC.sqlite3 < registros.sql
 sqlite3 AsignaYasegura.sqlite3 < registros.sql
+
 pueden visualizar la base de datos con
 https://sqliteonline.com/#
 agregar el .sqlite3 en esa pagina

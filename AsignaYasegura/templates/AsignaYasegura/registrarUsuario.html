@@ -30,8 +30,8 @@
 
 {% block content %} 
 <div class="container">
+   <H2 class="text-center">Registro de  digitador </H2>
     <form class="form-signin" action="{% url 'AsignaYasegura:digitador_registrar' %}" method="post">
-        <H1 class="text-center">Registro de  digitador </H1>
         <div class="text-center" >
             {% if mjsexitoso %}
                 {{mjsexitoso|capfirst}}
@@ -40,11 +40,15 @@
               {{error }}
             {% endif %} 
         </div>
-        <div id="formulario" class="text-center">
+         <div class="row">
+        <div class="col-lg-offset-3 col-lg-6 ">
+        <div id="formulario" >
             {% csrf_token %}
             {{ form.as_p }}
         </div>
-        <br/><br/><br/><br/><br/>
+      </div>
+    </div>
+       
         <div class="bock-center text-center">
             <center><input class="btn btn-primary" type="submit" value="Añadir digitador" />
             <a type="button" href="{% url 'AsignaYasegura:Menu' %}" class="btn btn-primary btn-danger">Cancelar</a>

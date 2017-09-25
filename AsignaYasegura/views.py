@@ -67,7 +67,8 @@ def nopermitido(request):
 def Menu(request):
     usuario=Usuario.objects.filter(usuario=request.user)[0]
     if(request.user.is_superuser and request.user.is_staff and "administrador"==Usuariorol.objects.filter(usuario=usuario)[0].rol.rol):
-        return render(request,'AsignaYasegura/menuadministrador.html')
+        print(request.user.password)
+        return render(request,'AsignaYasegura/menuadministrador.html',{'usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username,'contrasena':request.user.password})})
     elif(request.user.is_superuser and request.user.is_staff and "digitador"==Usuariorol.objects.filter(usuario=usuario)[0].rol.rol ):
         return render(request,'AsignaYasegura/menudigitador.html')
     elif(request.user.is_superuser and request.user.is_staff and "padre de familia"==Usuariorol.objects.filter(usuario=usuario)[0].rol.rol ):
@@ -170,6 +171,20 @@ def Digitador_eliminarU(request,item):
     else:
         return render(request,'AsignaYasegura/nopermitido.html')
 
+#permite editar la informacion de un administrador
+def Admin_editarInfo(request):
+    usuario1=Usuario.objects.filter(usuario=request.user)[0]
+    if (request.user.is_authenticated and request.user.is_superuser and "administrador"==Usuariorol.objects.filter(usuario=usuario1)[0].rol.rol):
+        form = AdminForm(request.POST or None)
+        print(request.POST)
+        if request.method=='POST':
+            if form.is_valid():
+                form.save()
+                #u.set_password('new password')
+                return redirect('/')
+        return render(request,'AsignaYasegura/nopermitido.html')
+    else:
+        return render(request,'AsignaYasegura/nopermitido.html')
 
 #--------------------------------------------------------VISTAS DIGITADOR-----------------------------------------------
 def Adquisicion_datos(request):

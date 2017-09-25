@@ -1,19 +1,33 @@
 #formulario p label{
 	text-align: center;
-	position: absolute;
-	left: 30%;
+	position: relative;
+	left: 15%;
 	margin-top: 8px;
 }
 
 #formulario p input, select{
 	text-align: center;
-	position: sticky;
-	left: 50%;
+	position: absolute;
+	left: 45%;
 
 }
 
 #formulario ul {
-	left: 40%;
-	position: absolute;
+	position: relative;
+	left: 45%;
 	text-align: justify;
 }
+#formulariomodel p label{
+	text-align: center;
+	position: relative;
+	left: 3%;
+	margin-top: 8px;
+}
+
+#formulariomodel p input, select{
+	text-align: center;
+	position: absolute;
+	left: 35%;
+
+}
+
