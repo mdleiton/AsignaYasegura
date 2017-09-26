@@ -100,6 +100,9 @@
             {% if mjs %}
                 {{mjs|capfirst}}
             {% endif %}
+            {% if error %}
+              {{error }}
+            {% endif %} 
           </div> 
           <div class="row">
             <div class="col-lg-offset-3 col-lg-6 ">
@@ -115,9 +118,6 @@
               <input class="btn btn-primary" type="submit" value="Actualizar datos" />
             </div>
           </div>
-          {% if error %}
-            <h2>{{error }}</h2>
-          {% endif %} 
         </form>
       </div>
       <div class="modal-footer">
@@ -135,17 +135,31 @@
         <h4 class="modal-title">Editar información </h4>
       </div>
       <div class="modal-body">
-        <form class="form-signin" method="post" action="{% url 'AsignaYasegura:Admin_editarInfo' %}">
+        <form class="form-signin" method="post" action="{% url 'AsignaYasegura:Admin_cambiocontrasena' %}">
           <div class="text-center" >
             {% if mjs %}
-                {{mjs|capfirst}}
+              {{mjs|capfirst}}
+            {% endif %}
+            {% if error %}
+              {{error }}
             {% endif %}
           </div> 
           <div class="row">
             <div class="col-lg-offset-3 col-lg-6 ">
               <div id="formulariomodel">
-                {% csrf_token %}
-                {{ usuariopass.as_p }}
+                <form id="login" class="form-signin" method="POST"  >
+                  {% csrf_token %}
+                  <h1 class="form-signin-heading">Iniciar Sesión</h1>
+                  <br/>
+                  <label for="inputEmail" class="sr-only">Usuario</label>
+                  <input type="text" name="username"   id="user" class="form-control" placeholder="Usuario" required>
+                  <br />
+                  <label for="inputPassword"  class="sr-only">Contraseña</label>
+                  <input type="password" name="password" id="pass" class="form-control" placeholder="contrasena" required>
+                  <br/>
+                  <label for="inputPassword"  class="sr-only">Contraseña</label>
+                  <input type="password" name="newpassword" id="newpass" class="form-control" placeholder="contrasena" required>
+                </form>
               </div>
             </div>
           </div>
@@ -155,9 +169,7 @@
               <input class="btn btn-primary" type="submit" value="Actualizar datos" />
             </div>
           </div>
-          {% if error %}
-            <h2>{{error }}</h2>
-          {% endif %} 
+          
         </form>
       </div>
       <div class="modal-footer">

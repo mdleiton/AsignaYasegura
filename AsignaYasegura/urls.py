@@ -20,8 +20,8 @@ urlpatterns = [
     url(r'^eliminardigitador/(?P<item>\d+)$', views.Digitador_eliminarU, name='digitador_eliminarU'),
     url(r'^ejecutarasignacion/$', views.Admin_ejecutar, name="Admin_ejecutar"),
     url(r'^editarinformacion/$', views.Admin_editarInfo, name="Admin_editarInfo"),
+    url(r'^cambiarcontrasena/$', views.Admin_cambiocontrasena, name="Admin_cambiocontrasena"),
     
-
     #opciones digitador
 	url(r'^adquisiciondatos/$', views.Adquisicion_datos, name="Adquisicion_datos"),
 	url(r'^calcularcapacidad/$', views.Calcular_capacidad, name="calcular_capacidad"),

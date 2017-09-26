@@ -40,7 +40,7 @@ def login(request):
             usuario=Usuario.objects.filter(usuario=user)[0]
             if(user.is_superuser and user.is_staff and tipologin==Usuariorol.objects.filter(usuario=usuario)[0].rol.rol):
                 auth_login(request, user)
-                return render(request,'AsignaYasegura/menuadministrador.html')
+                return render(request,'AsignaYasegura/menuadministrador.html',{'usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})
             elif(user.is_superuser and user.is_staff and tipologin==Usuariorol.objects.filter(usuario=usuario)[0].rol.rol ):
                 auth_login(request, user)
                 return render(request,'AsignaYasegura/menudigitador.html')
@@ -48,9 +48,9 @@ def login(request):
                 auth_login(request, user)
                 return render(request,'AsignaYasegura/menupadre.html')
             else:
-                return render(request,'AsignaYasegura/index.html',{'error':"incorrecto : nombre de usuario , contraseña o tipo de usuario"})
+                return render(request,'AsignaYasegura/index.html',{'error':"incorrecto : nombre de usuario , contraseña o tipo de usuario",'usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})
         else:
-            return render(request,'AsignaYasegura/index.html',{'error':"formulario de inicio de sesión incorrecto"})
+            return render(request,'AsignaYasegura/index.html',{'error':"formulario de inicio de sesión incorrecto",'usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})
     else:
         return render(request,'AsignaYasegura/index.html')
 
@@ -67,7 +67,6 @@ def nopermitido(request):
 def Menu(request):
     usuario=Usuario.objects.filter(usuario=request.user)[0]
     if(request.user.is_superuser and request.user.is_staff and "administrador"==Usuariorol.objects.filter(usuario=usuario)[0].rol.rol):
-        print(request.user.password)
         return render(request,'AsignaYasegura/menuadministrador.html',{'usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})
     elif(request.user.is_superuser and request.user.is_staff and "digitador"==Usuariorol.objects.filter(usuario=usuario)[0].rol.rol ):
         return render(request,'AsignaYasegura/menudigitador.html')
@@ -93,13 +92,13 @@ def Digitador_registrar(request):
                 for i in  request.POST.getlist('permisos'):
                     Usuariopermisos(usuario=usuario,permiso=Permiso.objects.filter(id_permiso=i)[0]).save()
                 form=UsuarioForm()
-                return render(request,'AsignaYasegura/registrarUsuario.html',{'form': form, 'mjsexitoso':"Se registró correctamente el usuario . Puede ingresar otro usuario"})
+                return render(request,'AsignaYasegura/registrarUsuario.html',{'form': form, 'mjsexitoso':"Se registró correctamente el usuario . Puede ingresar otro usuario",{'usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})}})
             else:
                 form=UsuarioForm()
-                return render(request,'AsignaYasegura/registrarUsuario.html',{'form': form, 'error':"no lleno correctamente la información"})
+                return render(request,'AsignaYasegura/registrarUsuario.html',{'form': form, 'error':"no lleno correctamente la información",'usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})
         else:
             form = UsuarioForm()    
-            return render(request,'AsignaYasegura/registrarUsuario.html',{'form': form})
+            return render(request,'AsignaYasegura/registrarUsuario.html',{'form': form,'usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})
     else:
         return render(request,'AsignaYasegura/nopermitido.html')
     
@@ -109,10 +108,10 @@ def Admin_ejecutar(request):
     if(request.user.is_superuser and request.user.is_authenticated and "administrador"==Usuariorol.objects.filter(usuario=usuario)[0].rol.rol):
         if request.method=='POST' :
             if asignaryasegura():
-                return render(request,'AsignaYasegura/ejecutarAsignacion.html',{'mjsexitoso':'la asignación de cupos se realizó con exito'})
-            return render(request,'AsignaYasegura/ejecutarAsignacion.html',{'error':'se encontraron algunos porblemas por favor ver detalles'})
+                return render(request,'AsignaYasegura/ejecutarAsignacion.html',{'mjsexitoso':'la asignación de cupos se realizó con exito','usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})
+            return render(request,'AsignaYasegura/ejecutarAsignacion.html',{'error':'se encontraron algunos porblemas por favor ver detalles','usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})
         else:
-            return render(request,'AsignaYasegura/ejecutarAsignacion.html')
+            return render(request,'AsignaYasegura/ejecutarAsignacion.html',{'usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})
     else:
         return render(request,'AsignaYasegura/nopermitido.html')
         
@@ -120,7 +119,7 @@ def Admin_ejecutar(request):
 def Digitador_ver(request):
     usuario=Usuario.objects.filter(usuario=request.user)[0]
     if(request.user.is_authenticated and request.user.is_superuser and "administrador"==Usuariorol.objects.filter(usuario=usuario)[0].rol.rol):
-        return render(request,'AsignaYasegura/digitadores.html',{'objects':digitadorescompletodata()})
+        return render(request,'AsignaYasegura/digitadores.html',{'objects':digitadorescompletodata(),'usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})
     else:
         return render(request,'AsignaYasegura/nopermitido.html')
 
@@ -128,7 +127,7 @@ def Digitador_ver(request):
 def Digitador_editar(request):
     usuario=Usuario.objects.filter(usuario=request.user)[0]
     if(request.user.is_superuser and request.user.is_authenticated and "administrador"==Usuariorol.objects.filter(usuario=usuario)[0].rol.rol):
-        return render(request,'AsignaYasegura/digitadores_editar.html',{'objects':digitadorescompletodata()})
+        return render(request,'AsignaYasegura/digitadores_editar.html',{'objects':digitadorescompletodata(),'usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})
 
 #permite editar la informacion/permiso de un digitador
 def Digitador_editarU(request,item):
@@ -144,8 +143,8 @@ def Digitador_editarU(request,item):
             for i in request.POST.getlist('permisos'):
                 Usuariopermisos(usuario=usuario,permiso=Permiso.objects.filter(id_permiso=i)[0]).save()
             form.save()
-            return render(request,'AsignaYasegura/digitadores_editar.html',{'objects':digitadorescompletodata()})
-        return render(request,'AsignaYasegura/digitadores_editarU.html',{'form':form,'tipo_objeto':"digitador"})
+            return render(request,'AsignaYasegura/digitadores_editar.html',{'objects':digitadorescompletodata(),'usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})
+        return render(request,'AsignaYasegura/digitadores_editarU.html',{'form':form,'tipo_objeto':"digitador",'usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})
     else:
         return render(request,'AsignaYasegura/nopermitido.html')
 
@@ -153,7 +152,7 @@ def Digitador_editarU(request,item):
 def Digitador_eliminar(request):
     usuario=Usuario.objects.filter(usuario=request.user)[0]
     if(request.user.is_superuser and request.user.is_authenticated and "administrador"==Usuariorol.objects.filter(usuario=usuario)[0].rol.rol):
-        return render(request,'AsignaYasegura/digitadores_eliminar.html',{'objects':digitadorescompletodata()})
+        return render(request,'AsignaYasegura/digitadores_eliminar.html',{'objects':digitadorescompletodata(),'usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})
     else:
         return render(request,'AsignaYasegura/nopermitido.html')
 
@@ -167,7 +166,7 @@ def Digitador_eliminarU(request,item):
             User.objects.get(username = digitador.usuario.username).delete()
             digitador.delete()
             return redirect('AsignaYasegura:digitador_eliminar')
-        return render(request,'AsignaYasegura/digitadores_eliminar.html',{'objects': digitadorescompletodata(),'object':digitador, 'eliminar': 'True'})
+        return render(request,'AsignaYasegura/digitadores_eliminar.html',{'objects': digitadorescompletodata(),'object':digitador, 'eliminar': 'True','usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})
     else:
         return render(request,'AsignaYasegura/nopermitido.html')
 
@@ -175,12 +174,31 @@ def Digitador_eliminarU(request,item):
 def Admin_editarInfo(request):
     usuario1=Usuario.objects.filter(usuario=request.user)[0]
     if (request.user.is_authenticated and request.user.is_superuser and "administrador"==Usuariorol.objects.filter(usuario=usuario1)[0].rol.rol):
-        form = AdminForm(request.POST or None)
-        print(request.POST)
         if request.method=='POST':
-            Usuario.objects.filter(pk=usuario1.ci).update(ci= request.POST['ci'],nombre =request.POST['nombre'],apellidos = request.POST['apellidos'],usuario = request.user,direccion=request.POST['direccion'],telefono=request.POST['telefono'],correo=request.POST['correo'])
-            #u.set_password('new password')
+            if request.POST['usuario']==request.user.username:
+                Usuario.objects.filter(pk=Usuario.objects.filter(usuario=request.user)[0].ci).update(ci= request.POST['ci'],nombre =request.POST['nombre'],apellidos = request.POST['apellidos'],usuario = request.user,direccion=request.POST['direccion'],telefono=request.POST['telefono'],correo=request.POST['correo'])
+                return redirect('AsignaYasegura:Menu')
+            else:
+                usere=request.user
+                usere.username==request.POST['usuario']
+                usere.save()
+                Usuario.objects.filter(pk=Usuario.objects.filter(usuario=request.user)[0].ci).update(ci= request.POST['ci'],nombre =request.POST['nombre'],apellidos = request.POST['apellidos'],usuario = request.user,direccion=request.POST['direccion'],telefono=request.POST['telefono'],correo=request.POST['correo'])
+                return redirect('AsignaYasegura:Menu')
+        return render(request,'AsignaYasegura/nopermitido.html')
+    else:
+        return render(request,'AsignaYasegura/nopermitido.html')
+
+#permite cambiar la contrasena de un administrador
+def Admin_cambiocontrasena(request):
+    usuario1=Usuario.objects.filter(usuario=request.user)[0]
+    if (request.user.is_authenticated and request.user.is_superuser and "administrador"==Usuariorol.objects.filter(usuario=usuario1)[0].rol.rol):
+        user = authenticate(username=request.POST['username'], password=request.POST['password'])
+        if user is not None:
+            print('ok')
+            user.set_password(request.POST['newpassword'])
             return redirect('AsignaYasegura:Menu')
+        else:
+             return render(request,'AsignaYasegura/menuadministrador.html',{'error':'No se pudo realizar con éxito el cambio de contraseña','usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})
         return render(request,'AsignaYasegura/nopermitido.html')
     else:
         return render(request,'AsignaYasegura/nopermitido.html')
@@ -199,3 +217,7 @@ def Calcular_capacidad(request):
         return render(request,'AsignaYasegura/calcular_capacidad.php')
     else:
         return render(request,'AsignaYasegura/nopermitido.html')
+
+#-----------------------------------------------------VISTAS PADRE DE FAMILIA-------------------------------------------------
+
+#validar cambio de pk de inf de administradores
