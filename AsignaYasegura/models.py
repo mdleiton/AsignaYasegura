@@ -1,4 +1,3 @@
-
 from __future__ import unicode_literals
 from django.contrib.auth.models import User
 from django.db import models,connection
@@ -72,12 +71,13 @@ class Distrito(models.Model):
 class Instruccion(models.Model):
 	id_instruccion= models.AutoField(primary_key=True)
 	tipo = models.CharField(max_length=35)
+	
 	def __str__(self):
 		return 'Instruccion: {}:{}'.format(self.id_instruccion, self.tipo)
 
 #el director puede acceder al sistema. si asi eleminar y director sera otro usuario
 class Director(models.Model):
-	ci= models.CharField(max_length=10)
+	ci= models.CharField(max_length=10,primary_key=True)
 	nombre = models.CharField(max_length=35)
 	apellidos = models.CharField(max_length=35)
 	direccion=models.CharField(max_length=50)
@@ -101,3 +101,36 @@ class CarrerasTecnicas(models.Model):
 	
 	def __str__(self):
 		return 'CarrerasTecnicas: {}:{}'.format(self.idcarrera,  self.nombre)
+
+class PPFF(models.Model):
+	ci= models.CharField(max_length=10,primary_key=True)
+	nombre = models.CharField(max_length=35)
+	apellidos = models.CharField(max_length=35)
+	usuario = models.ForeignKey(User)
+	direccion=models.CharField(max_length=50)
+	telefono=models.CharField(max_length=13)
+	correo=models.EmailField()
+	representados=models.OneToOneField('Estudiante')
+
+	def __str__(self):
+		return 'Padre de familia: {}:{}'.format(self.ci, self.usuario)
+
+class Estudiante(models.Model):
+	ci= models.CharField(max_length=10,primary_key=True)
+	nombre = models.CharField(max_length=35)
+	apellidos = models.CharField(max_length=35)
+	direccion=models.CharField(max_length=50)
+	telefono=models.CharField(max_length=13)
+	correo=models.EmailField()
+	curso=models.OneToOneField(User,null=True,blank=True)
+	paralelo=models.CharField(max_length=13,null=True,blank=True)
+
+	def __str__(self):
+		return 'Estudiante: {}:{}'.format(self.ci, self.nombre)    
+
+class Curso(models.Model):
+	id_curso=models.AutoField(primary_key=True)
+	curso=models.CharField(max_length=35)
+
+	def __str__(self):
+		return 'curso: {}:{}'.format(self.idcurso, self.nombre)    

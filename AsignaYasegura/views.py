@@ -48,9 +48,9 @@ def login(request):
                 auth_login(request, user)
                 return render(request,'AsignaYasegura/menupadre.html')
             else:
-                return render(request,'AsignaYasegura/index.html',{'error':"incorrecto : nombre de usuario , contraseña o tipo de usuario",'usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})
+                return render(request,'AsignaYasegura/index.html',{'error':"incorrecto : nombre de usuario , contraseña o tipo de usuario"})
         else:
-            return render(request,'AsignaYasegura/index.html',{'error':"formulario de inicio de sesión incorrecto",'usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})
+            return render(request,'AsignaYasegura/index.html',{'error':"formulario de inicio de sesión incorrecto"})
     else:
         return render(request,'AsignaYasegura/index.html')
 
@@ -79,7 +79,8 @@ def Menu(request):
 #---------------------------------------------------VISTAS ADMINISTRADOR-------------------------------------------------------------------------
 #permite registrar digitar (informacion personal , permisos)
 def Digitador_registrar(request):
-    if (request.user.is_authenticated and request.user.is_superuser and request.user.is_staff):
+    usuario=Usuario.objects.filter(usuario=request.user)[0]
+    if(request.user.is_superuser and request.user.is_authenticated and "administrador"==Usuariorol.objects.filter(usuario=usuario)[0].rol.rol):
         if request.method == 'POST': 
             form = UsuarioForm(request.POST) 
             if form.is_valid()  and len(request.POST['ci'])>9 and len(request.POST['contrasena'])>8:
@@ -92,7 +93,7 @@ def Digitador_registrar(request):
                 for i in  request.POST.getlist('permisos'):
                     Usuariopermisos(usuario=usuario,permiso=Permiso.objects.filter(id_permiso=i)[0]).save()
                 form=UsuarioForm()
-                return render(request,'AsignaYasegura/registrarUsuario.html',{'form': form, 'mjsexitoso':"Se registró correctamente el usuario . Puede ingresar otro usuario",{'usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})}})
+                return render(request,'AsignaYasegura/registrarUsuario.html',{'form': form, 'mjsexitoso':"Se registró correctamente el usuario . Puede ingresar otro usuario",'usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})
             else:
                 form=UsuarioForm()
                 return render(request,'AsignaYasegura/registrarUsuario.html',{'form': form, 'error':"no lleno correctamente la información",'usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})
@@ -192,32 +193,47 @@ def Admin_editarInfo(request):
 def Admin_cambiocontrasena(request):
     usuario1=Usuario.objects.filter(usuario=request.user)[0]
     if (request.user.is_authenticated and request.user.is_superuser and "administrador"==Usuariorol.objects.filter(usuario=usuario1)[0].rol.rol):
-        user = authenticate(username=request.POST['username'], password=request.POST['password'])
+        if request.user.check_password(request.POST['password']):
+            usere=request.user
+            usere.set_password(request.POST['newpassword'])
+            usere.save()
+            return redirect('AsignaYasegura:Menu')
+        else:
+            return render(request,'AsignaYasegura/menuadministrador.html',{'errorcontrasena':'No se pudo realizar con éxito el cambio de contraseña','usuarioform':AdminForm(instance=usuario1,initial={'usuario':request.user.username})})
+        '''
+        user = authenticate(username=request.user.username, password=request.POST['password'])
         if user is not None:
             print('ok')
             user.set_password(request.POST['newpassword'])
             return redirect('AsignaYasegura:Menu')
         else:
-             return render(request,'AsignaYasegura/menuadministrador.html',{'error':'No se pudo realizar con éxito el cambio de contraseña','usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})
+             
         return render(request,'AsignaYasegura/nopermitido.html')
+        '''
     else:
         return render(request,'AsignaYasegura/nopermitido.html')
 
 #--------------------------------------------------------VISTAS DIGITADOR-----------------------------------------------
+#permite registrar la informacion general de las instituciones
 def Adquisicion_datos(request):
     usuario=Usuario.objects.filter(usuario=request.user)[0]
-    if(request.user.is_superuser and request.user.is_authenticated and "administrador"==Usuariorol.objects.filter(usuario=usuario)[0].rol.rol):
-        return render(request,'AsignaYasegura/Adquisicion_datos.php')
+    if(request.user.is_superuser and request.user.is_authenticated and "digitador"==Usuariorol.objects.filter(usuario=usuario)[0].rol.rol):
+        return render(request,'AsignaYasegura/Adquisicion_datos.php',{'distritos':Distrito.objects.all()})
     else:
         return render(request,'AsignaYasegura/nopermitido.html')
 
+#permite ingresar la informacion de la infraestructura capacidad de la institucion
 def Calcular_capacidad(request):
     usuario=Usuario.objects.filter(usuario=request.user)[0]
-    if(request.user.is_superuser and request.user.is_authenticated and "administrador"==Usuariorol.objects.filter(usuario=usuario)[0].rol.rol):
+    if(request.user.is_superuser and request.user.is_authenticated and "digitador"==Usuariorol.objects.filter(usuario=usuario)[0].rol.rol):
         return render(request,'AsignaYasegura/calcular_capacidad.php')
     else:
         return render(request,'AsignaYasegura/nopermitido.html')
 
+
+
 #-----------------------------------------------------VISTAS PADRE DE FAMILIA-------------------------------------------------
+
+
 
 #validar cambio de pk de inf de administradores
