@@ -65,7 +65,7 @@ def nopermitido(request):
 
 #define el menu inicio para tipo de usuario
 def Menu(request):
-    if request.user.username=="AnonymousUser":
+    if request.user.username:
         usuario=Usuario.objects.filter(usuario=request.user)[0]
         if(request.user.is_superuser and request.user.is_staff and "administrador"==Usuariorol.objects.filter(usuario=usuario)[0].rol.rol):
             return render(request,'AsignaYasegura/menuadministrador.html',{'usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})
@@ -80,7 +80,7 @@ def Menu(request):
 #---------------------------------------------------VISTAS ADMINISTRADOR-------------------------------------------------------------------------
 #permite registrar digitar (informacion personal , permisos)
 def Digitador_registrar(request):
-    if request.user.username=="AnonymousUser":
+    if request.user.username:
         usuario=Usuario.objects.filter(usuario=request.user)[0]
         if(request.user.is_superuser and request.user.is_authenticated and "administrador"==Usuariorol.objects.filter(usuario=usuario)[0].rol.rol):
             if request.method == 'POST': 
@@ -109,7 +109,7 @@ def Digitador_registrar(request):
     
 #permite iniciar la accion asignacion de cupos
 def Admin_ejecutar(request):
-    if request.user.username=="AnonymousUser":
+    if request.user.username:
         usuario=Usuario.objects.filter(usuario=request.user)[0]
         if(request.user.is_superuser and request.user.is_authenticated and "administrador"==Usuariorol.objects.filter(usuario=usuario)[0].rol.rol):
             if request.method=='POST' :
@@ -125,7 +125,7 @@ def Admin_ejecutar(request):
         
 #permite ver una lista de usuarios de tipo digitador
 def Digitador_ver(request):
-    if request.user.username=="AnonymousUser":
+    if request.user.username:
         usuario=Usuario.objects.filter(usuario=request.user)[0]
         if(request.user.is_authenticated and request.user.is_superuser and "administrador"==Usuariorol.objects.filter(usuario=usuario)[0].rol.rol):
             return render(request,'AsignaYasegura/digitadores.html',{'objects':digitadorescompletodata(),'usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})
@@ -136,7 +136,7 @@ def Digitador_ver(request):
 
 #permite ver una lista de usuarios de tipo digitador para luego elegir un digitador para editar su informacion
 def Digitador_editar(request):
-    if request.user.username=="AnonymousUser":
+    if request.user.username:
         usuario=Usuario.objects.filter(usuario=request.user)[0]
         if(request.user.is_superuser and request.user.is_authenticated and "administrador"==Usuariorol.objects.filter(usuario=usuario)[0].rol.rol):
             return render(request,'AsignaYasegura/digitadores_editar.html',{'objects':digitadorescompletodata(),'usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})
@@ -145,7 +145,7 @@ def Digitador_editar(request):
 
 #permite editar la informacion/permiso de un digitador
 def Digitador_editarU(request,item):
-    if request.user.username=="AnonymousUser":
+    if request.user.username:
         usuario1=Usuario.objects.filter(usuario=request.user)[0]
         if (request.user.is_authenticated and request.user.is_superuser and "administrador"==Usuariorol.objects.filter(usuario=usuario1)[0].rol.rol):
             usuario = get_object_or_404(Usuario, pk=item) 
@@ -167,7 +167,7 @@ def Digitador_editarU(request,item):
 
 #permite ver una lista de usuarios de tipo digitador para luego elegir un digitador para eliminar su informacion
 def Digitador_eliminar(request):
-    if request.user.username=="AnonymousUser":
+    if request.user.username:
         usuario=Usuario.objects.filter(usuario=request.user)[0]
         if(request.user.is_superuser and request.user.is_authenticated and "administrador"==Usuariorol.objects.filter(usuario=usuario)[0].rol.rol):
             return render(request,'AsignaYasegura/digitadores_eliminar.html',{'objects':digitadorescompletodata(),'usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})
@@ -178,7 +178,7 @@ def Digitador_eliminar(request):
 
 #permite eliminar la informacion/permiso de un digitador
 def Digitador_eliminarU(request,item):
-    if request.user.username=="AnonymousUser":
+    if request.user.username:
         usuario=Usuario.objects.filter(usuario=request.user)[0]
         if(request.user.is_superuser and request.user.is_authenticated and "administrador"==Usuariorol.objects.filter(usuario=usuario)[0].rol.rol):
             digitador = get_object_or_404(Usuario, pk=item)    
@@ -195,7 +195,7 @@ def Digitador_eliminarU(request,item):
 
 #permite editar la informacion de un administrador
 def Admin_editarInfo(request):
-    if request.user.username=="AnonymousUser":
+    if request.user.username:
         usuario1=Usuario.objects.filter(usuario=request.user)[0]
         if (request.user.is_authenticated and request.user.is_superuser and "administrador"==Usuariorol.objects.filter(usuario=usuario1)[0].rol.rol):
             if request.method=='POST':
@@ -216,7 +216,7 @@ def Admin_editarInfo(request):
 
 #permite cambiar la contrasena de un administrador
 def Admin_cambiocontrasena(request):
-    if request.user.username=="AnonymousUser":
+    if request.user.username:
         usuario1=Usuario.objects.filter(usuario=request.user)[0]
         if (request.user.is_authenticated and request.user.is_superuser and "administrador"==Usuariorol.objects.filter(usuario=usuario1)[0].rol.rol):
             if request.user.check_password(request.POST['password']):
@@ -234,7 +234,7 @@ def Admin_cambiocontrasena(request):
 #--------------------------------------------------------VISTAS DIGITADOR-----------------------------------------------
 #permite registrar la informacion general de las instituciones
 def Adquisicion_datos(request):
-    if request.user.username=="AnonymousUser":
+    if request.user.username:
         usuario=Usuario.objects.filter(usuario=request.user)[0]
         if(request.user.is_superuser and request.user.is_authenticated and "digitador"==Usuariorol.objects.filter(usuario=usuario)[0].rol.rol):
             return render(request,'AsignaYasegura/Adquisicion_datos.php',{'distritos':Distrito.objects.all()})
@@ -245,7 +245,7 @@ def Adquisicion_datos(request):
 
 #permite ingresar la informacion de la infraestructura capacidad de la institucion
 def Calcular_capacidad(request):
-    if request.user.username=="AnonymousUser":
+    if request.user.username:
         usuario=Usuario.objects.filter(usuario=request.user)[0]
         if(request.user.is_superuser and request.user.is_authenticated and "digitador"==Usuariorol.objects.filter(usuario=usuario)[0].rol.rol):
              if request.method=='POST':
@@ -260,7 +260,22 @@ def Calcular_capacidad(request):
         return render_to_response('AsignaYasegura/index.html')
 
 def PPFF_registrar(request):
-    if request.user.username=="AnonymousUser":
+    if not request.user.username:
+        if request.method == 'POST': 
+            form = PPFFForm(request.POST) 
+            if form.is_valid()  and len(request.POST['ci'])>9 and len(request.POST['contrasena'])>8:
+                user=User.objects.create_superuser(username=request.POST['usuario'],email=request.POST['correo'], password=request.POST['contrasena'])
+                np=form.save(commit=False)
+                Usuario( ci= np.ci,nombre = np.nombre,apellidos = np.apellidos,usuario = user,direccion=np.direccion,telefono=np.telefono,correo=np.correo).save()
+                rol=Roles.objects.filter(rol="padre de familia")[0]
+                usuario=Usuario.objects.filter(usuario=user)[0]
+                Usuariorol(usuario=usuario,rol=rol).save()
+                form=PPFFForm()
+                return render(request,'AsignaYasegura/menupadredefamilia.html',{'tipo_objeto':"padre de familia",'form': form, 'mjsexitoso':"Se registró correctamente el usuario . Puede ingresar otro usuario",'usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})
+            else:
+                form=PPFFForm()
+                return render(request,'AsignaYasegura/registrarpadreinicio.html',{'tipo_objeto':"padre de familia",'form': form, 'error':"no lleno correctamente la información",'usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})
+    else:
         usuario=Usuario.objects.filter(usuario=request.user)[0]
         if(request.user.is_superuser and request.user.is_authenticated and "digitador"==Usuariorol.objects.filter(usuario=usuario)[0].rol.rol):
             if request.method == 'POST': 
@@ -282,8 +297,6 @@ def PPFF_registrar(request):
                 return render(request,'AsignaYasegura/registrarpfYes.html',{'tipo_objeto':"padre de familia",'form': form,'usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})
         else:
             return render(request,'AsignaYasegura/nopermitido.html')
-    else:
-        return render_to_response('AsignaYasegura/index.html')
     
 def PPFF_registrarinicio(request):
         if request.method == 'POST': 
