@@ -10,6 +10,8 @@ urlpatterns = [
     url(r'^logout/$', views.logout, name="logout"),
     url(r'^nopermitido/$', views.nopermitido, name="nopermitido"),
     url(r'^menu/$', views.Menu, name="Menu"),
+    url(r'^registrarPPFFinicio/$', views.PPFF_registrarinicio, name="Registrar_PPFFinicio"),
+    
     
     #opciones administrador
     url(r'^registrardigitador/$', views.Digitador_registrar, name="digitador_registrar"),

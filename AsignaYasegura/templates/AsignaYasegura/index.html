@@ -97,7 +97,7 @@
 			<h1 class="form-signin-heading">Iniciar Sesión</h1>
             <br/>
             <label for="inputEmail" class="sr-only">Usuario</label>
-			<input type="text" name="username"   id="user" class="form-control" placeholder="Usuario" >
+			<input type="text" name="username"   id="user" class="form-control" placeholder="Usuario" required>
 			<br />
 			<label for="inputPassword"  class="sr-only">Contraseña</label>
 			<input type="password" name="password" id="pass" class="form-control" placeholder="contrasena" required>
@@ -112,8 +112,14 @@
             </div>
             <br/>
             <br/>
-            <button id="entrar" class="btn btn-danger btn-block" type="submit">Ingresar</button>
-        
+            <div class="row">
+                <div class="col-md-4">
+                <button class="btn btn-danger btn-block btn-sm" type="submit">Ingresar</button>
+                </div>
+                <div class="col-md-8">
+                <a  class="btn btn-primary btn-block btn-sm" href="{% url 'AsignaYasegura:Registrar_PPFFinicio' %}" >Soy padre de familia registrarme</a>
+                </div>
+            </div>
 		</form>       
 {% endif %} 
 {% if error %}
