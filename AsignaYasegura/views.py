@@ -38,13 +38,15 @@ def login(request):
         user = authenticate(username=request.POST['username'], password=request.POST['password'])
         if user is not None:
             usuario=Usuario.objects.filter(usuario=user)[0]
-            if(user.is_superuser and user.is_staff and tipologin==Usuariorol.objects.filter(usuario=usuario)[0].rol.rol):
+            print(tipologin)
+            print(Usuariorol.objects.filter(usuario=usuario)[0].rol.rol)
+            if(user.is_superuser and user.is_staff and tipologin=="administrador" and tipologin==Usuariorol.objects.filter(usuario=usuario)[0].rol.rol):
                 auth_login(request, user)
                 return render(request,'AsignaYasegura/menuadministrador.html',{'usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})
-            elif(user.is_superuser and user.is_staff and tipologin==Usuariorol.objects.filter(usuario=usuario)[0].rol.rol ):
+            elif(user.is_superuser and user.is_staff and tipologin=="digitador" and tipologin==Usuariorol.objects.filter(usuario=usuario)[0].rol.rol ):
                 auth_login(request, user)
                 return render(request,'AsignaYasegura/menudigitador.html')
-            elif((not user.is_superuser or  not user.is_staff) and tipologin==Usuariorol.objects.filter(usuario=usuario)[0].rol.rol ):
+            elif((not user.is_superuser or  not user.is_staff) and tipologin=="padre de familia" and tipologin==Usuariorol.objects.filter(usuario=usuario)[0].rol.rol ):
                 auth_login(request, user)
                 return render(request,'AsignaYasegura/menupadre.html')
             else:
@@ -200,16 +202,6 @@ def Admin_cambiocontrasena(request):
             return redirect('AsignaYasegura:Menu')
         else:
             return render(request,'AsignaYasegura/menuadministrador.html',{'errorcontrasena':'No se pudo realizar con éxito el cambio de contraseña','usuarioform':AdminForm(instance=usuario1,initial={'usuario':request.user.username})})
-        '''
-        user = authenticate(username=request.user.username, password=request.POST['password'])
-        if user is not None:
-            print('ok')
-            user.set_password(request.POST['newpassword'])
-            return redirect('AsignaYasegura:Menu')
-        else:
-             
-        return render(request,'AsignaYasegura/nopermitido.html')
-        '''
     else:
         return render(request,'AsignaYasegura/nopermitido.html')
 
