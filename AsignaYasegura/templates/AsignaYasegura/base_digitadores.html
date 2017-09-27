@@ -15,7 +15,7 @@
     <link rel="shortcut icon" type="image/x-icon" href="{% static 'img/logo.jpg'  %}"/>
     <!-- Bootstrap Core CSS -->
     <link href="{% static 'css/bootstrap.min.css'  %}" rel="stylesheet">
-	<link href="{% static 'css/logeado.css'  %}" rel="stylesheet">
+	     <link rel="stylesheet" href="{% static 'css/nuevo.css'  %}" >
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -175,7 +175,13 @@
 
     <br /><br/><br/>
     <!-- Page Content -->
+  
     <div id="content">
+      <div id=titulo>
+        <img src="{% static 'img/21769831_379017482518757_1986918513_n.png' %}"  align="left">
+        <img src="{% static 'img/21850202_379017485852090_1048059339_n.png' %}" align="right" width="250" height="125">
+        <br><font color="#000066"><strong> {% block contenttitle %}ADQUISICIÓN DE DATOS {% endblock %}</strong></font><br>
+    </div>
         {% block content %} base de plantillas default{% endblock %}
     </div>
     <!-- Footer -->
@@ -187,6 +193,8 @@
                 </div>
             </div>
         </footer>
+
+
 	{% block script %}
 	{% endblock %}
 </body>

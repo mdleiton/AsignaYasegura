@@ -25,11 +25,10 @@
         </ul>
       </li>
 {% endblock %}
-
+{% block contenttitle %} Actualizar registro de {{tipo_objeto}} {% endblock %}
 {% block content %} 
 <div class="container">
     <form class="form-signin" method="post">
-        <H3 class="text-center"> Actualizar registro de {{tipo_objeto}} </H3>
         <div class="text-center" >
             {% if mjs %}
                 {{mjs|capfirst}}

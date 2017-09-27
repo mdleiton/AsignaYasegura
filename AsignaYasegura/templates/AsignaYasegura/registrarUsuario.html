@@ -27,10 +27,10 @@
         </ul>
       </li>
 {% endblock %}
-
+{% block contenttitle %}Registro de  digitador {% endblock %}
 {% block content %} 
 <div class="container">
-   <H2 class="text-center">Registro de  digitador </H2>
+   
     <form class="form-signin" action="{% url 'AsignaYasegura:digitador_registrar' %}" method="post">
         <div class="text-center" >
             {% if mjsexitoso %}

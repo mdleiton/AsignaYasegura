@@ -1,4 +1,4 @@
-{% extends "AsignaYasegura/base.html" %}
+{% extends "AsignaYasegura/base_digitadores.html" %}
 {% load static %}
 {% block title %} Adquisición de datos {% endblock %} 
 
@@ -119,11 +119,6 @@
 		}
 	}
 </script>    
-	<div id=titulo>
-    	<img src="{% static 'img/21769831_379017482518757_1986918513_n.png' %}"  align="left">
-        <img src="{% static 'img/21850202_379017485852090_1048059339_n.png' %}" align="right" width="250" height="125">
-		<br><font color="#000066"><strong>ADQUISICIÓN DE DATOS</strong></font><br>
-    </div>
     <br>
     <form action="{% url 'AsignaYasegura:calcular_capacidad' %}" method=get>
 		<div class="row">
