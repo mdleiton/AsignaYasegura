@@ -25,5 +25,6 @@ urlpatterns = [
     #opciones digitador
 	url(r'^adquisiciondatos/$', views.Adquisicion_datos, name="Adquisicion_datos"),
 	url(r'^calcularcapacidad/$', views.Calcular_capacidad, name="calcular_capacidad"),
-
+    url(r'^registrarPPFF/$', views.PPFF_registrar, name="Registrar_PPFF"),
+    
 ]

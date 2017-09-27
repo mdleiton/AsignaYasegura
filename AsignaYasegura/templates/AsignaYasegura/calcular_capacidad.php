@@ -1,25 +1,33 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<title>Medidas</title>
-        <LINK rel=stylesheet type="text/css" href="nuevo.css">
-        <div id=titulo>
-        	<img src="imagenes/21769831_379017482518757_1986918513_n.png" align="left">
-            <img src="imagenes/21850202_379017485852090_1048059339_n.png" align="right" width="250" height="125">
-			<br><font color="#000066"><strong>Medidas de las aulas de la Institución</strong></font><br>
-    	</div>       
-	</head>
-    <br><br>
-    <body>
+<{% extends "AsignaYasegura/base_digitadores.html" %}
+{% load static %}
+{% block title %} Calcular capacidad {% endblock %} 
+
+{% block menu%}
+      <li ><a href="{% url 'AsignaYasegura:Menu' %}">Información general</a></li>
+      <li  class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Instituciones <b class="caret"></b></a>
+        <ul class="dropdown-menu">
+           <li class="active"><a href="{% url 'AsignaYasegura:Adquisicion_datos' %}">Registrar Instituciones</a></li>
+           <li><a href="#">Editar Informacion Instituciones</a></li>
+          <li><a href="#">Eliminar Instituciones</a></li>
+        </ul>
+      </li>
+      <li class="active"><a href="#">Registrar capacidad institución</a></li>
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Estudiantes <b class="caret"></b></a>
+        <ul class="dropdown-menu">
+           <li><a href="{% url 'AsignaYasegura:Registrar_PPFF' %}">Registrar Padres de Familia</a></li>
+           <li><a href="#">Registrar estudiantes</a></li>
+        </ul>
+      </li>
+{% endblock %}
+{% block contenttitle %} Calcular información {% endblock %}
+{% block content %} 
 		<?php
-		if(empty($_GET['nombreescuela']) || empty($_GET['distrito']) || empty($_GET['direccion']) || empty($_GET['aulas']) || empty($_GET['especializacion'])|| empty($_GET['tipo']) || empty($_GET['tipob']) || empty($_GET['nombrerector']) || empty($_GET['cedularector']) || empty($_GET['numerorector']) || empty($_GET['correorector']) || empty($_GET['jornada']))
-		{
+		if(empty($_GET['nombreescuela']) || empty($_GET['distrito']) || empty($_GET['direccion']) || empty($_GET['aulas']) || empty($_GET['especializacion'])|| empty($_GET['tipo']) || empty($_GET['tipob']) || empty($_GET['nombrerector']) || empty($_GET['cedularector']) || empty($_GET['numerorector']) || empty($_GET['correorector']) || empty($_GET['jornada'])){
  			echo"</br>Faltan datos<br>";
  			echo"<a href=javascript:history.back()>Regresar</a>";
-		}
-		else
-		{
+		}else{
  			$nombreescuela=$_GET['nombreescuela'];
  			$distrito=$_GET['distrito'];
  			$direccion=$_GET['direccion'];
@@ -69,5 +77,4 @@
     	<div id=pdp>
     		
     	</div>
-	</body>
-</html>
+{% endblock %}

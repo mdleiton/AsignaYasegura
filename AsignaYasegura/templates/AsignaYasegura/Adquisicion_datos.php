@@ -16,7 +16,7 @@
       <li class="dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Estudiantes <b class="caret"></b></a>
         <ul class="dropdown-menu">
-           <li><a href="#">Registrar Padres de Familia</a></li>
+           <li><a href="{% url 'AsignaYasegura:Registrar_PPFF' %}">Registrar Padres de Familia</a></li>
            <li><a href="#">Registrar estudiantes</a></li>
         </ul>
       </li>
@@ -24,8 +24,21 @@
 
 {% block content %} 
 <script>
-	function controla(f){
+	function agregar(f){
+		var primaria=document.getElementById("primaria").value;
+		var secundaria=document.getElementById("secundaria").value;
 		if(f.checked==false){
+			document.getElementById("primaria").value = secundaria;
+		}else{
+			document.getElementById("primaria").value = primaria+","+secundaria;
+		}
+	}
+
+	function controla(f){
+		var primaria=document.getElementById("primaria").value;
+		var secundaria=document.getElementById("secundaria").value;
+		if(f.checked==false){
+			document.getElementById("primaria").value = primaria;
 			document.getElementById('contr1').checked=false;
 			document.getElementById('contr1').disabled=true;
 			document.getElementById('contr2').checked=false;
@@ -63,6 +76,7 @@
 			document.getElementById('contr18').checked=false;
 			document.getElementById('contr18').disabled=true;
 		}else{
+			document.getElementById("primaria").value = primaria+","+secundaria;	
 			document.getElementById('contr1').disabled=false;
 			document.getElementById('contr2').disabled=false;
 			document.getElementById('contr3').disabled=false;
@@ -120,7 +134,8 @@
 	}
 </script>    
     <br>
-    <form action="{% url 'AsignaYasegura:calcular_capacidad' %}" method=get>
+    <form action="{% url 'AsignaYasegura:calcular_capacidad' %}" method=post>
+    	 {% csrf_token %}
 		<div class="row">
 			<div class="col-md-5 col-md-offset-1 "  id=izquierda style="float:left">
 				<div>
@@ -143,8 +158,8 @@
 						    	</td>
 						    </tr>
 							<tr><td>Dirección:</td><td><input type=text name=direccion size="35"></td></tr>
-				            <tr><td>Tipo de instrucción:</td><td>Primaria <input type="checkbox" name="tipo[]" value="primaria"  required >
-				            	Secundaria <input type="checkbox" name="tipo[]" value="secundaria" onClick="controla(this)" ></td></tr>
+				            <tr><td>Tipo de instrucción:</td><td>Primaria <input id="primaria" type="checkbox" name="tipo[]" value="primaria" onClick="agregar(this)"  >
+				            	Secundaria <input id="secundaria" type="checkbox" name="tipo[]" value="secundaria" onClick="controla(this)" ></td></tr>
 				        </table>
 				    </div>
 				    <div id=oferta>

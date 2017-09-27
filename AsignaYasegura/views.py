@@ -218,14 +218,43 @@ def Adquisicion_datos(request):
 def Calcular_capacidad(request):
     usuario=Usuario.objects.filter(usuario=request.user)[0]
     if(request.user.is_superuser and request.user.is_authenticated and "digitador"==Usuariorol.objects.filter(usuario=usuario)[0].rol.rol):
-        return render(request,'AsignaYasegura/calcular_capacidad.php')
+         if request.method=='POST':
+            if request.POST['tipo[]']=="primaria":
+                print(request.POST['nombreescuela'],request.POST['distrito'],request.POST['direccion'],request.POST['aulas'],request.POST['tipo[]'],request.POST['nombrerector'],request.POST['cedularector'],request.POST['numerorector'],request.POST['correorector'],request.POST['jornada'])
+            else:
+                print(request.POST['nombreescuela'],request.POST['distrito'],request.POST['direccion'],request.POST['aulas'],request.POST['especializacion[]'],request.POST['tipo[]'],request.POST['tipob[]'],request.POST['nombrerector'],request.POST['cedularector'],request.POST['numerorector'],request.POST['correorector'],request.POST['jornada'])
+            return render(request,'AsignaYasegura/calcular_capacidad.php')
     else:
         return render(request,'AsignaYasegura/nopermitido.html')
 
-
+def PPFF_registrar(request):
+    usuario=Usuario.objects.filter(usuario=request.user)[0]
+    if(request.user.is_superuser and request.user.is_authenticated and "digitador"==Usuariorol.objects.filter(usuario=usuario)[0].rol.rol):
+        if request.method == 'POST': 
+            form = PPFFForm(request.POST) 
+            if form.is_valid()  and len(request.POST['ci'])>9 and len(request.POST['contrasena'])>8:
+                user=User.objects.create_superuser(username=request.POST['usuario'],email=request.POST['correo'], password=request.POST['contrasena'])
+                np=form.save(commit=False)
+                Usuario( ci= np.ci,nombre = np.nombre,apellidos = np.apellidos,usuario = user,direccion=np.direccion,telefono=np.telefono,correo=np.correo).save()
+                rol=Roles.objects.filter(rol="padre de familia")[0]
+                usuario=Usuario.objects.filter(usuario=user)[0]
+                Usuariorol(usuario=usuario,rol=rol).save()
+                form=PPFFForm()
+                return render(request,'AsignaYasegura/registrarpfYes.html',{'tipo_objeto':"padre de familia",'form': form, 'mjsexitoso':"Se registró correctamente el usuario . Puede ingresar otro usuario",'usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})
+            else:
+                form=PPFFForm()
+                return render(request,'AsignaYasegura/registrarpfYes.html',{'tipo_objeto':"padre de familia",'form': form, 'error':"no lleno correctamente la información",'usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})
+        else:
+            form = PPFFForm()    
+            return render(request,'AsignaYasegura/registrarpfYes.html',{'tipo_objeto':"padre de familia",'form': form,'usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})
+    else:
+        return render(request,'AsignaYasegura/nopermitido.html')
+    
+    
 
 #-----------------------------------------------------VISTAS PADRE DE FAMILIA-------------------------------------------------
 
 
 
 #validar cambio de pk de inf de administradores
+#validar username
