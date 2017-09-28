@@ -44,9 +44,9 @@ def login(request):
             elif(user.is_superuser and user.is_staff and tipologin=="digitador" and tipologin==Usuariorol.objects.filter(usuario=usuario)[0].rol.rol ):
                 auth_login(request, user)
                 return render(request,'AsignaYasegura/menudigitador.html')
-            elif((not user.is_superuser or  not user.is_staff) and tipologin=="padre de familia" and tipologin==Usuariorol.objects.filter(usuario=usuario)[0].rol.rol ):
+            elif(user.is_superuser and user.is_staff and tipologin=="padre" and "padre de familia"==Usuariorol.objects.filter(usuario=usuario)[0].rol.rol ):
                 auth_login(request, user)
-                return render(request,'AsignaYasegura/menupadre.html')
+                return render(request,'AsignaYasegura/menupadredefamilia.html')
             else:
                 return render(request,'AsignaYasegura/index.html',{'error':"incorrecto : nombre de usuario , contraseña o tipo de usuario"})
         else:
@@ -72,7 +72,7 @@ def Menu(request):
         elif(request.user.is_superuser and request.user.is_staff and "digitador"==Usuariorol.objects.filter(usuario=usuario)[0].rol.rol ):
             return render(request,'AsignaYasegura/menudigitador.html')
         elif(request.user.is_superuser and request.user.is_staff and "padre de familia"==Usuariorol.objects.filter(usuario=usuario)[0].rol.rol ):
-            return render(request,'AsignaYasegura/menupadre.html')  
+            return render(request,'AsignaYasegura/menupadredefamilia.html')  
     else:
          return render_to_response('AsignaYasegura/index.html')
 
@@ -270,11 +270,12 @@ def PPFF_registrar(request):
                 rol=Roles.objects.filter(rol="padre de familia")[0]
                 usuario=Usuario.objects.filter(usuario=user)[0]
                 Usuariorol(usuario=usuario,rol=rol).save()
-                form=PPFFForm()
-                return render(request,'AsignaYasegura/menupadredefamilia.html',{'tipo_objeto':"padre de familia",'form': form, 'mjsexitoso':"Se registró correctamente el usuario . Puede ingresar otro usuario",'usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})
+                user1 = authenticate(username=request.POST['usuario'], password=request.POST['contrasena'])
+                auth_login(request, user1)
+                return render(request,'AsignaYasegura/menupadredefamilia.html',{'tipo_objeto':"padre de familia", 'mjsexitoso':"Se registró correctamente el usuario . Puede ingresar otro usuario"})
             else:
                 form=PPFFForm()
-                return render(request,'AsignaYasegura/registrarpadreinicio.html',{'tipo_objeto':"padre de familia",'form': form, 'error':"no lleno correctamente la información",'usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})
+                return render(request,'AsignaYasegura/registrarpadreinicio.html',{'tipo_objeto':"padre de familia",'form': form, 'error':"no lleno correctamente la información"})
     else:
         usuario=Usuario.objects.filter(usuario=request.user)[0]
         if(request.user.is_superuser and request.user.is_authenticated and "digitador"==Usuariorol.objects.filter(usuario=usuario)[0].rol.rol):
