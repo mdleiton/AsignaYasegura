@@ -269,8 +269,23 @@ def Calcular_capacidad(request):
         usuario=Usuario.objects.filter(usuario=request.user)[0]
         if(request.user.is_superuser and request.user.is_authenticated and "digitador"==Usuariorol.objects.filter(usuario=usuario)[0].rol.rol):
              if request.method=='POST':
-                print(request.POST.getlist('tipo[]'),request.POST['nombreescuela'],request.POST['distrito'],request.POST['direccion'],request.POST['aulas'],request.POST['nombrerector'],request.POST['cedularector'],request.POST['numerorector'],request.POST['correorector'],request.POST['jornada'])
-                print(request.POST['nombreescuela'],request.POST['distrito'],request.POST['direccion'],request.POST['aulas'],request.POST.getlist('especializacion[]'),request.POST.getlist('tipo[]'),request.POST.getlist('tipob[]'),request.POST['nombrerector'],request.POST['cedularector'],request.POST['numerorector'],request.POST['correorector'],request.POST['jornada'])
+                director=director(ci=request.POST['cedularector'],nombre=request.POST['nombrerector'],apellidos=request.POST['apellidorector'],telefono=request.POST['numerorector'],correo=request.POST['correorector'])
+                director.save()
+                distrito=Distrito.objects.filter(codigo=request.POST['distrito'].split('-')[0])[0]
+                print(director,distrito)
+                instituto=Institucion(distrito=distrito,nombre=request.POST['nombreescuela'],jornada=request.POST['jornada'],direccion=request.POST['direccion'],representante=director,naulas=request.POST['aulas'])
+                for i in request.POST.getlist('tipo[]'):
+                    instruccion=Instruccion.objects.filter(tipo=i)[0]
+                    instituto.instruccion.add(instruccion)
+                    if i=="secundaria":
+                        for j in request.POST.getlist('tipob[]'):
+                            oa=OfertaAcademica.objects.filter(nombre=j)[0]
+                            instituto.ofertaacademica.add(oa)
+                            if j=="Bachillerato Tecnico":
+                                for k in request.POST.getlist('especializacion[]'):
+                                    ct=CarrerasTecnicas.objects.filter(nombre=k)[0]
+                                    instituto.carreras.add(ct)
+                instituto.save()
                 return render(request,'AsignaYasegura/calcular_capacidad.php')
         else:
             return render(request,'AsignaYasegura/nopermitido.html')
@@ -309,3 +324,5 @@ def PPFF_registrar(request):
 #validar cambio de pk de inf de administradores
 #validar username
 #validar en los registros que username sea unico
+#el director va a tener acceso al sistema?
+#

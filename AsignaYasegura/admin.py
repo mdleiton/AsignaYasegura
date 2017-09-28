@@ -4,7 +4,6 @@ from __future__ import unicode_literals
 from django.contrib import admin
 from AsignaYasegura.models import *
 
-
 admin.site.register(Roles)
 admin.site.register(Usuario)
 admin.site.register(Usuariorol)
@@ -13,4 +12,7 @@ admin.site.register(Director)
 admin.site.register(Distrito)
 admin.site.register(Institucion)
 admin.site.register(Permiso)
-admin.site.register(Usuariopermisos)
+admin.site.register(Estudiante)
+admin.site.register(Curso)
+admin.site.register(Instruccion)
+admin.site.register(OfertaAcademica)

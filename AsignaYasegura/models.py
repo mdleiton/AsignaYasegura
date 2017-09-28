@@ -49,6 +49,7 @@ class Usuariopermisos(models.Model):
 
 class Institucion(models.Model):
 	id_institucion= models.AutoField(primary_key=True)
+	nombre=models.CharField(max_length=50)
 	distrito = models.ForeignKey('Distrito')
 	direccion = models.CharField(max_length=50)
 	representante=models.OneToOneField('Director')
@@ -56,6 +57,7 @@ class Institucion(models.Model):
 	ofertaacademica=models.ManyToManyField('OfertaAcademica')
 	instruccion=models.ManyToManyField('Instruccion')
 	carreras=models.ManyToManyField('CarrerasTecnicas')
+	jornadas=models.CharField(max_length=50)
 
 	def __str__(self):
 		return 'Institucion: {}:{}'.format(self.nombre, self.distrito)
@@ -80,7 +82,6 @@ class Director(models.Model):
 	ci= models.CharField(max_length=10,primary_key=True)
 	nombre = models.CharField(max_length=35)
 	apellidos = models.CharField(max_length=35)
-	direccion=models.CharField(max_length=50)
 	telefono=models.CharField(max_length=13)
 	correo=models.EmailField()
 

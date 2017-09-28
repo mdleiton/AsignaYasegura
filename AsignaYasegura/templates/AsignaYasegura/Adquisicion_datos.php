@@ -136,7 +136,7 @@
 				        		<td>Distrito:</td>
 				        		<td><select id="optionlist" name=distrito>
 				        		{% for distrito in distritos%}
-				        			<option value="{{distrito.codigo}} - {{distrito.nombre}}">{{distrito.codigo}} - {{distrito.nombre}}</option>
+				        			<option value="{{distrito.codigo}}-{{distrito.nombre}}">{{distrito.codigo}} - {{distrito.nombre}}</option>
 				        		{% empty %}
 						        	<option value=" No existe distritos registrados en la base de datos."> No existe informacion que presentar.</option>
 						     	{% endfor %}
@@ -177,7 +177,8 @@
 		      	<div id=rector>
 		        	<br><font color="#CC0000"><strong>Datos del representante legal de la Institución</strong></font><br><br>
 		            <table>
-		            	<tr><td>Nombre de el/la director/a:</td><td><input type=text name=nombrerector size="40" required></td></tr>
+		            	<tr><td>Nombres de el/la director/a:</td><td><input type=text name=nombrerector size="40" required></td></tr>
+		            	<tr><td>Apellidos de el/la director/a:</td><td><input type=text name=apellidorector size="40" required></td></tr>
 		                <tr><td>Número de cédula:</td><td><input type=text name=cedularector required></td></tr>
 		                <tr><td>Número de teléfono:</td><td><input type=text name=numerorector required></td></tr>
 		                <tr><td>Correo electrónico:</td><td><input type=text name=correorector size="40" required></td></tr>
@@ -187,7 +188,7 @@
 			    	<br><font color="#CC0000"><strong>Información complementaria</strong></font><br><br>
 			        <table>
 			        	<tr><td>Número de aulas disponibles:</td><td><input type=value name=aulas required></td></tr>
-			            <tr><td>Jornada vespertina:</td><td>Sí<input type="radio" name="jornada" value="si" ></td><td>No<input type="radio" name="jornada" value="No"></td></tr>
+			            <tr><td>Jornada vespertina:</td><td>Sí<input type="radio" name="jornada" value="vespertina" ></td><td>No<input type="radio" name="jornada" value="matutina"></td></tr>
 			        </table>
 			        <br><br>
 			    </div>

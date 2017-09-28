@@ -30,3 +30,5 @@ INSERT INTO AsignaYasegura_roles(rol,descripcion) values('digitador','registra l
 INSERT INTO AsignaYasegura_permiso(permiso,descripcion) VALUES ( 'Registrar estudiantes','permite registrar padres de familias de escasos recursos');
 INSERT INTO AsignaYasegura_permiso(permiso,descripcion) VALUES ( 'Registrar instituciones','permite registrar instituciones/capacidades de las escuelas');
 INSERT INTO AsignaYasegura_permiso(permiso,descripcion) VALUES ( 'Inspecciones','permite inspeccionar instituciones de las escuelas');
+INSERT INTO AsignaYasegura_instruccion(tipo) VALUES ( 'primaria');
+INSERT INTO AsignaYasegura_instruccion(tipo) VALUES ( 'secundaria');
