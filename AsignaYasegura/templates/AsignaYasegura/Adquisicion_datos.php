@@ -24,21 +24,8 @@
 
 {% block content %} 
 <script>
-	function agregar(f){
-		var primaria=document.getElementById("primaria").value;
-		var secundaria=document.getElementById("secundaria").value;
-		if(f.checked==false){
-			document.getElementById("primaria").value = secundaria;
-		}else{
-			document.getElementById("primaria").value = primaria+","+secundaria;
-		}
-	}
-
 	function controla(f){
-		var primaria=document.getElementById("primaria").value;
-		var secundaria=document.getElementById("secundaria").value;
 		if(f.checked==false){
-			document.getElementById("primaria").value = primaria;
 			document.getElementById('contr1').checked=false;
 			document.getElementById('contr1').disabled=true;
 			document.getElementById('contr2').checked=false;
@@ -75,8 +62,7 @@
 			document.getElementById('contr17').disabled=true;
 			document.getElementById('contr18').checked=false;
 			document.getElementById('contr18').disabled=true;
-		}else{
-			document.getElementById("primaria").value = primaria+","+secundaria;	
+		}else{	
 			document.getElementById('contr1').disabled=false;
 			document.getElementById('contr2').disabled=false;
 			document.getElementById('contr3').disabled=false;
@@ -158,7 +144,7 @@
 						    	</td>
 						    </tr>
 							<tr><td>Dirección:</td><td><input type=text name=direccion size="35"></td></tr>
-				            <tr><td>Tipo de instrucción:</td><td>Primaria <input id="primaria" type="checkbox" name="tipo[]" value="primaria" onClick="agregar(this)"  >
+				            <tr><td>Tipo de instrucción:</td><td>Primaria <input id="primaria" type="checkbox" name="tipo[]" value="primaria"  >
 				            	Secundaria <input id="secundaria" type="checkbox" name="tipo[]" value="secundaria" onClick="controla(this)" ></td></tr>
 				        </table>
 				    </div>
