@@ -17,18 +17,12 @@
         </ul>
       </li>
       <li><a href="{% url 'AsignaYasegura:Admin_ejecutar' %}">Ejecutar Asignación de cupos</a></li>
-      <li class="dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Casos especiales <b class="caret"></b></a>
-        <ul class="dropdown-menu">
-          <li><a href="#">Por zonas</a></li>
-          <li><a href="#">Por regiones</a></li>
-          <li><a href="#">General</a></li>
-        </ul>
-      </li>
+   
+    <li><a href="{% url 'AsignaYasegura:Admin_problemasasignacion' %}">Problemas asociados a la asignación</a></li>
 {% endblock %}
 
 {%block encabezadotablas%}
-       <th>N°</th>
+        <th>N°</th>
         <th>DNI </th>
         <th>Nombres</th>
         <th>Apellidos</th>

@@ -137,12 +137,29 @@ class Aula(models.Model):
 	paralelov=models.CharField(max_length=35)
 	capacidadpupitres=models.IntegerField()
 
+	def __str__(self):
+		return 'Aula: {}:{}'.format(self.id_aula, self.capacidadmax)
+
 class AulaInstitucion(models.Model):
 	id_aulaInstitucion=models.AutoField(primary_key=True)
 	aula=models.ForeignKey('Aula')
 	institucion=models.ForeignKey('Institucion')
 
+	def __str__(self):
+		return 'Aula-institucion: {}:{}'.format(self.aula, self.institucion)
+
 class CapacidadEstandar(models.Model):
 	id_capacidad=models.AutoField(primary_key=True)
 	capacidad=models.IntegerField()
 	nivelestudio=models.CharField(max_length=35)
+
+	def __str__(self):
+		return 'CapacidadEstandar: {}:{}'.format(self.nivelestudio, self.capacidad)
+
+class ProblemasAsignacion(models.Model):
+	id_problemas=models.AutoField(primary_key=True)
+	estudiante=models.ForeignKey('Estudiante')
+	problema=models.CharField(max_length=40)	
+
+	def __str__(self):
+		return 'Problemas asignacion: {}:{}'.format(self.estudiante, self.problema)

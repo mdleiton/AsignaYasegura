@@ -14,14 +14,8 @@
         </ul>
       </li>
       <li class="active"><a href="{% url 'AsignaYasegura:Admin_ejecutar' %}">Ejecutar Asignación de cupos</a></li>
-      <li class="dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Casos especiales <b class="caret"></b></a>
-        <ul class="dropdown-menu">
-          <li><a href="#">Por zonas</a></li>
-          <li><a href="#">Por regiones</a></li>
-          <li><a href="#">General</a></li>
-        </ul>
-      </li>
+   
+    <li><a href="{% url 'AsignaYasegura:Admin_problemasasignacion' %}">Problemas asociados a la asignación</a></li>
 {% endblock %}
 {% block contenttitle %} Ejecutar procesos {% endblock %}
 {% block content %} 
@@ -41,22 +35,42 @@
       <br/>
       <div class="row">
         <div class="col-md-offset-2 col-md-6 text-left">
-          <label>Cantidad de estudiantes registrados: {{estudiantes}}</label>
+          <label>Cantidad de estudiantes registrados: </label>
+        </div>
+        <div class="col-md-2 text-right">
+           <label>{{estudiantes}} </label>
         </div>
       </div>
       <div class="row">
         <div class="col-md-offset-2 col-md-6 text-left">
-          <label>Cantidad de Instituciones registrados: {{instituciones}}</label>
+          <label>Cantidad de estudiantes especiales registrados: </label>
+        </div>
+        <div class="col-md-2 text-right">
+           <label> 0 </label>
         </div>
       </div>
       <div class="row">
         <div class="col-md-offset-2 col-md-6 text-left">
-          <label>Total de instituciones (Distrito): {{insttotal}}</label>
+          <label>Cantidad de Instituciones registrados:</label>
+        </div>
+        <div class="col-md-2 text-right">
+           <label>{{instituciones}} </label>
         </div>
       </div>
       <div class="row">
         <div class="col-md-offset-2 col-md-6 text-left">
-          <label>Cantidad de cupos disponibles: {{cupos}}</label>
+          <label>Total de instituciones (Distrito): </label>
+        </div>
+        <div class="col-md-2 text-right">
+           <label>{{insttotal}} </label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-offset-2 col-md-6 text-left">
+          <label>Cantidad de cupos disponibles: </label>
+        </div>
+        <div class="col-md-2 text-right">
+           <label>{{cupos}} </label>
         </div>
       </div>
       <br/>

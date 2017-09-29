@@ -145,8 +145,8 @@ def Admin_ejecutar(request):
                 est=Estudiante.objects.all().count()
                 inst=Institucion.objects.all().count()
                 insttotal=Distrito.objects.all().aggregate(Sum('cantidadinstituciones'))['cantidadinstituciones__sum']
-                print(int(Aula.objects.all().aggregate(Sum('capacidadm'))['capacidadm__sum']))
-                cupos=Aula.objects.all().aggregate(Sum('capacidadm'))['capacidadm__sum']+Aula.objects.all().aggregate(Sum('capacidadv'))['capacidadv__sum']
+                #cupos=Aula.objects.all().aggregate(Sum('capacidadm'))['capacidadm__sum']+Aula.objects.all().aggregate(Sum('capacidadv'))['capacidadv__sum']
+                cupos=0
                 return render(request,'AsignaYasegura/ejecutarAsignacion.html',{'estudiantes':est,'instituciones':inst,'insttotal':insttotal,'cupos':cupos,'usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})
         else:
             return render(request,'AsignaYasegura/nopermitido.html')
@@ -234,7 +234,7 @@ def Admin_editarInfo(request):
                     return redirect('AsignaYasegura:Menu')
                 else:
                     usere=request.user
-                    usere.username==request.POST['usuario']
+                    usere.username=request.POST['usuario']
                     usere.save()
                     Usuario.objects.filter(pk=Usuario.objects.filter(usuario=request.user)[0].ci).update(ci= request.POST['ci'],nombre =request.POST['nombre'],apellidos = request.POST['apellidos'],usuario = request.user,direccion=request.POST['direccion'],telefono=request.POST['telefono'],correo=request.POST['correo'])
                     return redirect('AsignaYasegura:Menu')
@@ -260,6 +260,19 @@ def Admin_cambiocontrasena(request):
             return render(request,'AsignaYasegura/nopermitido.html')
     else:
         return render_to_response('AsignaYasegura/index.html')
+
+#presenta todos los problemas suscitados en la asignacion de cupos
+def Admin_problemasasignacion(request):
+    if request.user.username:
+        usuario1=Usuario.objects.filter(usuario=request.user)[0]
+        if (request.user.is_authenticated and request.user.is_superuser and "administrador"==Usuariorol.objects.filter(usuario=usuario1)[0].rol.rol):
+            problemas=ProblemasAsignacion.objects.all()
+            return render(request,'AsignaYasegura/problemasAsignacion.html',{'objects':problemas,'usuarioform':AdminForm(instance=usuario1,initial={'usuario':request.user.username})})
+        else:
+            return render(request,'AsignaYasegura/nopermitido.html')
+    else:
+        return render_to_response('AsignaYasegura/index.html')
+
 
 #--------------------------------------------------------VISTAS DIGITADOR-----------------------------------------------
 #permite registrar la informacion general de las instituciones
@@ -334,11 +347,8 @@ def PPFF_registrar(request):
 #validar cambio de pk de inf de administradores
 #validar username
 #validar en los registros que username sea unico
-#el director va a tener acceso al sistema?
 #SE CAE EL SISTEMA CUANDO LO ACTUALIZA DESPUES DE INICIAR SESION
-#AGREGAR BARRA EN INSTITUCION INICIO
-#formularios registrar digtador: tildes,
-#permiso padres/estudiantes
+
 #admin : agregar opcion casos especiales: agregar informacion sobre discapacidad
 #admin Ñ mantener casos sobre problemas
 #registrar institucion programacion:si es si es ambos 

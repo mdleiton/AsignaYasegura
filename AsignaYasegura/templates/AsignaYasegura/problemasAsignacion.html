@@ -1,0 +1,64 @@
+{% extends "AsignaYasegura/base.html" %}
+{% load static %}
+
+{% block title %} Problemas asociados a la asignación de cupos {% endblock %} 
+
+{% block menu%}
+      <li ><a href="{% url 'AsignaYasegura:Menu' %}">Avance de Procesos</a></li>
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Digitadores <b class="caret"></b></a>
+        <ul class="dropdown-menu">
+           <li><a href="{% url 'AsignaYasegura:digitador_registrar' %}">Registrar Digitador</a></li>
+            <li><a href="/verdigitador/">Ver Información/permisos digitadores</a></li>
+            <li><a href="{% url 'AsignaYasegura:digitador_editar' %}" >Editar Información/permisos digitadores</a></li>
+            <li><a href="{% url 'AsignaYasegura:digitador_eliminar' %}">Eliminar digitador</a></li>
+        </ul>
+      </li>
+      <li ><a href="{% url 'AsignaYasegura:Admin_ejecutar' %}">Ejecutar Asignación de cupos</a></li>
+   
+    <li class="active"><a href="{% url 'AsignaYasegura:Admin_problemasasignacion' %}">Problemas asociados a la asignación</a></li>
+{% endblock %}
+
+{% block contenttitle %}<h2> Problemas asociados a la asignación de cupos</h2>  {% endblock %}
+
+{% block content %} 
+<div class="row text-center">
+  <div class="container">
+    <div class="table-responsive text-center">
+      <table id="productos" class="table table-striped table-hover ">
+        <thead class="text-center">
+          <tr>
+            <th>N°</th>
+            <th>DNI </th>
+            <th>Nombres</th>
+            <th>Apellidos</th>
+            <th>Representante</th>
+            <th>Teléfono</th>
+            <th>Problema</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for registro in objects %}
+          <tr>
+              <td>{{ forloop.counter   }}</td>
+              <td>{{ registro.estudiante.ci      }}</td>
+              <td>{{ registro.estudiante.nombre   }}</td>
+              <td>{{ registro.estudiante.apellidos}}</td>
+              <td>{{ registro.estudiante.representante}}</td >
+              <td>{{ registro.estudiante.telefono }}</td>
+              <td>{{ registro.problema}}</td>
+              
+          </tr>
+        {% empty %}
+          <tr>
+            <td>.</td>
+            <td>No existe informacion que presentar..</td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
