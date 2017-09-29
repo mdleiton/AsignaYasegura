@@ -34,10 +34,41 @@
     <form class="form-signin" action="{% url 'AsignaYasegura:digitador_registrar' %}" method="post">
         <div class="text-center" >
             {% if mjsexitoso %}
-                {{mjsexitoso|capfirst}}
+              <div class="modal fade" id="mostrarmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+               <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                     <div class="modal-header">
+                      <button href="{% url 'AsignaYasegura:digitador_registrar' %}" type="button" class="close" data-dismiss="modal" aria-label="close"><span aria-hidden="true">&times;</span></button>
+                        <h3 class="modal-title" id="myModalLabel">Estado registro digitador</h3>
+                  </div>
+                  <div class="modal-body">
+                        <h4>  {{mjsexitoso|capfirst}}</h4>   
+                  </div>
+                  <div class="modal-footer">
+                      <a data-dismiss="modal" class="btn btn-danger">Cerrar</a>
+                  </div>
+                 </div>
+               </div>
+              </div>
             {% endif %}
             {% if error %}
-              {{error }}
+              <div class="modal fade" id="mostrarmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+               <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                     <div class="modal-header">
+                      <button href="{% url 'AsignaYasegura:digitador_registrar' %}" type="button" class="close" data-dismiss="modal" aria-label="close"><span aria-hidden="true">&times;</span></button>
+                        <h3 class="modal-title" id="myModalLabel">Estado registro digitador</h3>
+                  </div>
+                  <div class="modal-body">
+                        <h4>  {{error|capfirst}}</h4>   
+                  </div>
+                  <div class="modal-footer">
+                      <a data-dismiss="modal" class="btn btn-danger">Cerrar</a>
+                  </div>
+                 </div>
+               </div>
+              </div>
+              
             {% endif %} 
         </div>
          <div class="row">
@@ -59,4 +90,10 @@
         </div>
     </form>
 </div>
+<script>
+$(document).ready(function(){
+  $("#mostrarmodal").modal("show");
+  $(".modal-dialog").attr("style","height: 378px; z-index: 2;")
+});
+</script>
 {% endblock %}

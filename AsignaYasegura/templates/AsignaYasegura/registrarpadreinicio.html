@@ -9,7 +9,7 @@
 {% block contenttitle %}Registro {{tipo_objeto}} {% endblock %}
 {% block content %} 
 <div class="container">
-    <form class="form-signin" action="{% url 'AsignaYasegura:Registrar_PPFF' %}" method="post">
+    <form class="form-signin" action="{% url 'AsignaYasegura:Registrar_PPFFinicio' %}" method="post">
         <div class="text-center" >
             {% if mjsexitoso %}
                 {{mjsexitoso|capfirst}}

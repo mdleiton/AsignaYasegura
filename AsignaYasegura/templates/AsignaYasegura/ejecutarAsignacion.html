@@ -37,21 +37,26 @@
 	<div class="container">
     <form method="post" action="{% url 'AsignaYasegura:Admin_ejecutar' %}">
        {% csrf_token %}
-      <h1>Datos generales previo a la inicialización del proceso:</h1>
+      <h1>Datos generales previos a la inicialización del proceso:</h1>
       <br/>
       <div class="row">
         <div class="col-md-offset-2 col-md-6 text-left">
-          <label>Cantidad de estudiantes registrados: </label>
+          <label>Cantidad de estudiantes registrados: {{estudiantes}}</label>
         </div>
       </div>
       <div class="row">
         <div class="col-md-offset-2 col-md-6 text-left">
-          <label>Cantidad de Instituciones registrados: </label>
+          <label>Cantidad de Instituciones registrados: {{instituciones}}</label>
         </div>
       </div>
       <div class="row">
         <div class="col-md-offset-2 col-md-6 text-left">
-          <label>Cantidad de cupos disponibles: </label>
+          <label>Total de instituciones (Distrito): {{insttotal}}</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-offset-2 col-md-6 text-left">
+          <label>Cantidad de cupos disponibles: {{cupos}}</label>
         </div>
       </div>
       <br/>
@@ -67,7 +72,7 @@
         <div class="form-group">
           <div class="col-md-offset-2 col-md-6 text-left">  
             <input type="checkbox" id="requisito2" name="finregistroestudiantes" value="finregistroestudiantes" required>
-            <label for="requisito2">Fecha fin registro estudiantes</label>
+            <label for="requisito2">Fecha final del registro estudiantil</label>
           </div>
         </div>
         <br/><br/>

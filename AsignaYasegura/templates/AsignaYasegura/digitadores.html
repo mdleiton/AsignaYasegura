@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block title %} Lista de digitadores{% endblock %} 
-{% block contenttitle %} Editar información digitadores{% endblock %}
+{% block contenttitle %}Digitadores{% endblock %}
 {% block tipo %}<h3 class="bock-center text-center" style="font-weight: bold;">Digitadores</h3>{% endblock %}
 
 {% block menu%}
@@ -11,8 +11,8 @@
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Digitadores <b class="caret"></b></a>
         <ul class="dropdown-menu">
            <li><a href="{% url 'AsignaYasegura:digitador_registrar' %}">Registrar Digitador</a></li>
-            <li ><a href="/verdigitador/">Ver Información/permisos digitadores</a></li>
-            <li class="active" ><a href="{% url 'AsignaYasegura:digitador_editar' %}">Editar Información/permisos digitadores</a></li>
+            <li class="active"><a href="/verdigitador/">Ver Información/permisos digitadores</a></li>
+            <li><a href="{% url 'AsignaYasegura:digitador_editar' %}" >Editar Información/permisos digitadores</a></li>
             <li><a href="{% url 'AsignaYasegura:digitador_eliminar' %}">Eliminar digitador</a></li>
         </ul>
       </li>
@@ -28,7 +28,7 @@
 {% endblock %}
 
 {%block encabezadotablas%}
-       <th>N°</th>
+        <th>N°</th>
         <th>DNI </th>
         <th>Nombres</th>
         <th>Apellidos</th>
@@ -37,7 +37,6 @@
         <th>Registrar padres/estudiantes</th>
         <th>Registrar instituciones</th>
         <th>Inspecciones</th>
-        <th>EDITAR</th>
 {% endblock %}
 {%block elementostablas%}
         <td>{{ forloop.counter   }}</td>
@@ -49,6 +48,5 @@
         <td>{{ registro.padres_estudiantes}}</td>
         <td>{{ registro.Registrar_instituciones}}</td >
         <td>{{ registro.Inspecciones }}</td>
-        <td><a class="btn btn-primary"   href="{% url 'AsignaYasegura:digitador_editarU'  registro.ci %}" 
-          value="Editar" class="btn btn-primary btn-sm"  >editar</a></td>
+
         {% endblock %}

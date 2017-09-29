@@ -2,6 +2,7 @@ from django.shortcuts import render,render_to_response,get_object_or_404,redirec
 from .models import *
 from django.contrib.auth import login as auth_login,logout as auth_logout,authenticate
 from .forms import *
+from django.db.models import Sum
 
 #------------------------------------------------FUNCIONES GENERALES----------------------------------------------------------------
 #permite obtener una lista de diccionario con la informacion completa de todos los usuario de rol digitador(informacion personal, permisos)
@@ -16,7 +17,7 @@ def digitadorescompletodata():
         usuariofinal['Registrar_instituciones']="No Permitido"
         usuariofinal['Inspecciones']="No Permitido"
         for j in listapermiso:
-            if j.permiso.permiso=="Registrar padres/estudiantes" :
+            if j.permiso.permiso=="Registrar estudiantes" :
                 usuariofinal['padres_estudiantes']="Permitido"
             elif j.permiso.permiso=="Registrar instituciones":
                 usuariofinal['Registrar_instituciones']="Permitido"
@@ -40,7 +41,8 @@ def login(request):
             usuario=Usuario.objects.filter(usuario=user)[0]
             if(user.is_superuser and user.is_staff and tipologin=="administrador" and tipologin==Usuariorol.objects.filter(usuario=usuario)[0].rol.rol):
                 auth_login(request, user)
-                return render(request,'AsignaYasegura/menuadministrador.html',{'usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})
+                return render(request,'AsignaYasegura/menuadministrador.html',{'estudiantes':Estudiante.objects.all().count(),'usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username}),'porcentajeescuelas':(Institucion.objects.all().count()*100)/Distrito.objects.all().aggregate(Sum('cantidadinstituciones'))['cantidadinstituciones__sum']
+            })
             elif(user.is_superuser and user.is_staff and tipologin=="digitador" and tipologin==Usuariorol.objects.filter(usuario=usuario)[0].rol.rol ):
                 auth_login(request, user)
                 return render(request,'AsignaYasegura/menudigitador.html',{'usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})
@@ -68,7 +70,8 @@ def Menu(request):
     if request.user.username:
         usuario=Usuario.objects.filter(usuario=request.user)[0]
         if(request.user.is_superuser and request.user.is_staff and "administrador"==Usuariorol.objects.filter(usuario=usuario)[0].rol.rol):
-            return render(request,'AsignaYasegura/menuadministrador.html',{'usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})
+            return render(request,'AsignaYasegura/menuadministrador.html',{'estudiantes':Estudiante.objects.all().count(),'usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username}),'porcentajeescuelas':(Institucion.objects.all().count()*100)/Distrito.objects.all().aggregate(Sum('cantidadinstituciones'))['cantidadinstituciones__sum']
+            })
         elif(request.user.is_superuser and request.user.is_staff and "digitador"==Usuariorol.objects.filter(usuario=usuario)[0].rol.rol ):
             return render(request,'AsignaYasegura/menudigitador.html',{'usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})
         elif(request.user.is_superuser and request.user.is_staff and "padre de familia"==Usuariorol.objects.filter(usuario=usuario)[0].rol.rol ):
@@ -88,7 +91,9 @@ def PPFF_registrarinicio(request):
             usuario=Usuario.objects.filter(usuario=user)[0]
             Usuariorol(usuario=usuario,rol=rol).save()
             form=PPFFForm()
-            return render(request,'AsignaYasegura/registrarpfYes.html',{'tipo_objeto':"padre de familia",'form': form, 'mjsexitoso':"Se registró correctamente el usuario . Puede ingresar otro usuario",'usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})
+            user1 = authenticate(username=request.POST['usuario'], password=request.POST['contrasena'])
+            auth_login(request, user1)
+            return render(request,'AsignaYasegura/menupadredefamilia.html',{'tipo_objeto':"padre de familia", 'mjsexitoso':"Se registró correctamente el usuario . Puede ingresar otro usuario"})
         else:
             form=PPFFForm()
             return render(request,'AsignaYasegura/registrarpadreinicio.html',{'tipo_objeto':"padre de familia",'form': form, 'error':"no lleno correctamente la información",'usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})
@@ -137,7 +142,12 @@ def Admin_ejecutar(request):
                     return render(request,'AsignaYasegura/ejecutarAsignacion.html',{'mjsexitoso':'la asignación de cupos se realizó con exito','usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})
                 return render(request,'AsignaYasegura/ejecutarAsignacion.html',{'error':'se encontraron algunos porblemas por favor ver detalles','usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})
             else:
-                return render(request,'AsignaYasegura/ejecutarAsignacion.html',{'usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})
+                est=Estudiante.objects.all().count()
+                inst=Institucion.objects.all().count()
+                insttotal=Distrito.objects.all().aggregate(Sum('cantidadinstituciones'))['cantidadinstituciones__sum']
+                print(int(Aula.objects.all().aggregate(Sum('capacidadm'))['capacidadm__sum']))
+                cupos=Aula.objects.all().aggregate(Sum('capacidadm'))['capacidadm__sum']+Aula.objects.all().aggregate(Sum('capacidadv'))['capacidadv__sum']
+                return render(request,'AsignaYasegura/ejecutarAsignacion.html',{'estudiantes':est,'instituciones':inst,'insttotal':insttotal,'cupos':cupos,'usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})
         else:
             return render(request,'AsignaYasegura/nopermitido.html')
     else:
@@ -325,4 +335,10 @@ def PPFF_registrar(request):
 #validar username
 #validar en los registros que username sea unico
 #el director va a tener acceso al sistema?
-#
+#SE CAE EL SISTEMA CUANDO LO ACTUALIZA DESPUES DE INICIAR SESION
+#AGREGAR BARRA EN INSTITUCION INICIO
+#formularios registrar digtador: tildes,
+#permiso padres/estudiantes
+#admin : agregar opcion casos especiales: agregar informacion sobre discapacidad
+#admin Ñ mantener casos sobre problemas
+#registrar institucion programacion:si es si es ambos 

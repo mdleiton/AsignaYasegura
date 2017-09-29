@@ -100,15 +100,15 @@
 			<input type="text" name="username"   id="user" class="form-control" placeholder="Usuario" required>
 			<br />
 			<label for="inputPassword"  class="sr-only">Contraseña</label>
-			<input type="password" name="password" id="pass" class="form-control" placeholder="contrasena" required>
+			<input type="password" name="password" id="pass" class="form-control" placeholder="Contraseña" required>
             <br/>
-			<div class="right-block text-center">
-                <label class="col-md-3 col-xs-11 radio-inline block-center" style="font-weight: bold;">
-                    <input name="tipologin" type="radio" value="administrador" checked="checked">Admin           </label>
-                <label class="col-md-3 col-xs-11 radio-inline block-center " style="font-weight: bold;">
+			<div class="right-block text-right">
+                <label class="col-md-4 col-xs-11 radio-inline block-center" style="font-weight: bold;">
+                    <input name="tipologin" type="radio" value="administrador" checked="checked">Administrador </label>
+                <label class="col-md-2 col-xs-11 radio-inline block-center " style="font-weight: bold;">
                     <input name="tipologin" type="radio" value="digitador">Digitador       </label>
                 <label class="col-md-5 col-xs-11 radio-inline  block-center" style="font-weight: bold;">
-                    <input name="tipologin" type="radio" value="padre">Padre de familia</label>
+                    <input name="tipologin" type="radio" value="padre">Representante</label>
             </div>
             <br/>
             <br/>
@@ -117,7 +117,7 @@
                 <button class="btn btn-danger btn-block btn-sm" type="submit">Ingresar</button>
                 </div>
                 <div class="col-md-8">
-                <a  class="btn btn-primary btn-block btn-sm" href="{% url 'AsignaYasegura:Registrar_PPFFinicio' %}" >Soy padre de familia registrarme</a>
+                <a  class="btn btn-primary btn-block btn-sm" href="{% url 'AsignaYasegura:Registrar_PPFFinicio' %}" >Registrarse</a>
                 </div>
             </div>
 		</form>       

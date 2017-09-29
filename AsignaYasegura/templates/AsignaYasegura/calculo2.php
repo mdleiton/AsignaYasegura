@@ -10,87 +10,181 @@
 			<br><font color="#000066"><strong> Capacidad de la Institución</strong></font><br>
     	</div>  
 	</head>
-	<body>
+	<body style="text-align:center">
 	<?php
 	function  numeroalumnos($longitud,$amplitud)
 		{
-    		$longitud=$longitud-60;
-    		$i=1;
-    		$fila=1;
-    		while($i<=$longitud)
-			{
-        		if(($i%70)==0)
-				{
-            		$fila=$fila+1;
-				}
-        		$i=$i+1;
-			}
-    		$amplitud = $amplitud - 60;
-    		$j = 1;
-    		$columna = 1;
-    		while ($j <= $amplitud)
-			{
-        		if (($j % 140) == 0)
-				{
-            		$columna = $columna + 1;
-				}	
-        		$j=$j+1;
-			}
-    		$numero=$fila*$columna;
-			$datos[] = array();
-    		$datos[0]=$numero;
-    		$datos[1]=$fila;
-    		$datos[2]=$columna;
-    		return $datos;
+    		$longitud=$longitud-2;
+    		$metros=$longitud*$amplitud;
+			$numero=floor($metros);
+    		return $numero;
 		}
-	if(empty($_GET['longitud']) || empty($_GET['amplitud']))
+	$niveles=array("Preparatoria", "Básica elemental", "Básica media", "Básica superior", "Bachillerato");
+	$capacidades=array();
+	for($i=0;$i<5;$i++)
 	{
- 		echo"</br>Faltan datos<br>";
- 		echo"<a href=javascript:history.back()>Regresar</a>";
+		$capacidades[$i]=0;
+	}
+	$opcion=$_GET['op'];
+	if ($opcion==1 || $opcion==3 || $opcion==5)
+	{
+		$longitud=$_GET['longitud'];
+ 		$amplitud=$_GET['amplitud'];
+		$nivel1=$_GET['nivel1'];
+		$nivel2=$_GET['nivel2'];	
+		$i=count($longitud);
+		$capacidad=0;
+		$pupitres=0;
+		echo "<br><br><br>";
+		echo "<table border=10 align=center>";
+		echo "<tr>";
+			echo "<td><strong>Aula</strong></td>";
+			echo "<td><strong>Longitud</strong></td>";
+			echo "<td><strong>Amplitud</strong></td>";
+			echo "<td><strong>Horario matutino</strong></td>";
+			echo "<td><strong>Horario vespertino</strong></td>";
+			echo "<td><strong>Capacidad Potencial</strong></td>";
+			echo "<td><strong>Capacidad Matutina</strong></td>";
+			echo "<td><strong>Capacidad Vespertina</strong></td>";
+		echo "</tr>";
+		for($k=0; $k<$i; $k++)
+		{
+			$numero=numeroalumnos($longitud[$k],$amplitud[$k]);
+			$a=$longitud[$k];
+			$b=$amplitud[$k];
+			$n1=$nivel1[$k];
+			$n2=$nivel2[$k];
+			$numeroreal=$numero;
+			$numeroreal2=$numero;
+			if ($nivel1[$k]==1 && $numero>25)
+			{
+				$numeroreal=25;
+			}
+			elseif ($nivel1[$k]==2 && $numero>30)
+			{
+				$numeroreal=30;
+			}
+			elseif ($nivel1[$k]==3 && $numero>35)
+			{
+				$numeroreal=35;
+			}
+			elseif (($nivel1[$k]==4 || $nivel1[$k]==5) && $numero>45)
+			{
+				$numeroreal=45;
+			}
+			if ($nivel2[$k]==1 && $numero>25)
+			{
+				$numeroreal2=25;
+			}
+			elseif ($nivel2[$k]==2 && $numero>30)
+			{
+				$numeroreal2=30;
+			}
+			elseif ($nivel2[$k]==3 && $numero>35)
+			{
+				$numeroreal2=35;
+			}
+			elseif (($nivel2[$k]==4 || $nivel2[$k]==5) && $numero>45)
+			{
+				$numeroreal2=45;
+			}
+			if ($numeroreal>=$numeroreal2)
+			{
+				$pupitres=$pupitres+$numeroreal;
+			}
+			else
+			{
+				$pupitres=$pupitres+$numeroreal2;
+			}
+			$capacidad=$capacidad+$numeroreal+$numeroreal2;
+			$capacidades[$n1-1]=$capacidades[$n1-1]+$numeroreal;
+			$capacidades[$n2-1]=$capacidades[$n2-1]+$numeroreal2;
+			echo "<tr>";
+				echo "<td>",$k+1;echo "</td>";
+				echo "<td>",$a;echo "</td>"; 
+				echo "<td>",$b;echo "</td>";
+				echo "<td>",$niveles[$n1-1];echo "</td>";
+				echo "<td>",$niveles[$n2-1];echo "</td>"; 
+				echo "<td>",$numero;echo "</td>";
+				echo "<td>",$numeroreal;echo "</td>";
+				echo "<td>",$numeroreal2;echo "</td>";
+			echo "</tr>";  
+		}
+		echo "</table>";
+		echo "<br><br>";
+		echo "<table border=5 align=center>";
+			for ($i=0;$i<5;$i++)
+			{
+				echo"<tr><td><font size=3><strong>Capacidad ",$niveles[$i]; echo":</td><td>",$capacidades[$i]; echo" estudiantes.</strong></font></td></tr>";
+			}
+			echo "<tr><td><font size=3 font color=\"red\"><strong>Capacidad total:</td><td>",$capacidad; echo" estudiantes.</strong></font></td></tr>";
+			echo "<tr><td><font size=3 font color=\"red\"><strong>Pupitres necesarios:</td><td>",$pupitres; echo".</strong></font></td>";
+		echo "</tr>";
+		echo "</table>";
 	}
 	else
 	{
- 		$longitud=$_GET['longitud'];
+		$longitud=$_GET['longitud'];
  		$amplitud=$_GET['amplitud'];
-	}
-	$i=count($longitud);
-	$capacidad=0;
-	$data[]=array();
-	echo "<br><br><br>";
-	echo "<table border=10 align=center>";
-	echo "<tr>";
-		echo "<td><strong>Aula</strong></td>";
-		echo "<td><strong>Longitud</strong></td>";
-		echo "<td><strong>Amplitud</strong></td>";
-		echo "<td><strong>Capacidad</strong></td>";
-		echo "<td><strong>Filas</strong></td>";
-		echo "<td><strong>Columnas</strong></td>";
-	echo "</tr>";
-	for($k=0; $k<$i; $k++)
-	{
-		$data=numeroalumnos($longitud[$k],$amplitud[$k]);
-		$a=$data[0];
-		$b=$data[1];
-		$c=$data[2];
-		$d=$longitud[$k];
-		$e=$amplitud[$k];
-		$capacidad=$capacidad+$a;
+		$nivel1=$_GET['nivel1'];	
+		$i=count($longitud);
+		$capacidad=0;
+		echo "<br><br><br>";
+		echo "<table border=10 align=center>";
 		echo "<tr>";
-			echo "<td>",$k+1;echo "</td>";
-			echo "<td>",$d;echo "</td>"; 
-			echo "<td>",$e;echo "</td>"; 
-			echo "<td>",$a;echo "</td>";
-			echo "<td>",$b;echo "</td>";
-			echo "<td>",$c;echo "</td>";
-		echo "</tr>";  
+			echo "<td><strong>Aula</strong></td>";
+			echo "<td><strong>Longitud</strong></td>";
+			echo "<td><strong>Amplitud</strong></td>";
+			echo "<td><strong>Horario matutino</strong></td>";
+			echo "<td><strong>Capacidad Potencial</strong></td>";
+			echo "<td><strong>Capacidad Ajustada</strong></td>";
+		echo "</tr>";
+		for($k=0; $k<$i; $k++)
+		{
+			$numero=numeroalumnos($longitud[$k],$amplitud[$k]);
+			$a=$longitud[$k];
+			$b=$amplitud[$k];
+			$n1=$nivel1[$k];
+			$numeroreal=$numero;
+			if ($nivel1[$k]==1 && $numero>25)
+			{
+				$numeroreal=25;
+			}
+			elseif ($nivel1[$k]==2 && $numero>30)
+			{
+				$numeroreal=30;
+			}
+			elseif ($nivel1[$k]==3 && $numero>35)
+			{
+				$numeroreal=35;
+			}
+			elseif (($nivel1[$k]==4 || $nivel1[$k]==5) && $numero>45)
+			{
+				$numeroreal=45;
+			}
+			$capacidad=$capacidad+$numeroreal;
+			$capacidades[$n1-1]=$capacidades[$n1-1]+$numeroreal;
+			echo "<tr>";
+				echo "<td>",$k+1;echo "</td>";
+				echo "<td>",$a;echo "</td>"; 
+				echo "<td>",$b;echo "</td>"; 
+				echo "<td>",$niveles[$n1-1];echo "</td>";
+				echo "<td>",$numero;echo "</td>";
+				echo "<td>",$numeroreal;echo "</td>";
+			echo "</tr>";  
+		}
+		echo "</table>";
+		echo "<br><br>";
+		echo "<table border=5 align=center>";
+			for ($i=0;$i<5;$i++)
+			{
+				echo"<tr><td><font size=3><strong>Capacidad ",$niveles[$i]; echo":</td><td>",$capacidades[$i]; echo" estudiantes.</strong></font></td></tr>";
+			}
+			echo "<tr><td><font size=3 font color=\"red\"><strong>Capacidad total:</td><td>",$capacidad; echo" estudiantes.</strong></font></td></tr>";
+			echo "<tr><td><font size=3 font color=\"red\"><strong>Pupitres necesarios:</td><td>",$capacidad; echo".</strong></font></td>";
+		echo "</tr>";
+		echo "</table>";
 	}
-	echo "</table>";
-	echo "<br><br>";
-	echo "<table border=5 align=center>";
-	echo "<tr>";
-		echo "<td><font size=3><strong>Capacidad total: ",$capacidad; echo" estudiantes.</strong></font></td>";
-	echo "</tr>";
-	echo "</table>";
 	?>
     	<div id=pdp>
     	</div>

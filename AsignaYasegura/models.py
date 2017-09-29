@@ -29,7 +29,7 @@ class Permiso(models.Model):
 	descripcion=models.CharField(max_length=100)
 	
 	def __str__(self):
-		return 'Permiso: {}'.format(self.permiso)
+		return '{}'.format(self.permiso)
 
 class Usuariorol(models.Model):
 	id_usuario_rol=models.AutoField(primary_key=True)
@@ -57,7 +57,8 @@ class Institucion(models.Model):
 	ofertaacademica=models.ManyToManyField('OfertaAcademica')
 	instruccion=models.ManyToManyField('Instruccion')
 	carreras=models.ManyToManyField('CarrerasTecnicas')
-	jornadas=models.CharField(max_length=50)
+	horariom=models.CharField(max_length=10)
+	horariov=models.CharField(max_length=10)
 
 	def __str__(self):
 		return 'Institucion: {}:{}'.format(self.nombre, self.distrito)
@@ -66,6 +67,7 @@ class Distrito(models.Model):
 	codigo= models.CharField(primary_key=True,max_length=35)
 	nombre = models.CharField(max_length=35)
 	zona = models.CharField(max_length=35)
+	cantidadinstituciones=models.IntegerField()
 	
 	def __str__(self):
 		return 'Distrito: {}:{}'.format(self.codigo, self.nombre)
@@ -103,6 +105,7 @@ class CarrerasTecnicas(models.Model):
 	def __str__(self):
 		return 'CarrerasTecnicas: {}:{}'.format(self.idcarrera,  self.nombre)
 
+
 class Estudiante(models.Model):
 	ci= models.CharField(max_length=10,primary_key=True)
 	nombre = models.CharField(max_length=35)
@@ -122,3 +125,24 @@ class Curso(models.Model):
 
 	def __str__(self):
 		return 'curso: {}:{}'.format(self.idcurso, self.nombre)
+
+class Aula(models.Model):
+	id_aula=models.AutoField(primary_key=True)
+	aula=models.CharField(max_length=35)
+	curso=models.ForeignKey('Curso')
+	capacidadmax=models.IntegerField()
+	capacidadm=models.IntegerField()
+	capacidadv=models.IntegerField()
+	paralelom=models.CharField(max_length=35)
+	paralelov=models.CharField(max_length=35)
+	capacidadpupitres=models.IntegerField()
+
+class AulaInstitucion(models.Model):
+	id_aulaInstitucion=models.AutoField(primary_key=True)
+	aula=models.ForeignKey('Aula')
+	institucion=models.ForeignKey('Institucion')
+
+class CapacidadEstandar(models.Model):
+	id_capacidad=models.AutoField(primary_key=True)
+	capacidad=models.IntegerField()
+	nivelestudio=models.CharField(max_length=35)
