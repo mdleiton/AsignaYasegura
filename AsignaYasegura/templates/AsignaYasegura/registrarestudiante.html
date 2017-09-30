@@ -1,0 +1,123 @@
+{% extends "AsignaYasegura/base_digitadores.html" %}
+{% load static %}
+{% block title %} Registro de estudiante {% endblock %} 
+
+{% block menu%}
+      <li ><a href="{% url 'AsignaYasegura:Menu' %}">Información general</a></li>
+      <li class="dropdown active">
+        <a  href="#" class="dropdown-toggle" data-toggle="dropdown"> Estudiantes  <b class="caret"></b></a>
+        <ul class="dropdown-menu">
+           <li class="active"><a href="{% url 'AsignaYasegura:registrar_estudiante' %}">Registrar Estudiantes</a></li>
+           <li><a href="#">Editar Información estudiantes</a></li>
+          <li><a href="#">Eliminar registro de estudiante</a></li>
+        </ul>
+      </li>
+      <li><a href="#">Ver información solicitudes</a></li>
+{% endblock %}
+{% block contenttitle %} Registro de estudiante {% endblock %}
+{% block content %} 
+<link href = "{% static 'css/stylemap.css'  %}" rel = "stylesheet" >
+<script src = "http://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyCv2SC4alSoTDCn9bYPyxMTLhiRIUHZgEU" > </script>  
+<script>		
+	function controla(f)
+	{
+		if(f.checked==true)
+		{
+			document.getElementById('contr2').cheked=false;
+			document.getElementById('contr2').disabled=true;
+			document.getElementById('contr3').disabled=false;
+			document.getElementById('contr4').disabled=false;
+			document.getElementById('contr5').disabled=false;
+		}
+		else
+		{
+			document.getElementById('contr2').cheked=false;
+			document.getElementById('contr2').disabled=false;
+			document.getElementById('contr3').disabled=true;
+			document.getElementById('contr4').disabled=true;
+			document.getElementById('contr5').disabled=true;
+			document.getElementById('contr3').value="";
+			document.getElementById('contr4').value="";
+			document.getElementById('contr5').value="";
+		}
+	}
+</script>
+<script>
+	function controlb(f)
+	{
+		if(f.checked==true)
+		{
+			document.getElementById('contr1').cheked=false;
+			document.getElementById('contr1').disabled=true;	
+		}
+		else
+		{
+			document.getElementById('contr1').cheked=false;
+			document.getElementById('contr1').disabled=false;
+		}
+	}
+</script>
+	<br>
+    <form action=mg.php method=get>
+    	{% csrf_token %}
+		<div class="row">
+			<div class="col-md-5 col-md-offset-1 "  id=izquierda style="float:left">
+				<div id=estudiante>
+					<br><font color="#CC0000"><strong>Información general del estudiante</strong></font><br><br>
+					<table>
+						<tr><td>Número de matrícula:</td><td><input type=text name=matricula size="35" required></td></tr>
+						<tr><td>Número de cédula:</td><td><input type=text name=cedula size="35" required></td></tr>
+						<tr><td>Apellidos:</td><td><input type=text name=apellidosestudiante size="35" required></td></tr>
+						<tr><td>Nombres:</td><td><input type=text name=nombresestudiante size="35" required></td></tr>
+						<tr><td>Fecha de nacimiento:</td><td><input type=text name=nacimientoestudiante size="35" required></td></tr>
+						<tr><td>Dirección:</td><td><input type=text name=direccionestudiante size="35" required></td></tr>
+						<tr><td>Curso:</td><td><select id="optionlist" name=curso>
+		            				<option value="1">Primer año básico</option>
+		            				<option value="2">Segundo año básico</option>
+		            				<option value="3">Tercer año básico</option>3 - Antigua Dirección 	Provincial de Educación-Colegio Vicente Rocafuerte</option>
+		            				<option value="4">Cuarto año básico</option>
+		            				<option value="5">Quinto año básico</option>
+		            				<option value="6">Sexto año básico</option>
+		            				<option value="7">Séptimo año básico</option>
+		            				<option value="8">Octavo año básico</option>
+		            				<option value="9">Noveno año básico</option>
+		            				<option value="10">Décimo año básico</option>
+		            				<option value="11">Primero bachillerato</option>
+							<option value="12">Segundo bachillerato</option>
+		            				<option value="13">Tercero bachillerato</option></select></td></tr>
+						<tr><td>Capacidades especiales:</td><td>Sí<input type="checkbox" id="contr1" name="discapacidad[]" value="1" onClick="controla(this)">    No<input type="checkbox" id="contr2" name="discapacidad[]" value="2" onClick="controlb(this)"></td></tr>
+						<tr><td>Código del Conadis:</td><td><input type=text id="contr4" name=conadis size="35" disabled></td></tr>
+						<tr><td>Tipo de discapacidad:</td><td><input type=text id="contr5" name=conadis size="35" disabled></td></tr>
+						<tr><td>Porcentaje de discapacidad:</td><td><input type=text id="contr3" name=porcentajed size="35" disabled></td></tr>       
+					</table> 
+				</div>		
+				<br><br>
+			</div>
+		    <div class="col-md-6"  id=derecha  style="float:right">
+		    	<div id = "main" >
+  					<div id = "mapDiv" >
+  						<br><font color="#CC0000"><strong>Indique su dirección exacta</strong></font><br><br>
+    					 <div id = "map" > </div> 
+    				</div>
+    			</div>
+    		</div>
+    	</div>	
+    	<div class="row text-center block-center">
+    		<input type=submit value=Registrar>	<input type=reset value=Cancelar>
+		</div>
+	</form>
+<script >
+    var ubicacion = {
+        "location": "Data de Villamil, Guayas"
+    };
+var education = {
+    "schools": [{
+        "location": "Av. Jaime Roldos Aguilera, Playas",
+    }, {
+        "location": "Campus Prosperina, Guayaquil"
+    }],
+};
+
+
+</script> <script src = "{% static 'js/helper.js'  %}" > </script>
+{% endblock %}

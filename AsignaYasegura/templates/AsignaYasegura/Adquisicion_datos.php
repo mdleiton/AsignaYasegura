@@ -12,7 +12,8 @@
           <li><a href="#">Eliminar Instituciones</a></li>
         </ul>
       </li>
-      <li><a href="#">Registrar capacidad institución</a></li>
+      <li><a href="{% url 'AsignaYasegura:calcular_capacidad' %}">Registrar capacidad institución</a></li>
+      
       <li class="dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Estudiantes <b class="caret"></b></a>
         <ul class="dropdown-menu">
@@ -154,21 +155,10 @@
 				        	<tr><td><strong>Bachillerato General Unificado</strong></td><td></td><td><input type="checkbox" id="contr1" name="tipob[]" value="Bachillerato General Unificado" disabled></td></tr>
 				        	<tr><td><strong>Bachillerato Internacional</strong></td><td></td><td><input type="checkbox" id="contr2" name="tipob[]" value="Bachillerato Internacional" disabled></td></tr>
 				        	<tr><td><strong>Bachillerato Técnico</strong></td><td></td><td><input type="checkbox" id="contr3" name="tipob[]" value="Bachillerato Técnico" disabled onClick="controlb(this)"></td></tr>
-				            <tr><td>Producción agropecuaria</td><td><input type="checkbox" id="contr4" name="especializacion[]" value="Producción agropecuaria" disabled></td></tr>
-				            <tr><td>Conservación y manejo de recursos naturales</td><td><input type="checkbox" id="contr5" name="especializacion[]" value="Conservación y manejo de recursos naturales" disabled></td></tr>
-				            <tr><td>Industrialización de productos alimenticios</td><td><input type="checkbox" id="contr6" name="especializacion[]" value="Industrialización de productos alimenticios" disabled></td></tr>
-				            <tr><td>Promotor en recreación y deportes</td><td><input type="checkbox" id="contr7" name="especializacion[]" value="Promotor en recreación y deportes" disabled></td></tr>
-				            <tr><td>Electromecánica automotriz</td><td><input type="checkbox" id="contr8" name="especializacion[]" value="Electromecánica automotriz" disabled></td></tr>
-				            <tr><td>Chapisteria y pintura</td><td><input type="checkbox" id="contr9" name="especializacion[]" value="Chapisteria y pintura" disabled></td></tr>
-				            <tr><td>Climatización</td><td><input type="checkbox" id="contr10" name="especializacion[]" value="Climatización" disabled></td></tr>
-				            <tr><td>Electrónica de consumo</td><td><input type="checkbox" id="contr11" name="especializacion[]" value="Electrónica de consumo" disabled></td></tr>
-				            <tr><td>Aplicación de proyectos de producción</td><td><input type="checkbox" id="contr12" name="especializacion[]" value="Aplicación de proyectos de producción" disabled></td></tr>
-				            <tr><td>Fabricación y montaje de muebles</td><td><input type="checkbox" id="contr13" name="especializacion[]" value="Fabricación y montaje de muebles" disabled></td></tr>
-				            <tr><td>Industria de la confección</td><td><input type="checkbox" id="contr14" name="especializacion[]" value="Industria de la confección" disabled></td></tr>
-				            <tr><td>Calzado y marroquinería</td><td><input type="checkbox" id="contr15" name="especializacion[]" value="Calzado y marroquinería" disabled></td></tr>
-				            <tr><td>Mecanizado y construcciones metálicas</td><td><input type="checkbox" id="contr16" name="especializacion[]" value="Mecanizado y construcciones metálicas" disabled></td></tr>
-				            <tr><td>Instalaciones, equipos y máquinas eléctricas</td><td><input type="checkbox" id="contr17" name="especializacion[]" value="Instalaciones, equipos y máquinas eléctricas" disabled></td></tr>
-				            <tr><td>Industria textil</td><td><input type="checkbox" id="contr18" name="especializacion[]" value="Industria textil" disabled></td></tr>	
+				        	{% for registro in carreras %}
+				        		 <tr><td>{{registro.nombre}}</td><td><input type="checkbox" id="contr{{forloop.counter|add:3}}" name="especializacion[]" value="{{registro.nombre}}" disabled></td></tr>
+				        	{% endfor %}
+				            
 				        </table>
 				    </div>
 				</div>
@@ -188,7 +178,8 @@
 			    	<br><font color="#CC0000"><strong>Información complementaria</strong></font><br><br>
 			        <table>
 			        	<tr><td>Número de aulas disponibles:</td><td><input type=value name=aulas required></td></tr>
-			            <tr><td>Jornada vespertina:</td><td>Sí<input type="radio" name="jornada" value="vespertina" ></td><td>No<input type="radio" name="jornada" value="matutina"></td></tr>
+			            <tr><td>Jornadas</td><td>Matutina<input id="matutina" type="checkbox" name="jornadas" value="matutina" >
+				            	Vespertina <input id="vespertina" type="checkbox" name="jornadas" value="vespertina"></td></tr>
 			        </table>
 			        <br><br>
 			    </div>
@@ -196,4 +187,29 @@
 	        </div>
 	    </div>
 	</form>
+{% if error %}
+    <div class="modal fade" id="mostrarmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+       <div class="modal-dialog" role="document">
+          <div class="modal-content">
+             <div class="modal-header">
+            	<button href="/login/" type="button" class="close" data-dismiss="modal" aria-label="close"><span aria-hidden="true">&times;</span></button>
+                <h3 class="modal-title" id="myModalLabel">Error registro información general institución</h3>
+        	</div>
+         	<div class="modal-body">
+              	<h4> {{error}}</h4>   
+         	</div>
+         	<div class="modal-footer">
+            	<a data-dismiss="modal" class="btn btn-danger">Intentar de nuevo</a>
+         	</div>
+         </div>
+       </div>
+    </div>
+{% endif %}           
+<script>
+$(document).ready(function(){
+    $("#mostrarmodal").modal("show");
+	$(".modal-dialog").attr("style","height: 378px; z-index: 2;")
+
+});
+</script>
 {% endblock %} 

@@ -97,12 +97,6 @@
       <div class="modal-body">
         <form class="form-signin" method="post" action="{% url 'AsignaYasegura:Admin_editarInfo' %}">
           <div class="text-center" >
-            {% if mjs %}
-                {{mjs|capfirst}}
-            {% endif %}
-            {% if error %}
-              {{error }}
-            {% endif %} 
           </div> 
           <div class="row">
             <div class="col-lg-offset-3 col-lg-6 ">

@@ -57,8 +57,8 @@ class Institucion(models.Model):
 	ofertaacademica=models.ManyToManyField('OfertaAcademica')
 	instruccion=models.ManyToManyField('Instruccion')
 	carreras=models.ManyToManyField('CarrerasTecnicas')
-	horariom=models.CharField(max_length=10)
-	horariov=models.CharField(max_length=10)
+	horariom=models.IntegerField()
+	horariov=models.IntegerField()
 
 	def __str__(self):
 		return 'Institucion: {}:{}'.format(self.nombre, self.distrito)
@@ -88,14 +88,14 @@ class Director(models.Model):
 	correo=models.EmailField()
 
 	def __str__(self):
-		return 'Director: {}:{}'.format(self.ci, self.usuario)
+		return 'Director: {}:{}'.format(self.ci, self.nombre)
 
 class OfertaAcademica(models.Model):
 	id_institucion= models.AutoField(primary_key=True)
 	nombre=models.CharField(max_length=50)
 
 	def __str__(self):
-		return 'Ofertaacademica: {}:{}'.format(self.id_institucion, self.oferta)
+		return 'Ofertaacademica: {}:{}'.format(self.id_institucion, self.nombre)
 
 class CarrerasTecnicas(models.Model):
 	idcarrera=models.AutoField(primary_key=True)
@@ -104,7 +104,6 @@ class CarrerasTecnicas(models.Model):
 	
 	def __str__(self):
 		return 'CarrerasTecnicas: {}:{}'.format(self.idcarrera,  self.nombre)
-
 
 class Estudiante(models.Model):
 	ci= models.CharField(max_length=10,primary_key=True)
@@ -115,9 +114,18 @@ class Estudiante(models.Model):
 	curso=models.OneToOneField(User,null=True,blank=True)
 	paralelo=models.CharField(max_length=13,null=True,blank=True)
 	representante=models.ForeignKey('Usuario')
-
+	
 	def __str__(self):
 		return 'Estudiante: {}:{}'.format(self.ci, self.nombre)    
+
+class Discapacidad(models.Model):
+	id_discapacidad=models.AutoField(primary_key=True)
+	discapacidad=models.CharField(max_length=35)
+	porcentaje= models.FloatField()
+	estudiante=models.OneToOneField('Estudiante')
+
+	def __str__(self):
+		return 'Discapacidad: {}:{}'.format(self.estudiante, self.discapacidad) 
 
 class Curso(models.Model):
 	id_curso=models.AutoField(primary_key=True)

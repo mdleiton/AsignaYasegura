@@ -22,59 +22,232 @@
       </li>
 {% endblock %}
 {% block contenttitle %} Calcular información {% endblock %}
-{% block content %} 
+{% block content %}
+	<font color=red> *Nota: Es necesario ingresar todas las medidas en metros </font><br><br> 
+	<div id=aulas align=\"center\">		
+	{%for i in instituto.instruccion.all %}
+		{% ifequal i.tipo "primaria" %}
+			{{i}}
+		{% endifequal %}
+
+	{% endfor %}	
+	</div>
 		<?php
-		if(empty($_GET['nombreescuela']) || empty($_GET['distrito']) || empty($_GET['direccion']) || empty($_GET['aulas']) || empty($_GET['especializacion'])|| empty($_GET['tipo']) || empty($_GET['tipob']) || empty($_GET['nombrerector']) || empty($_GET['cedularector']) || empty($_GET['numerorector']) || empty($_GET['correorector']) || empty($_GET['jornada'])){
- 			echo"</br>Faltan datos<br>";
- 			echo"<a href=javascript:history.back()>Regresar</a>";
-		}else{
+			$tipo=$_GET['tipo'];
+			$control=count($tipo);
  			$nombreescuela=$_GET['nombreescuela'];
  			$distrito=$_GET['distrito'];
  			$direccion=$_GET['direccion'];
  			$aulas=$_GET['aulas'];
-			$especializacion=$_GET['especializacion'];
-			$tipo=$_GET['tipo'];
-			echo "<div id=contenido>";
-				echo "<font color=red> Nombre: ",$nombreescuela; echo"</font><br>";
-				echo "<font color=red> Distrito: ",$distrito; echo "</font><br>";
-				echo "<font color=red> Dirección: ",$direccion; echo"</font><br>";
-				$i=count($especializacion);
-				$j=count($tipo);
-				echo "<font color=red> Oferta Académica: </font><br>";
-				echo "<font color=red> Tipos de bachillerato: </font><br>";
-				for ($k=0;$k<$j;$k++)
-				{
-					echo "<font color=red>", $tipo[$k]; echo"</font><br>";
+			$jornada=$_GET['jornada'];
+
+			if($tipo[0]=="primaria" && $control==1){
+				if ($jornada==1){
+					echo "<form action=calculo2.php method=get>";
+					echo "<table border=5 align=center>";
+					echo "<tr>";
+						echo "<td><strong>Aula</strong></td>";
+						echo "<td><strong>Longitud</strong></td>";
+						echo "<td><strong>Amplitud</strong></td>";
+						echo "<td><strong>Horario matutino</strong></td>";
+						echo "<td><strong>Horario vespertino</strong></td>";
+					echo "</tr>";
+					for($i=0;$i<$aulas;$i++){
+						echo "<tr><td>",$i+1; echo"</td>";
+						echo "<td><input type=text name=longitud[] required></td>";
+						echo "<td><input type=text name=amplitud[] required></td>";
+						echo "<td><select name=nivel1[]>";
+								echo "<option value=\"1\">Preparatoria</option>";
+								echo "<option value=\"2\">Básica elemental</option>";
+								echo "<option value=\"3\">Básica media</option>";
+								echo "<option value=\"4\">Básica superior</option>";
+						echo "</select></td>";
+						echo "<td><select name=nivel2[]>";
+								echo "<option value=\"1\">Preparatoria</option>";
+								echo "<option value=\"2\">Básica elemental</option>";
+								echo "<option value=\"3\">Básica media</option>";
+								echo "<option value=\"4\">Básica superior</option>";
+						echo "</select></td></tr>";
+					}
+					echo "</table>";
+					echo "<input type=hidden name=op value=\"1\">";
+					echo"<br><input type=submit value=Aceptar>
+					<input type=reset value=Cancelar>
+					</form> ";
+				}else{
+					echo "<form action=calculo2.php method=get>";
+					echo "<table border=5 align=center>";
+					echo "<tr>";
+						echo "<td><strong>Aula</strong></td>";
+						echo "<td><strong>Longitud</strong></td>";
+						echo "<td><strong>Amplitud</strong></td>";
+						echo "<td><strong>Horario matutino</strong></td>";
+					echo "</tr>";
+					for($i=0;$i<$aulas;$i++){
+						echo "<tr><td>",$i+1; echo"</td>";
+						echo "<td><input type=text name=longitud[] required></td>";
+						echo "<td><input type=text name=amplitud[] required></td>";
+						echo "<td><select name=nivel1[]>";
+								echo "<option value=\"1\">Preparatoria</option>";
+								echo "<option value=\"2\">Básica elemental</option>";
+								echo "<option value=\"3\">Básica media</option>";
+								echo "<option value=\"4\">Básica superior</option>";
+						echo "</select></td></tr>";
+					}
+					echo "</table>";
+					echo "<input type=hidden name=op value=\"2\">";
+					echo"<br><input type=submit value=Aceptar>
+					<input type=reset value=Cancelar>
+					</form> ";
 				}
-				echo "<font color=red> Especializaciones: </font><br>";
-				for ($k=0;$k<$i;$k++)
-				{
-					echo "<font color=red>", $especializacion[$k]; echo"</font><br>";
+				echo "</div>";
+			}elseif($tipo[0]=="secundaria" && $control==1){
+				$especializacion=$_GET['especializacion'];
+				if ($jornada==1){
+					echo "<form action=calculo2.php method=get>";
+					echo "<table border=5 align=center>";
+					echo "<tr>";
+						echo "<td><strong>Aula</strong></td>";
+						echo "<td><strong>Longitud</strong></td>";
+						echo "<td><strong>Amplitud</strong></td>";
+						echo "<td><strong>Horario matutino</strong></td>";
+						echo "<td><strong>Horario vespertino</strong></td>";
+					echo "</tr>";
+					for($i=0;$i<$aulas;$i++){
+						echo "<tr><td>",$i+1; echo"</td>";
+						echo "<td><input type=text name=longitud[] required></td>";
+						echo "<td><input type=text name=amplitud[] required></td>";
+						echo "<td><select name=nivel1[]>";
+								echo "<option value=\"5\">Bachillerato</option>";
+						echo "</select></td>";
+						echo "<td><select name=nivel2[]>";
+								echo "<option value=\"5\">Bachillerato</option>";
+						echo "</select></td></tr>";
+					}
+					echo "</table>";
+					echo "<input type=hidden name=op value=\"3\">";
+					echo"<br><input type=submit value=Aceptar>
+					<input type=reset value=Cancelar>
+					</form> ";
+				}else{
+					echo "<form action=calculo2.php method=get>";
+					echo "<table border=5 align=center>";
+					echo "<tr>";
+						echo "<td><strong>Aula</strong></td>";
+						echo "<td><strong>Longitud</strong></td>";
+						echo "<td><strong>Amplitud</strong></td>";
+						echo "<td><strong>Horario matutino</strong></td>";
+					echo "</tr>";
+					for($i=0;$i<$aulas;$i++){
+						echo "<tr><td>",$i+1; echo"</td>";
+						echo "<td><input type=text name=longitud[] required></td>";
+						echo "<td><input type=text name=amplitud[] required></td>";
+						echo "<td><select name=nivel1[]>";
+								echo "<option value=\"5\">Bachillerato</option>";
+						echo "</select></td></tr>";
+					}
+					echo "</table>";
+					echo "<input type=hidden name=op value=\"4\">";
+					echo"<br><input type=submit value=Aceptar>
+					<input type=reset value=Cancelar>
+					</form> ";
 				}
-				echo "<font color=red> *Nota: Es necesario ingresar todas las medidas en centímetros </font><br><br>";
-			echo "</div>";
-			echo "<div id=aulas align=\"center\">";
-				echo "<form action=calculo2.php method=get>";
-				echo "<table border=5 align=center>";
-				echo "<tr>";
-					echo "<td><strong>Aula</strong></td>";
-					echo "<td><strong>Longitud</strong></td>";
-					echo "<td><strong>Amplitud</strong></td>";
-				echo "</tr>";
-				for($i=0;$i<$aulas;$i++)
-				{
-					echo "<tr><td>",$i+1; echo"</td>";
-					echo "<td><input type=text name=longitud[]></td>";
-					echo "<td><input type=text name=amplitud[]></td></tr>";
+				echo "</div>";
+			}
+			elseif($control==2){
+				$especializacion=$_GET['especializacion'];
+				if ($jornada==1){
+					echo "<form action=calculo2.php method=get>";
+					echo "<table border=5 align=center>";
+					echo "<tr>";
+						echo "<td><strong>Aula</strong></td>";
+						echo "<td><strong>Longitud</strong></td>";
+						echo "<td><strong>Amplitud</strong></td>";
+						echo "<td><strong>Horario matutino</strong></td>";
+						echo "<td><strong>Horario vespertino</strong></td>";
+					echo "</tr>";
+					for($i=0;$i<$aulas;$i++){
+						echo "<tr><td>",$i+1; echo"</td>";
+						echo "<td><input type=text name=longitud[] required></td>";
+						echo "<td><input type=text name=amplitud[] required></td>";
+						echo "<td><select name=nivel1[]>";
+								echo "<option value=\"1\">Preparatoria</option>";
+								echo "<option value=\"2\">Básica elemental</option>";
+								echo "<option value=\"3\">Básica media</option>";
+								echo "<option value=\"4\">Básica superior</option>";
+								echo "<option value=\"5\">Bachillerato</option>";
+						echo "</select></td>";
+						echo "<td><select name=nivel2[]>";
+								echo "<option value=\"1\">Preparatoria</option>";
+								echo "<option value=\"2\">Básica elemental</option>";
+								echo "<option value=\"3\">Básica media</option>";
+								echo "<option value=\"4\">Básica superior</option>";
+								echo "<option value=\"5\">Bachillerato</option>";
+						echo "</select></td></tr>";
+					}
+					echo "</table>";
+					echo "<input type=hidden name=op value=\"5\">";
+					echo"<br><input type=submit value=Aceptar>
+					<input type=reset value=Cancelar>
+					</form> ";
+				}else{
+					echo "<form action=calculo2.php method=get>";
+					echo "<table border=5 align=center>";
+					echo "<tr>";
+						echo "<td><strong>Aula</strong></td>";
+						echo "<td><strong>Longitud</strong></td>";
+						echo "<td><strong>Amplitud</strong></td>";
+						echo "<td><strong>Horario matutino</strong></td>";
+					echo "</tr>";
+					for($i=0;$i<$aulas;$i++){
+						echo "<tr><td>",$i+1; echo"</td>";
+						echo "<td><input type=text name=longitud[] required></td>";
+						echo "<td><input type=text name=amplitud[] required></td>";
+						echo "<td><select name=nivel1[]>";
+								echo "<option value=\"1\">Preparatoria</option>";
+								echo "<option value=\"2\">Básica elemental</option>";
+								echo "<option value=\"3\">Básica media</option>";
+								echo "<option value=\"4\">Básica superior</option>";
+								echo "<option value=\"5\">Bachillerato</option>";
+						echo "</select></td></tr>";
+					}
+					echo "</table>";
+					echo "<input type=hidden name=op value=\"6\">";
+					echo"<br><input type=submit value=Aceptar>
+					<input type=reset value=Cancelar>
+					</form> ";
 				}
-				echo "</table>";
-				echo"<br><input type=submit value=Aceptar>
-				<input type=reset value=Cancelar>
-				</form> ";
-			echo "</div>";
-		}
+				echo "</div>";
+			}
+		
 		?>
     	<div id=pdp>
     		
     	</div>
+
+{% if mjsregistroinfinstituto %}
+    <div class="modal fade" id="mjsregistroinfinstituto" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+       <div class="modal-dialog" role="document">
+          <div class="modal-content">
+             <div class="modal-header">
+            	<button href="/login/" type="button" class="close" data-dismiss="modal" aria-label="close"><span aria-hidden="true">&times;</span></button>
+                <h3 class="modal-title" id="myModalLabel">Estadoregistro de información general institución</h3>
+        	</div>
+         	<div class="modal-body">
+              	<h4> {{mjsregistroinfinstituto}}</h4>   
+         	</div>
+         	<div class="modal-footer">
+            	<a data-dismiss="modal" class="btn btn-danger">Ingresar información para determinar capacidad</a>
+         	</div>
+         </div>
+       </div>
+    </div>
+{% endif %}           
+<script>
+$(document).ready(function(){
+    $("#mjsregistroinfinstituto").modal("show");
+	$(".modal-dialog").attr("style","height: 378px; z-index: 2;")
+
+});
+</script>
 {% endblock %}

@@ -280,7 +280,7 @@ def Adquisicion_datos(request):
     if request.user.username:
         usuario=Usuario.objects.filter(usuario=request.user)[0]
         if(request.user.is_superuser and request.user.is_authenticated and "digitador"==Usuariorol.objects.filter(usuario=usuario)[0].rol.rol):
-            return render(request,'AsignaYasegura/Adquisicion_datos.php',{'distritos':Distrito.objects.all(),'usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})
+            return render(request,'AsignaYasegura/Adquisicion_datos.php',{'carreras':CarrerasTecnicas.objects.all(),'distritos':Distrito.objects.all(),'usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})
         else:
             return render(request,'AsignaYasegura/nopermitido.html')
     else:
@@ -291,30 +291,37 @@ def Calcular_capacidad(request):
     if request.user.username:
         usuario=Usuario.objects.filter(usuario=request.user)[0]
         if(request.user.is_superuser and request.user.is_authenticated and "digitador"==Usuariorol.objects.filter(usuario=usuario)[0].rol.rol):
-             if request.method=='POST':
-                director=director(ci=request.POST['cedularector'],nombre=request.POST['nombrerector'],apellidos=request.POST['apellidorector'],telefono=request.POST['numerorector'],correo=request.POST['correorector'])
-                director.save()
-                distrito=Distrito.objects.filter(codigo=request.POST['distrito'].split('-')[0])[0]
-                print(director,distrito)
-                instituto=Institucion(distrito=distrito,nombre=request.POST['nombreescuela'],jornada=request.POST['jornada'],direccion=request.POST['direccion'],representante=director,naulas=request.POST['aulas'])
-                for i in request.POST.getlist('tipo[]'):
-                    instruccion=Instruccion.objects.filter(tipo=i)[0]
-                    instituto.instruccion.add(instruccion)
-                    if i=="secundaria":
-                        for j in request.POST.getlist('tipob[]'):
-                            oa=OfertaAcademica.objects.filter(nombre=j)[0]
-                            instituto.ofertaacademica.add(oa)
-                            if j=="Bachillerato Tecnico":
-                                for k in request.POST.getlist('especializacion[]'):
-                                    ct=CarrerasTecnicas.objects.filter(nombre=k)[0]
-                                    instituto.carreras.add(ct)
-                instituto.save()
-                return render(request,'AsignaYasegura/calcular_capacidad.php')
+            if request.method=='POST':
+                director=Director.objects.filter(ci=request.POST['cedularector'])
+                if not director:
+                    director=Director(ci=request.POST['cedularector'],nombre=request.POST['nombrerector'],apellidos=request.POST['apellidorector'],telefono=request.POST['numerorector'],correo=request.POST['correorector'])
+                    director.save()
+                    distrito=Distrito.objects.filter(codigo=request.POST['distrito'].split('-')[0])[0]
+                    instituto=Institucion(horariov='vespertina' in request.POST.getlist('jornadas'),horariom='matutina' in request.POST.getlist('jornadas'),distrito=distrito,nombre=request.POST['nombreescuela'],direccion=request.POST['direccion'],representante=director,naulas=request.POST['aulas'])
+                    instituto.save()
+                    for i in request.POST.getlist('tipo[]'):
+                        instruccion=Instruccion.objects.filter(tipo=i)[0]
+                        instituto.instruccion.add(instruccion)
+                        if i=="secundaria":
+                            for j in request.POST.getlist('tipob[]'):
+                                oa=OfertaAcademica.objects.filter(nombre=j)[0]
+                                instituto.ofertaacademica.add(oa)
+                                if j=="Bachillerato Técnico":
+                                    for k in request.POST.getlist('especializacion[]'):
+                                        ct=CarrerasTecnicas.objects.filter(nombre=k)[0]
+                                        instituto.carreras.add(ct)
+                    instituto.save()
+                    return render(request,'AsignaYasegura/calcular_capacidad.php',{'mjsregistroinfinstituto':"Se registró correctamente la información general de la empresa. Por favor ahorra ingresar las especificaciones técnicas de la empresa",'usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})
+                else:
+                     return render(request,'AsignaYasegura/Adquisicion_datos.php',{'error':'Dicho representante ya se encuentra registrado','carreras':CarrerasTecnicas.objects.all(),'distritos':Distrito.objects.all(),'usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})   
+            else:
+                return render(request,'AsignaYasegura/calcular_capacidad.php',{'instituto':Institucion.objects.all()[0],'usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})
         else:
             return render(request,'AsignaYasegura/nopermitido.html')
     else:
         return render_to_response('AsignaYasegura/index.html')
 
+#registra padres de familia si el digitador tiene los permisos necesarios para hacerlo
 def PPFF_registrar(request):
     if request.user.username:
         usuario=Usuario.objects.filter(usuario=request.user)[0]
@@ -338,17 +345,27 @@ def PPFF_registrar(request):
                 return render(request,'AsignaYasegura/registrarpfYes.html',{'tipo_objeto':"padre de familia",'form': form,'usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})
         else:
             return render(request,'AsignaYasegura/nopermitido.html')
+    else:
+        return render_to_response('AsignaYasegura/index.html')
     
 
 #-----------------------------------------------------VISTAS PADRE DE FAMILIA-------------------------------------------------
 
+def Estudiante_registrar(request):
+    if request.user.username:
+        usuario=Usuario.objects.filter(usuario=request.user)[0]
+        if(request.user.is_superuser and request.user.is_authenticated and "padre de familia"==Usuariorol.objects.filter(usuario=usuario)[0].rol.rol):
+            return render(request,'AsignaYasegura/registrarestudiante.html')
+        else:
+            return render(request,'AsignaYasegura/nopermitido.html')
+    else:
+        return render_to_response('AsignaYasegura/index.html')
 
-
-#validar cambio de pk de inf de administradores
+#validar cambio de pk de inrf de administradores
 #validar username
 #validar en los registros que username sea unico
 #SE CAE EL SISTEMA CUANDO LO ACTUALIZA DESPUES DE INICIAR SESION
-
-#admin : agregar opcion casos especiales: agregar informacion sobre discapacidad
-#admin Ñ mantener casos sobre problemas
-#registrar institucion programacion:si es si es ambos 
+#director se registra en la base de datos al registrar inf institucion o prevaimente ya esta en la base de datosa?
+#falta validar los permisos para realizar ciertas acciones
+def Pruebas(request):
+    return render(request,'AsignaYasegura/pruebas.html')
