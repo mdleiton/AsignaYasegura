@@ -3,29 +3,35 @@
 {% block title %} Menu Digitador {% endblock %} 
 
 {% block menu%}
-      <li class="active"><a href="{% url 'AsignaYasegura:Menu' %}">Información general</a></li>
-      <li class="dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Instituciones <b class="caret"></b></a>
-        <ul class="dropdown-menu">
-           <li><a href="{% url 'AsignaYasegura:Adquisicion_datos' %}">Registrar Instituciones</a></li>
-           <li><a href="#">Editar Informacion Instituciones</a></li>
-          <li><a href="#">Eliminar Instituciones</a></li>
-        </ul>
-      </li>
-      <li><a href="{% url 'AsignaYasegura:calcular_capacidad' %}">Registrar capacidad institución</a></li>
-      <li class="dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Estudiantes <b class="caret"></b></a>
-        <ul class="dropdown-menu">
-           <li><a href="{% url 'AsignaYasegura:Registrar_PPFF' %}">Registrar Padres de Familia</a></li>
-           <li><a href="#">Registrar estudiantes</a></li>
-        </ul>
-      </li>
+  <li class="active"><a href="{% url 'AsignaYasegura:Menu' %}">Información general</a></li>
+  <li class="dropdown">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Instituciones <b class="caret"></b></a>
+    <ul class="dropdown-menu">
+    	<li><a href="{% url 'AsignaYasegura:Adquisicion_datos' %}">Registrar Instituciones</a></li>
+    	<li><a href="#">Editar Informacion Instituciones</a></li>
+    	<li><a href="#">Eliminar Instituciones</a></li>
+    </ul>
+  </li>
+  <li><a href="{% url 'AsignaYasegura:calcular_capacidad' %}">Registrar capacidad institución</a></li>
+  <li class="dropdown">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Estudiantes <b class="caret"></b></a>
+    <ul class="dropdown-menu">
+       <li><a href="{% url 'AsignaYasegura:Registrar_PPFF' %}">Registrar Padres de Familia</a></li>
+       <li><a href="#">Registrar estudiantes</a></li>
+    </ul>
+  </li>
 {% endblock %}
 {% block contenttitle %} Bienvenidos {% endblock %}
 {% block content %} 
 <div class="row text-center">
 	<div class="container">
 	<h1>Cronograma de actividades asignadas</h1>
+	<h2>{% if errorcontrasena %}
+        	{{ errorcontrasena |capfirst}}
+    	{% endif %}
+	</h2>{% if mjscontrasena %}
+        	{{ mjscontrasena |capfirst}}
+    	{% endif %}
 	<div class="block-center ">
 	<table class="table table-responsive table-striped table-hover table-bordered ">
   		<thead>

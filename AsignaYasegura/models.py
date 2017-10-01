@@ -15,6 +15,16 @@ class Usuario(models.Model):
     def __str__(self):
     	return 'Usuario: {}:{}'.format(self.ci, self.usuario)
 
+class GeolocalizacionPadre(models.Model):
+	idgeolocalizacion=models.AutoField(primary_key=True)
+	direccion=models.CharField(max_length=100)
+	latitud=models.FloatField()
+	longitud=models.FloatField()
+	padre=models.ForeignKey('Usuario')
+
+	def __str__(self):
+		return 'GeolocalizacionPadre: {}:{}'.format(self.padre,self.direccion)
+
 class Roles(models.Model):
 	id_rol=models.AutoField(primary_key=True)
 	rol=models.CharField(max_length=35)

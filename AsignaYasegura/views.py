@@ -131,7 +131,7 @@ def Digitador_registrar(request):
                     return render(request,'AsignaYasegura/registrarUsuario.html',{'form': form, 'mjsexitoso':"Se registró correctamente el usuario . Puede ingresar otro usuario",'usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})
                 else:
                     form=UsuarioForm()
-                    return render(request,'AsignaYasegura/registrarUsuario.html',{'form': form, 'error':"no lleno correctamente la información",'usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})
+                    return render(request,'AsignaYasegura/registrarUsuario.html',{'form': form, 'error':"no lleno correctamente la información. Quizás el ci ya esta registrado o el nombre de usuario ya existe.",'usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})
             else:
                 form = UsuarioForm()    
                 return render(request,'AsignaYasegura/registrarUsuario.html',{'form': form,'usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})
@@ -299,8 +299,7 @@ def Adquisicion_datos(request):
 def Calcular_capacidad(request):
     if request.user.username:
         usuario=Usuario.objects.filter(usuario=request.user)[0]
-        permiso=validarpermiso(usuario,"Registrar instituciones")
-        if(request.user.is_superuser and permiso and request.user.is_authenticated and "digitador"==Usuariorol.objects.filter(usuario=usuario)[0].rol.rol):
+        if(request.user.is_superuser and validarpermiso(usuario,"Registrar instituciones") and request.user.is_authenticated and "digitador"==Usuariorol.objects.filter(usuario=usuario)[0].rol.rol):
             if request.method=='POST':
                 director=Director.objects.filter(ci=request.POST['cedularector'])
                 if not director:
@@ -356,16 +355,18 @@ def PPFF_registrar(request):
                     return render(request,'AsignaYasegura/registrarpfYes.html',{'tipo_objeto':"padre de familia",'form': form, 'mjsexitoso':"Se registró correctamente el usuario . Puede ingresar otro usuario",'usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})
                 else:
                     form=PPFFForm()
-                    return render(request,'AsignaYasegura/registrarpfYes.html',{'tipo_objeto':"padre de familia",'form': form, 'error':"no lleno correctamente la información",'usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})
+                    return render(request,'AsignaYasegura/registrarpfYes.html',{'tipo_objeto':"padre de familia",'form': form, 'error':"no lleno correctamente la información.Quizás el nombre de usuario ya existe",'usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})
             else:
                 form = PPFFForm()    
                 return render(request,'AsignaYasegura/registrarpfYes.html',{'tipo_objeto':"padre de familia",'form': form,'usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})
         else:
             return render(request,'AsignaYasegura/nopermitido.html')
     else:
-        return render_to_response('AsignaYasegura/index.html')
-    
+        return render_to_response('AsignaYasegura/index.html')    
 
+#registrara la latitud longitud para cada padre de familia
+def PPFF_registrargeolocalizacion(request):
+    return True
 #-----------------------------------------------------VISTAS PADRE DE FAMILIA-------------------------------------------------
 
 def Estudiante_registrar(request):
@@ -388,3 +389,4 @@ def Estudiante_registrar(request):
 #arreglar cupos admin: ejecutar asignacion
 #SE CAE EL SISTEMA CUANDO LO ACTUALIZA DESPUES DE INICIAR SESION
 #modificar registro instituciones sobre relaciones horarios
+#validar que cada padre de familia tenga su respectiva latitud , longitud antes de registrar algun padre

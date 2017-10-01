@@ -6,49 +6,90 @@
 <link href="{% static 'css/formulario.css'  %}" rel="stylesheet">
 {% endblock %}
 {% block menu%}
-      <li ><a href="{% url 'AsignaYasegura:Menu' %}">Información general</a></li>
-      <li class="dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Instituciones <b class="caret"></b></a>
-        <ul class="dropdown-menu">
-           <li><a href="{% url 'AsignaYasegura:Adquisicion_datos' %}">Registrar Instituciones</a></li>
-           <li><a href="#">Editar Informacion Instituciones</a></li>
-          <li><a href="#">Eliminar Instituciones</a></li>
-        </ul>
-      </li>
-      <li><a href="#">Registrar capacidad institución</a></li>
-      <li class="dropdown active">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Estudiantes <b class="caret"></b></a>
-        <ul class="dropdown-menu">
-           <li class="active"><a href="{% url 'AsignaYasegura:Registrar_PPFF' %}">Registrar Padres de Familia</a></li>
-           <li><a href="#">Registrar estudiantes</a></li>
-        </ul>
-      </li>
+  <li ><a href="{% url 'AsignaYasegura:Menu' %}">Información general</a></li>
+  <li class="dropdown">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Instituciones <b class="caret"></b></a>
+    <ul class="dropdown-menu">
+      <li><a href="{% url 'AsignaYasegura:Adquisicion_datos' %}">Registrar Instituciones</a></li>
+      <li><a href="#">Editar Informacion Instituciones</a></li>
+      <li><a href="#">Eliminar Instituciones</a></li>
+    </ul>
+  </li>
+  <li><a href="#">Registrar capacidad institución</a></li>
+  <li class="dropdown active">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Estudiantes <b class="caret"></b></a>
+    <ul class="dropdown-menu">
+      <li class="active"><a href="{% url 'AsignaYasegura:Registrar_PPFF' %}">Registrar Padres de Familia</a></li>
+      <li><a href="#">Registrar estudiantes</a></li>
+    </ul>
+  </li>
 {% endblock %}
 {% block contenttitle %}Registro {{tipo_objeto}} {% endblock %}
 {% block content %} 
 <div class="container">
-    <form class="form-signin" action="{% url 'AsignaYasegura:Registrar_PPFF' %}" method="post">
-        <div class="text-center" >
-            {% if mjsexitoso %}
-                {{mjsexitoso|capfirst}}
-            {% endif %}
-            {% if error %}
-              {{error }}
-            {% endif %} 
+  <form class="form-signin" action="{% url 'AsignaYasegura:Registrar_PPFF' %}" method="post">
+    <div class="text-center" >
+      {% if mjsexitoso %}
+        <div class="modal fade" id="mostrarmodalestadoOK" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button href="{% url 'AsignaYasegura:digitador_registrar' %}" type="button" class="close" data-dismiss="modal" aria-label="close"><span aria-hidden="true">&times;</span></button>
+                <h3 class="modal-title" id="myModalLabel">Estado registro digitador</h3>
+              </div>
+              <div class="modal-body">
+                  <h4>{{mjsexitoso|capfirst}}</h4>
+                  <h3>Ahora requerimos que porfavor coloque el puntero rojo en el mapa. </h3>
+                  <a class="btn btn-danger" href="{% url 'AsignaYasegura:Registrar_PPFFgeolocalizacion' %}">Continuar</a>   
+              </div>
+              <div class="modal-footer">
+                <a data-dismiss="modal" class="btn btn-danger">Cerrar</a>
+              </div>
+            </div>
+          </div>
         </div>
-         <div class="row">
-        <div class="col-lg-offset-3 col-lg-6 ">
+      {% endif %}
+      {% if error %}
+        <div class="modal fade" id="mostrarmodalestadoERROR" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button href="{% url 'AsignaYasegura:digitador_registrar' %}" type="button" class="close" data-dismiss="modal" aria-label="close"><span aria-hidden="true">&times;</span></button>
+                <h3 class="modal-title" id="myModalLabel">Estado registro digitador</h3>
+              </div>
+              <div class="modal-body">
+                <h4>  {{error|capfirst}}</h4>   
+              </div>
+              <div class="modal-footer">
+                <a data-dismiss="modal" class="btn btn-danger">Cerrar</a>
+              </div>
+            </div>
+          </div>
+        </div> 
+      {% endif %} 
+    </div>
+    <div class="row">
+      <div class="col-lg-offset-3 col-lg-6 ">
         <div id="formulario" >
-            {% csrf_token %}
-            {{ form.as_p }}
+          {% csrf_token %}
+          {{ form.as_p }}
         </div>
       </div>
     </div>
-        <div class="bock-center text-center">
-            <center><input class="btn btn-primary" type="submit" value="Añadir {{tipo_objeto}}" />
-            <a type="button" href="{% url 'AsignaYasegura:Menu' %}" class="btn btn-primary btn-danger">Cancelar</a>
-            </center>
-        </div>
-    </form>
+    <div class="bock-center text-center">
+      <center><input class="btn btn-primary" type="submit" value="Añadir {{tipo_objeto}}" />
+        <a type="button" href="{% url 'AsignaYasegura:Menu' %}" class="btn btn-primary btn-danger">Cancelar</a>
+      </center>
+    </div>
+  </form>
 </div>
+<script>
+$(document).ready(function(){
+  $("#mostrarmodalestadoOK").modal("show");
+  $(".modal-dialog").attr("style","height: 378px; z-index: 2;")
+  $("#mostrarmodalestadoERROR").modal("show");
+  $(".modal-dialog").attr("style","height: 378px; z-index: 2;")
+});
+</script>
+
 {% endblock %}

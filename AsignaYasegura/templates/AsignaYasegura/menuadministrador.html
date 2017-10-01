@@ -29,10 +29,7 @@
 	</h2>{% if mjscontrasena %}
         	{{ mjscontrasena |capfirst}}
     	{% endif %}
-    <h2>
-
-    </h2>
-	<div class="block-center ">
+    <div class="block-center ">
 	<table class="table table-responsive table-striped table-hover table-bordered ">
   		<thead>
 		    <tr>
@@ -75,7 +72,7 @@
 
 <div class="row text-center">
 	<h1>Porcentaje de avance de registro de Institución</h1>
-	<h3>{{porcentajeescuelas}}%</h3>
+	<h3>{{porcentajeescuelas|stringformat:"3.3f"}}%</h3>
 		<div class="col-md-offset-2 col-md-8">
 			<div class="progress progress-striped">
 	  			<div class="progress-bar progress-bar-danger" role="progressbar"  style="width:{{porcentajeescuelas}}%">

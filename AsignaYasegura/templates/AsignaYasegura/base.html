@@ -3,33 +3,33 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="">
 
-    <title>{% block title %} Bienvenidos  {% endblock %}</title>
+  <title>{% block title %} Bienvenidos  {% endblock %}</title>
 
-    {% block style %}
-    <link rel="shortcut icon" type="image/x-icon" href="{% static 'img/logo.jpg'  %}"/>
-    <!-- Bootstrap Core CSS -->
-    <link href="{% static 'css/bootstrap.min.css'  %}" rel="stylesheet">
-    <link rel="stylesheet" href="{% static 'css/nuevo.css'  %}" >
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
+  {% block style %}
+  <link rel="shortcut icon" type="image/x-icon" href="{% static 'img/logo.jpg'  %}"/>
+  <!-- Bootstrap Core CSS -->
+  <link href="{% static 'css/bootstrap.min.css'  %}" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/nuevo.css'  %}" >
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
 
-     <!-- jQuery -->
-    <script src="{% static 'js/jquery-3.1.1.js'  %}"></script>
+   <!-- jQuery -->
+  <script src="{% static 'js/jquery-3.1.1.js'  %}"></script>
 
-    <!-- Bootstrap Core JavaScript -->
-    <script src="{% static 'js/bootstrap.min.js'  %}"></script>
-    {% endblock %}
-	
+  <!-- Bootstrap Core JavaScript -->
+  <script src="{% static 'js/bootstrap.min.js'  %}"></script>
+  {% endblock %}
+
 	{% block extra-style%}
 
 	{% endblock %}
@@ -37,110 +37,97 @@
 </head>
 <body>
   <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
-  <div class="navbar-header">
-    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-      <span class="sr-only">Desplegar navegación</span>
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-    </button>
-    <a class="navbar-brand" href="{% url 'AsignaYasegura:Menu' %}">AsignaYasegura</a>
-  </div>
-  {% if user.is_authenticated %}
-  <div class="collapse navbar-collapse navbar-ex1-collapse">
-    <ul class="nav navbar-nav">
-{% block menu%}
-      <li class="active"><a href="#">Enlace #1</a></li>
-      <li><a href="#">Enlace #2</a></li>
-      <li><a href="#">Enlace #3</a></li>
-      <li><a href="#">Enlace #4</a></li>
-      <li class="dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-          Menú #1 <b class="caret"></b>
-        </a>
-        <ul class="dropdown-menu">
-          <li><a href="#">Acción #1</a></li>
-          <li><a href="#">Acción #2</a></li>
-          <li><a href="#">Acción #3</a></li>
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+        <span class="sr-only">Desplegar navegación</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="{% url 'AsignaYasegura:Menu' %}">AsignaYasegura</a>
+    </div>
+    {% if user.is_authenticated %}
+      <div class="collapse navbar-collapse navbar-ex1-collapse">
+        <ul class="nav navbar-nav">
+          {% block menu%}
+          <li class="active"><a href="#">Enlace #1</a></li>
+          <li><a href="#">Enlace #2</a></li>
+          <li><a href="#">Enlace #3</a></li>
+          <li><a href="#">Enlace #4</a></li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Menú #1 <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li><a href="#">Acción #1</a></li>
+              <li><a href="#">Acción #2</a></li>
+              <li><a href="#">Acción #3</a></li>
+            </ul>
+          </li>
+          {% endblock %}
         </ul>
-      </li>
-{% endblock %}
-    </ul>
-    <ul class="nav navbar-nav navbar-right">
-    <li><label >  <p class="encabezado"> aYa {% if user.is_authenticated %}
-                                                Bienvenido 
-                                            {% endif %}</p>
-        </label>
-    </li>
-      <li class="dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-         <u>{{user.username|capfirst}}</u><b class="caret"></b>
-        </a>
-        <ul class="dropdown-menu">
-          <li><a type="button"  data-toggle="modal" data-target="#myModal">Editar información</a></li>
-           <li><a type="button"  data-toggle="modal" data-target="#myModal2">Cambiar contraseña</a></li>
-          <li><a class="nombre" href="/logout/"> Cerrar Sesión</a></li>
+        <ul class="nav navbar-nav navbar-right">
+          <li><label ><p class="encabezado"> aYa {% if user.is_authenticated %}
+                                                  Bienvenido 
+                                              {% endif %}</p></label>
+          </li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              <u>{{user.username|capfirst}}</u><b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+              <li><a type="button"  data-toggle="modal" data-target="#myModal">Editar información</a></li>
+              <li><a type="button"  data-toggle="modal" data-target="#myModal2">Cambiar contraseña</a></li>
+              <li><a class="nombre" href="/logout/"> Cerrar Sesión</a></li>
+            </ul>
+          </li>
         </ul>
-      </li>
-    </ul>
-    {% endif %}
-  </div>
-</nav>
-<div id="myModal" class="modal fade" role="dialog">
-  <link href="{% static 'css/formulario.css'  %}" rel="stylesheet">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Editar información </h4>
-      </div>
-      <div class="modal-body">
-        <form class="form-signin" method="post" action="{% url 'AsignaYasegura:Admin_editarInfo' %}">
-          <div class="text-center" >
-          </div> 
-          <div class="row">
-            <div class="col-lg-offset-3 col-lg-6 ">
-              <div id="formulariomodel">
-                {% csrf_token %}
-                {{ usuarioform.as_p }}
+      {% endif %}
+    </div>
+  </nav>
+  <div id="myModal" class="modal fade" role="dialog">
+    <link href="{% static 'css/formulario.css'  %}" rel="stylesheet">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Editar información </h4>
+        </div>
+        <div class="modal-body">
+          <form class="form-signin" method="post" action="{% url 'AsignaYasegura:Admin_editarInfo' %}">
+            <div class="row">
+              <div class="col-lg-offset-3 col-lg-6 ">
+                <div id="formulariomodel">
+                  {% csrf_token %}
+                  {{ usuarioform.as_p }}
+                </div>
               </div>
             </div>
-          </div>
-          <br/><br/>
-          <div class="row">
-            <div class="col-lg-12 text-center" >
-              <input class="btn btn-primary" type="submit" value="Actualizar datos" />
+            <br/><br/>
+            <div class="row">
+              <div class="col-lg-12 text-center" >
+                <input class="btn btn-primary" type="submit" value="Actualizar datos" />
+              </div>
             </div>
-          </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
       </div>
     </div>
   </div>
-</div>
-<div id="myModal2" class="modal fade" role="dialog">
-  <link href="{% static 'css/formulario.css'  %}" rel="stylesheet">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Editar información </h4>
-      </div>
-      <div class="modal-body">
-        <form class="form-signin" method="post" action="{% url 'AsignaYasegura:Admin_cambiocontrasena' %}">
-          <div class="text-center" >
-            {% if mjs %}
-              {{mjs|capfirst}}
-            {% endif %}
-            {% if error %}
-              {{error }}
-            {% endif %}
-          </div> 
-          <div class="row">
-            <div class="col-lg-offset-3 col-lg-6 ">
-              <div id="formulariomodel">
+  <div id="myModal2" class="modal fade" role="dialog">
+    <link href="{% static 'css/formulario.css'  %}" rel="stylesheet">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Editar información </h4>
+        </div>
+        <div class="modal-body">
+          <form class="form-signin" method="post" action="{% url 'AsignaYasegura:Admin_cambiocontrasena' %}"> 
+            <div class="row">
+              <div class="col-lg-offset-3 col-lg-6 ">
+                <div id="formulariomodel">
                   {% csrf_token %}
                   <br/>
                   <label for="inputPassword"  class="sr-only">Contraseña Antigua</label>
@@ -148,44 +135,42 @@
                   <br/>
                   <label for="inputPassword"  class="sr-only">Contraseña nueva</label>
                   <input type="password" name="newpassword" id="newpass" class="form-control" placeholder="Contraseña nueva" required>
+                </div>
               </div>
             </div>
-          </div>
-          <br/><br/>
-          <div class="row">
-            <div class="col-lg-12 text-center" >
-              <input class="btn btn-primary" type="submit" value="Actualizar datos" />
-            </div>
-          </div>
-          
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <br/><br/>
+            <div class="row">
+              <div class="col-lg-12 text-center" >
+                <input class="btn btn-primary" type="submit" value="Actualizar datos" />
+              </div>
+            </div>        
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
       </div>
     </div>
   </div>
-</div>
-
-    <br /><br/><br/>
+  <br/><br/><br/>
     <!-- Page Content -->
-    <div id="content">
-      <div id=titulo>
-        <img src="{% static 'img/21769831_379017482518757_1986918513_n.png' %}"  align="left">
-        <img src="{% static 'img/21850202_379017485852090_1048059339_n.png' %}" align="right" width="250" height="125">
-        <br><font color="#000066"><strong> {% block contenttitle %}Bienvenidos{% endblock %}</strong></font><br>
+  <div id="content">
+    <div id=titulo>
+      <img src="{% static 'img/21769831_379017482518757_1986918513_n.png' %}"  align="left">
+      <img src="{% static 'img/21850202_379017485852090_1048059339_n.png' %}" align="right" width="250" height="125">
+      <br><font color="#000066"><strong> {% block contenttitle %}Bienvenidos{% endblock %}</strong></font><br>
     </div>
-        {% block content %} base de plantillas default{% endblock %}
-    </div>
+    {% block content %} base de plantillas default{% endblock %}
+  </div>
     <!-- Footer -->
 	<br/><br/>
-        <footer>
-            <div class="row">
-                <div id="divCopyright" class="col-lg-12 block-center text-center">
-                    <p>   Copyright &copy; ESPOL 2017</p>
-                </div>
-            </div>
-        </footer>
+  <footer>
+    <div class="row">
+      <div id="divCopyright" class="col-lg-12 block-center text-center">
+        <p>   Copyright &copy; ESPOL 2017</p>
+      </div>
+    </div>
+  </footer>
 	{% block script %}
 	{% endblock %}
 </body>
