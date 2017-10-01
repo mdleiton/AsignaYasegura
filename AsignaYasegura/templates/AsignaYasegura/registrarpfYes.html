@@ -27,48 +27,53 @@
 {% block contenttitle %}Registro {{tipo_objeto}} {% endblock %}
 {% block content %} 
 <div class="container">
-  <form class="form-signin" action="{% url 'AsignaYasegura:Registrar_PPFF' %}" method="post">
-    <div class="text-center" >
-      {% if mjsexitoso %}
-        <div class="modal fade" id="mostrarmodalestadoOK" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <button href="{% url 'AsignaYasegura:digitador_registrar' %}" type="button" class="close" data-dismiss="modal" aria-label="close"><span aria-hidden="true">&times;</span></button>
-                <h3 class="modal-title" id="myModalLabel">Estado registro digitador</h3>
-              </div>
-              <div class="modal-body">
-                  <h4>{{mjsexitoso|capfirst}}</h4>
-                  <h3>Ahora requerimos que porfavor coloque el puntero rojo en el mapa. </h3>
-                  <a class="btn btn-danger" href="{% url 'AsignaYasegura:Registrar_PPFFgeolocalizacion' %}">Continuar</a>   
-              </div>
-              <div class="modal-footer">
-                <a data-dismiss="modal" class="btn btn-danger">Cerrar</a>
-              </div>
+  <div class="text-center" >
+    {% if mjsexitoso %}
+      <div class="modal fade" id="mostrarmodalestadoOK" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button href="{% url 'AsignaYasegura:digitador_registrar' %}" type="button" class="close" data-dismiss="modal" aria-label="close"><span aria-hidden="true">&times;</span></button>
+              <h3 class="modal-title" id="myModalLabel">Estado registro digitador</h3>
+            </div>
+            <div class="modal-body">
+              <form class="form-signin" action="{% url 'AsignaYasegura:Registrar_PPFFgeolocalizacion' %}" method="post">
+                {% csrf_token %}
+                <h4>{{mjsexitoso|capfirst}}</h4>
+                <h3>Ahora requerimos que porfavor coloque el puntero rojo en el mapa. </h3>
+                <input name="direccion" value="{{direccion}}" style="display : none;" readonly >
+                <input name="infoadd"  value="{{infoadd}}" style="display : none;" readonly >
+                <input class="btn btn-danger" type="submit" value="Registrar geolocalización" />
+              </form>
+            </div>
+            <div class="modal-footer">
+              <a data-dismiss="modal" class="btn btn-danger">Continuar registrando padres de familia</a>
             </div>
           </div>
         </div>
-      {% endif %}
-      {% if error %}
-        <div class="modal fade" id="mostrarmodalestadoERROR" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <button href="{% url 'AsignaYasegura:digitador_registrar' %}" type="button" class="close" data-dismiss="modal" aria-label="close"><span aria-hidden="true">&times;</span></button>
-                <h3 class="modal-title" id="myModalLabel">Estado registro digitador</h3>
-              </div>
-              <div class="modal-body">
-                <h4>  {{error|capfirst}}</h4>   
-              </div>
-              <div class="modal-footer">
-                <a data-dismiss="modal" class="btn btn-danger">Cerrar</a>
-              </div>
+      </div>
+    {% endif %}
+    {% if error %}
+      <div class="modal fade" id="mostrarmodalestadoERROR" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button href="{% url 'AsignaYasegura:digitador_registrar' %}" type="button" class="close" data-dismiss="modal" aria-label="close"><span aria-hidden="true">&times;</span></button>
+              <h3 class="modal-title" id="myModalLabel">Estado registro digitador</h3>
+            </div>
+            <div class="modal-body">
+              <h4>  {{error|capfirst}}</h4>   
+            </div>
+            <div class="modal-footer">
+              <a data-dismiss="modal" class="btn btn-danger">Cerrar</a>
             </div>
           </div>
-        </div> 
-      {% endif %} 
-    </div>
-    <div class="row">
+        </div>
+      </div> 
+    {% endif %} 
+  </div>
+  <form class="form-signin" action="{% url 'AsignaYasegura:Registrar_PPFF' %}" method="post">
+    <div class="row"> 
       <div class="col-lg-offset-3 col-lg-6 ">
         <div id="formulario" >
           {% csrf_token %}
@@ -81,7 +86,7 @@
         <a type="button" href="{% url 'AsignaYasegura:Menu' %}" class="btn btn-primary btn-danger">Cancelar</a>
       </center>
     </div>
-  </form>
+  </form>  
 </div>
 <script>
 $(document).ready(function(){

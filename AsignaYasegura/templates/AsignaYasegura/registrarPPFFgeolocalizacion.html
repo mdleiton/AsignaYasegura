@@ -1,0 +1,77 @@
+{% extends "AsignaYasegura/base_digitadores.html" %}
+{% load static %}
+{% block title %} Registro de estudiante {% endblock %} 
+
+{% block menu%}
+<li ><a href="{% url 'AsignaYasegura:Menu' %}">Información general</a></li>
+<li class="dropdown">
+<a href="#" class="dropdown-toggle" data-toggle="dropdown">Instituciones <b class="caret"></b></a>
+<ul class="dropdown-menu">
+  <li><a href="{% url 'AsignaYasegura:Adquisicion_datos' %}">Registrar Instituciones</a></li>
+  <li><a href="#">Editar Informacion Instituciones</a></li>
+  <li><a href="#">Eliminar Instituciones</a></li>
+</ul>
+</li>
+<li><a href="#">Registrar capacidad institución</a></li>
+<li class="dropdown active">
+<a href="#" class="dropdown-toggle" data-toggle="dropdown">Estudiantes <b class="caret"></b></a>
+<ul class="dropdown-menu">
+  <li class="active"><a href="{% url 'AsignaYasegura:Registrar_PPFF' %}">Registrar Padres de Familia</a></li>
+  <li><a href="#">Registrar estudiantes</a></li>
+</ul>
+</li>
+{% endblock %}
+
+{% block contenttitle %} Registro de geolocalización padre {% endblock %}
+
+{% block content %} 
+
+{% if direccion %}
+<link href = "{% static 'css/stylemap.css'  %}" rel = "stylesheet" >
+<script src = "http://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyCv2SC4alSoTDCn9bYPyxMTLhiRIUHZgEU" > </script>  
+	<div class="row">
+		<form action="{% url 'AsignaYasegura:registrar_estudiante' %}" method="POST">
+			<div id = "main" class="col-md-6 col-md-offset-3">
+				{% csrf_token %}
+				<input name="infoadd"  value="{{infoadd}}" style="display : none;" readonly >
+				<div class="form-group">
+	      			<label for="inputEmail" class="col-md-4 control-label">Dirección:</label>
+	      			<div class="col-md-8">
+	        			<input class="form-control" id=direccion type=text name=direccionestudiante size="35" value="{{direccion}}" readonly>
+	      			</div>
+	      		</div>
+	      		<div class="form-group">
+	      			<label for="inputEmail" class="col-md-4 control-label">Latitud:</label>
+	      			<div class="col-md-8">
+	        			<input class="form-control" id=latitud type=text name=latitud size="35">
+	      			</div>
+	      		</div>
+	      		<div class="form-group">
+	      			<label for="inputEmail" class="col-md-4 control-label">Longitud:</label>
+	      			<div class="col-md-8">
+	        			<input class="form-control" id=longitud type=text name=longitud size="35">
+	      			</div>
+	      		</div>
+	      		 <input class="btn btn-danger" type="submit" value="Registrar geolocalización" />
+	      	</div>
+	 		<div id = "mapDiv" class="col-md-6 ">
+	 			<br/>
+	 			<div id="map"></div>
+	 		</div>
+	 	</form>
+	</div>  
+
+<script >
+var ubicacion = {
+    "sitio": [{
+        "location": document.getElementById('direccion').value,
+    }],
+};
+ubicacion.sitio[0].location=document.getElementById('direccion').value;	
+console.log(ubicacion.sitio[0].location);
+
+</script> <script src = "{% static 'js/helper.js'  %}" > </script>
+
+{% endif %}
+
+{% endblock %}
