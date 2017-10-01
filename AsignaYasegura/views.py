@@ -29,6 +29,14 @@ def digitadorescompletodata():
 
 def asignaryasegura():
     return True
+
+def validarpermiso(usuario,permiso):
+    permisos=Usuariopermisos.objects.filter(usuario=usuario)
+    for i in permisos:
+        if i.permiso.permiso==permiso:
+            return True
+    return False
+
 '''
 ------------------------------------------------------VISTAS GENERALES------------------------------------------------------------------
 permite definir el tipo de usuario y determinar el tipo de menu de inicio que debe presentar
@@ -48,7 +56,7 @@ def login(request):
                 return render(request,'AsignaYasegura/menudigitador.html',{'usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})
             elif(user.is_superuser and user.is_staff and tipologin=="padre" and "padre de familia"==Usuariorol.objects.filter(usuario=usuario)[0].rol.rol ):
                 auth_login(request, user)
-                return render(request,'AsignaYasegura/menupadredefamilia.html')
+                return render(request,'AsignaYasegura/menupadredefamilia.html',{'usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})
             else:
                 return render(request,'AsignaYasegura/index.html',{'error':"incorrecto : nombre de usuario , contraseña o tipo de usuario"})
         else:
@@ -75,7 +83,7 @@ def Menu(request):
         elif(request.user.is_superuser and request.user.is_staff and "digitador"==Usuariorol.objects.filter(usuario=usuario)[0].rol.rol ):
             return render(request,'AsignaYasegura/menudigitador.html',{'usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})
         elif(request.user.is_superuser and request.user.is_staff and "padre de familia"==Usuariorol.objects.filter(usuario=usuario)[0].rol.rol ):
-            return render(request,'AsignaYasegura/menupadredefamilia.html')  
+            return render(request,'AsignaYasegura/menupadredefamilia.html',{'usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})
     else:
          return render_to_response('AsignaYasegura/index.html')
 
@@ -279,7 +287,8 @@ def Admin_problemasasignacion(request):
 def Adquisicion_datos(request):
     if request.user.username:
         usuario=Usuario.objects.filter(usuario=request.user)[0]
-        if(request.user.is_superuser and request.user.is_authenticated and "digitador"==Usuariorol.objects.filter(usuario=usuario)[0].rol.rol):
+        permiso=validarpermiso(usuario,"Registrar instituciones")
+        if(request.user.is_superuser and permiso and request.user.is_authenticated and "digitador"==Usuariorol.objects.filter(usuario=usuario)[0].rol.rol):
             return render(request,'AsignaYasegura/Adquisicion_datos.php',{'carreras':CarrerasTecnicas.objects.all(),'distritos':Distrito.objects.all(),'usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})
         else:
             return render(request,'AsignaYasegura/nopermitido.html')
@@ -290,15 +299,22 @@ def Adquisicion_datos(request):
 def Calcular_capacidad(request):
     if request.user.username:
         usuario=Usuario.objects.filter(usuario=request.user)[0]
-        if(request.user.is_superuser and request.user.is_authenticated and "digitador"==Usuariorol.objects.filter(usuario=usuario)[0].rol.rol):
+        permiso=validarpermiso(usuario,"Registrar instituciones")
+        if(request.user.is_superuser and permiso and request.user.is_authenticated and "digitador"==Usuariorol.objects.filter(usuario=usuario)[0].rol.rol):
             if request.method=='POST':
                 director=Director.objects.filter(ci=request.POST['cedularector'])
                 if not director:
                     director=Director(ci=request.POST['cedularector'],nombre=request.POST['nombrerector'],apellidos=request.POST['apellidorector'],telefono=request.POST['numerorector'],correo=request.POST['correorector'])
                     director.save()
                     distrito=Distrito.objects.filter(codigo=request.POST['distrito'].split('-')[0])[0]
-                    instituto=Institucion(horariov='vespertina' in request.POST.getlist('jornadas'),horariom='matutina' in request.POST.getlist('jornadas'),distrito=distrito,nombre=request.POST['nombreescuela'],direccion=request.POST['direccion'],representante=director,naulas=request.POST['aulas'])
+                    instituto=Institucion(distrito=distrito,nombre=request.POST['nombreescuela'],direccion=request.POST['direccion'],representante=director,naulas=request.POST['aulas'])
                     instituto.save()
+                    if 'vespertina' in request.POST.getlist('jornadas'):
+                        jornada1=Jornada.objects.filter(jornada="vespertina")[0]
+                        instituto.jornada.add(jornada1)
+                    if 'matutina' in request.POST.getlist('jornadas'):
+                        jornada1=Jornada.objects.filter(jornada="vespertina")[0]
+                        instituto.jornada.add(jornada1)
                     for i in request.POST.getlist('tipo[]'):
                         instruccion=Instruccion.objects.filter(tipo=i)[0]
                         instituto.instruccion.add(instruccion)
@@ -325,7 +341,8 @@ def Calcular_capacidad(request):
 def PPFF_registrar(request):
     if request.user.username:
         usuario=Usuario.objects.filter(usuario=request.user)[0]
-        if(request.user.is_superuser and request.user.is_authenticated and "digitador"==Usuariorol.objects.filter(usuario=usuario)[0].rol.rol):
+        permiso=validarpermiso(usuario,"Registrar estudiantes")
+        if(request.user.is_superuser and permiso and request.user.is_authenticated and "digitador"==Usuariorol.objects.filter(usuario=usuario)[0].rol.rol):
             if request.method == 'POST': 
                 form = PPFFForm(request.POST) 
                 if form.is_valid()  and len(request.POST['ci'])>9 and len(request.POST['contrasena'])>8:
@@ -368,9 +385,6 @@ def Estudiante_registrar(request):
 #validar cambio de pk de inrf de administradores
 #validar username
 #validar en los registros que username sea unico
+#arreglar cupos admin: ejecutar asignacion
 #SE CAE EL SISTEMA CUANDO LO ACTUALIZA DESPUES DE INICIAR SESION
-#director se registra en la base de datos al registrar inf institucion o prevaimente ya esta en la base de datosa?
-#falta validar los permisos para realizar ciertas acciones
 #modificar registro instituciones sobre relaciones horarios
-def Pruebas(request):
-    return render(request,'AsignaYasegura/pruebas.html')

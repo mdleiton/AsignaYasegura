@@ -8,7 +8,7 @@ class Usuario(models.Model):
     nombre = models.CharField(max_length=35)
     apellidos = models.CharField(max_length=35)
     usuario = models.OneToOneField(User)
-    direccion=models.CharField(max_length=50)
+    direccion=models.CharField(max_length=100)
     telefono=models.CharField(max_length=13)
     correo=models.EmailField()
 
@@ -51,14 +51,23 @@ class Estudiante(models.Model):
 	ci= models.CharField(max_length=10,primary_key=True)
 	nombre = models.CharField(max_length=35)
 	apellidos = models.CharField(max_length=35)
-	direccion=models.CharField(max_length=50)
+	direccion=models.CharField(max_length=100)
 	telefono=models.CharField(max_length=13)
-	curso=models.OneToOneField(User,null=True,blank=True)
-	paralelo=models.CharField(max_length=13,null=True,blank=True)
 	representante=models.ForeignKey('Usuario')
-	
+	latitud=models.FloatField(null=True,blank=True)
+	longitud=models.FloatField(null=True,blank=True)
+	curso=models.ForeignKey('Curso')
+
 	def __str__(self):
 		return 'Estudiante: {}:{}'.format(self.ci, self.nombre)    
+
+class Registro(models.Model):
+	id_registro=models.AutoField(primary_key=True)
+	estudiante=models.ForeignKey('Estudiante')
+	aulajornadacurso=models.ForeignKey('AulajornadaCurso')
+
+	def __str__(self):
+		return 'Estudiante-Aula-Jornada-Curso: {}:{}'.format(self.estudiante, self.aulajornadacurso)
 
 class Discapacidad(models.Model):
 	id_discapacidad=models.AutoField(primary_key=True)
@@ -121,8 +130,8 @@ class Institucion(models.Model):
 	instruccion=models.ManyToManyField('Instruccion')
 	carreras=models.ManyToManyField('CarrerasTecnicas')
 	jornada=models.ManyToManyField('Jornada')
-	latitud=models.FloatField()
-	longitud=models.FloatField()
+	latitud=models.FloatField(null=True,blank=True)
+	longitud=models.FloatField(null=True,blank=True)
 
 	def __str__(self):
 		return 'Institucion: {}:{}'.format(self.nombre, self.distrito)
@@ -157,6 +166,7 @@ class AulajornadaCurso(models.Model):
 	curso=models.ForeignKey('Curso')
 	capacidad=models.IntegerField()
 	paralelo=models.CharField(max_length=35)
+	cupos=models.IntegerField()
 
 	def __str__(self):
 		return 'Aula-jornada-curso: {}:{}:{}'.format(self.aula, self.jornada,self.curso)

@@ -19,7 +19,7 @@ INSERT INTO AsignaYasegura_aula(capacidadmax,capacidadpupitres,longitud,amplitud
 INSERT INTO AsignaYasegura_aula(capacidadmax,capacidadpupitres,longitud,amplitud,institucion_id) VALUES(54,54,10.5,10.5,1);
 INSERT INTO AsignaYasegura_aula(capacidadmax,capacidadpupitres,longitud,amplitud,institucion_id) VALUES(54,54,10.5,10.5,1);
 -- inf de las aulas asociadas a las jornadas y niveles de estudio asociadas para sus respectivas capacidades
-INSERT INTO AsignaYasegura_aulajornadacurso(aula_id,jornada_id,curso_id,capacidad,paralelo) VALUES (1,1,1,30,'Paralelo A');
-INSERT INTO AsignaYasegura_aulajornadacurso(aula_id,jornada_id,curso_id,capacidad,paralelo) VALUES (2,1,1,30,'Paralelo B');
-INSERT INTO AsignaYasegura_aulajornadacurso(aula_id,jornada_id,curso_id,capacidad,paralelo) VALUES (3,1,2,30,'Paralelo A');
-INSERT INTO AsignaYasegura_aulajornadacurso(aula_id,jornada_id,curso_id,capacidad,paralelo) VALUES (4,1,2,30,'Paralelo B');
+INSERT INTO AsignaYasegura_aulajornadacurso(aula_id,jornada_id,curso_id,capacidad,paralelo,cupos) VALUES (1,1,1,30,'Paralelo A',30);
+INSERT INTO AsignaYasegura_aulajornadacurso(aula_id,jornada_id,curso_id,capacidad,paralelo,cupos) VALUES (2,1,1,30,'Paralelo B',30);
+INSERT INTO AsignaYasegura_aulajornadacurso(aula_id,jornada_id,curso_id,capacidad,paralelo,cupos) VALUES (3,1,2,30,'Paralelo A',30);
+INSERT INTO AsignaYasegura_aulajornadacurso(aula_id,jornada_id,curso_id,capacidad,paralelo,cupos) VALUES (4,1,2,30,'Paralelo B',30);

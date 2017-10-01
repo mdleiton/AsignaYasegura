@@ -30,8 +30,7 @@ urlpatterns = [
 	url(r'^calcularcapacidad/$', views.Calcular_capacidad, name="calcular_capacidad"),
     url(r'^registrarPPFF/$', views.PPFF_registrar, name="Registrar_PPFF"),
 
-    url(r'^pruebas/$', views.Pruebas, name="pruebas"),
-    
+   
 
     #opciones padre de familia
     url(r'^registrarEstudiante/$', views.Estudiante_registrar, name="registrar_estudiante"),
