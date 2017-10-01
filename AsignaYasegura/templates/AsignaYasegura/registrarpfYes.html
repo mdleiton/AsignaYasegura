@@ -28,7 +28,7 @@
 {% block content %} 
 <div class="container">
   <div class="text-center" >
-    {% if mjsexitoso %}
+    {% if mjsexitoso or mjsregistrolocalizacion %}
       <div class="modal fade" id="mostrarmodalestadoOK" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
@@ -37,14 +37,19 @@
               <h3 class="modal-title" id="myModalLabel">Estado registro digitador</h3>
             </div>
             <div class="modal-body">
-              <form class="form-signin" action="{% url 'AsignaYasegura:Registrar_PPFFgeolocalizacion' %}" method="post">
-                {% csrf_token %}
-                <h4>{{mjsexitoso|capfirst}}</h4>
-                <h3>Ahora requerimos que porfavor coloque el puntero rojo en el mapa. </h3>
-                <input name="direccion" value="{{direccion}}" style="display : none;" readonly >
-                <input name="infoadd"  value="{{infoadd}}" style="display : none;" readonly >
-                <input class="btn btn-danger" type="submit" value="Registrar geolocalización" />
-              </form>
+              {%if mjsexitoso %}
+                <form class="form-signin" action="{% url 'AsignaYasegura:Registrar_PPFFgeolocalizacion' %}" method="post">
+                  {% csrf_token %}
+                  <h4>{{mjsexitoso|capfirst}}</h4>
+                  <h3>Ahora requerimos que porfavor coloque el puntero rojo en el mapa. </h3>
+                  <input name="direccion" value="{{direccion}}" style="display : none;" readonly >
+                  <input name="infoadd"  value="{{infoadd}}" style="display : none;" readonly >
+                  <input name="sinlatitud"  value="1" style="display : none;" readonly >
+                  <input class="btn btn-danger" type="submit" value="Registrar geolocalización" />
+                </form>
+              {% else %}
+                <h4>{{mjsregistrolocalizacion|capfirst}}</h4>
+              {% endif %}
             </div>
             <div class="modal-footer">
               <a data-dismiss="modal" class="btn btn-danger">Continuar registrando padres de familia</a>

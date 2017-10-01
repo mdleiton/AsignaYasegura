@@ -30,10 +30,10 @@
 <link href = "{% static 'css/stylemap.css'  %}" rel = "stylesheet" >
 <script src = "http://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyCv2SC4alSoTDCn9bYPyxMTLhiRIUHZgEU" > </script>  
 	<div class="row">
-		<form action="{% url 'AsignaYasegura:registrar_estudiante' %}" method="POST">
+		<form action="{% url 'AsignaYasegura:Registrar_PPFFgeolocalizacion' %}" method="POST">
 			<div id = "main" class="col-md-6 col-md-offset-3">
 				{% csrf_token %}
-				<input name="infoadd"  value="{{infoadd}}" style="display : none;" readonly >
+				<input name="sinlatitud"  value="0" style="display : none;" readonly >
 				<div class="form-group">
 	      			<label for="inputEmail" class="col-md-4 control-label">Dirección:</label>
 	      			<div class="col-md-8">
@@ -52,8 +52,19 @@
 	        			<input class="form-control" id=longitud type=text name=longitud size="35">
 	      			</div>
 	      		</div>
-	      		 <input class="btn btn-danger" type="submit" value="Registrar geolocalización" />
+	      		<div class="form-group">
+	      			<div class="col-md-8 col-md-offset-4">
+	      			<input name="infoadd"  value="{{infoadd}}" style="visibility:hidden" readonly >
+	      			</div>
+	      		</div>
 	      	</div>
+	      	<br/>
+	      	<div class="col-md-4 col-md-offset-5">
+	      		<div class="form-group">
+	      		 <input class="btn btn-danger block-center" type="submit" value="Registrar geolocalización" />
+	      		</div>
+	      	</div>
+
 	 		<div id = "mapDiv" class="col-md-6 ">
 	 			<br/>
 	 			<div id="map"></div>

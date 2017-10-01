@@ -37,6 +37,8 @@ def validarpermiso(usuario,permiso):
             return True
     return False
 
+def validarDireccion(ci,latitud,longitud):
+    return True
 '''
 ------------------------------------------------------VISTAS GENERALES------------------------------------------------------------------
 permite definir el tipo de usuario y determinar el tipo de menu de inicio que debe presentar
@@ -352,8 +354,7 @@ def PPFF_registrar(request):
                     usuario=Usuario.objects.filter(usuario=user)[0]
                     Usuariorol(usuario=usuario,rol=rol).save()
                     form=PPFFForm()
-                    print(np.ci,np.direccion)
-                    return render(request,'AsignaYasegura/registrarpfYes.html',{'infoadd':np.ci,'direccion':np.direccion,'tipo_objeto':"padre de familia",'form': form, 'mjsexitoso':"Se registró correctamente el usuario . Puede ingresar otro usuario",'usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})
+                    return render(request,'AsignaYasegura/registrarpfYes.html',{'infoadd':np.ci,'direccion':np.direccion,'tipo_objeto':"padre de familia",'form': form, 'mjsexitoso':"Se registró correctamente el padre de familia",'usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})
                 else:
                     form=PPFFForm()
                     return render(request,'AsignaYasegura/registrarpfYes.html',{'tipo_objeto':"padre de familia",'form': form, 'error':"no lleno correctamente la información.Quizás el nombre de usuario ya existe",'usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})
@@ -372,11 +373,20 @@ def PPFF_registrargeolocalizacion(request):
         permiso=validarpermiso(usuario,"Registrar estudiantes")
         if(request.user.is_superuser and permiso and request.user.is_authenticated and "digitador"==Usuariorol.objects.filter(usuario=usuario)[0].rol.rol):
             if request.method == 'POST': 
-                print(request.POST['direccion']) 
-                return render(request,'AsignaYasegura/registrarPPFFgeolocalizacion.html',{'infoadd':request.POST['infoadd'],'direccion':request.POST['direccion'],'tipo_objeto':"padre de familia",'usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})
+                if request.POST['sinlatitud']=='0' :
+                    padre = get_object_or_404(Usuario, pk=request.POST['infoadd'])
+                    if validarDireccion(padre.ci,request.POST['latitud'],request.POST['longitud']):
+                        GeolocalizacionPadre(padre=padre,latitud=request.POST['latitud'],longitud=request.POST['longitud'],direccion=request.POST['direccionestudiante']).save()
+                        form=PPFFForm()
+                        return render(request,'AsignaYasegura/registrarpfYes.html',{'form':form,'mjsregistrolocalizacion':'registro completo del padre de familia. puede ingresar otro padre de familia.','tipo_objeto':"padre de familia",'usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})
+                    else:
+                        form=PPFFForm()
+                        return render(request,'AsignaYasegura/registrarpfYes.html',{'infoadd':padre.ci,'direccion':padre.direccion,'tipo_objeto':"padre de familia",'form': form, 'mjsexitoso':"Error la dirección ingresado no concuerda con la almacenada en el INEC",'usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})
+                else:
+                    return render(request,'AsignaYasegura/registrarPPFFgeolocalizacion.html',{'infoadd':request.POST['infoadd'],'direccion':request.POST['direccion'],'tipo_objeto':"padre de familia",'usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})  
             else:    
                 form=PPFFForm()
-                return render(request,'AsignaYasegura/registrarpfYes.html',{'form':form,'tipo_objeto':"padre de familia",'usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})
+                return render(request,'AsignaYasegura/registrarpfYes.html',{'form':form,'tipo_objeto':"padre de familia",'usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})             
         else:
             return render(request,'AsignaYasegura/nopermitido.html')
     else:

@@ -192,7 +192,6 @@ class Aula(models.Model):
 	def __str__(self):
 		return 'Aula: {}:{}'.format(self.id_aula, self.capacidadmax)
 
-
 class CapacidadEstandar(models.Model):
 	id_capacidad=models.AutoField(primary_key=True)
 	capacidad=models.IntegerField()
