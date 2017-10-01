@@ -355,7 +355,11 @@ def Estudiante_registrar(request):
     if request.user.username:
         usuario=Usuario.objects.filter(usuario=request.user)[0]
         if(request.user.is_superuser and request.user.is_authenticated and "padre de familia"==Usuariorol.objects.filter(usuario=usuario)[0].rol.rol):
-            return render(request,'AsignaYasegura/registrarestudiante.html')
+            if request.method == 'POST': 
+                print(request.POST['direccionestudiante'])
+                return render(request,'AsignaYasegura/registrarestudiante.html',{'direccion':request.POST['direccionestudiante'],'obtener':'Ahora debe registrar las coordenadas en el mapa','usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})
+            else:
+                return render(request,'AsignaYasegura/registrarestudiante.html',{'usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})
         else:
             return render(request,'AsignaYasegura/nopermitido.html')
     else:
@@ -367,5 +371,6 @@ def Estudiante_registrar(request):
 #SE CAE EL SISTEMA CUANDO LO ACTUALIZA DESPUES DE INICIAR SESION
 #director se registra en la base de datos al registrar inf institucion o prevaimente ya esta en la base de datosa?
 #falta validar los permisos para realizar ciertas acciones
+#modificar registro instituciones sobre relaciones horarios
 def Pruebas(request):
     return render(request,'AsignaYasegura/pruebas.html')

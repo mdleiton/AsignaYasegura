@@ -38,3 +38,17 @@ INSERT INTO AsignaYasegura_permiso(permiso,descripcion) VALUES ( 'Registrar inst
 INSERT INTO AsignaYasegura_permiso(permiso,descripcion) VALUES ( 'Inspecciones','permite inspeccionar instituciones de las escuelas');
 INSERT INTO AsignaYasegura_instruccion(tipo) VALUES ( 'primaria');
 INSERT INTO AsignaYasegura_instruccion(tipo) VALUES ( 'secundaria');
+INSERT INTO AsignaYasegura_nivel(nivel) VALUES ('Preparatoria');
+INSERT INTO AsignaYasegura_nivel(nivel) VALUES ('Básica elemental');
+INSERT INTO AsignaYasegura_nivel(nivel) VALUES ('Básica media');
+INSERT INTO AsignaYasegura_nivel(nivel) VALUES ('Básica superior');
+INSERT INTO AsignaYasegura_nivel(nivel) VALUES ('Bachillerato');
+INSERT INTO AsignaYasegura_jornada(jornada) VALUES ('matutina');
+INSERT INTO AsignaYasegura_jornada(jornada) VALUES ('vespertina');
+INSERT INTO AsignaYasegura_capacidadestandar( capacidad, nivel_id) VALUES( 25,1);
+INSERT INTO AsignaYasegura_capacidadestandar( capacidad, nivel_id) VALUES( 30,2);
+INSERT INTO AsignaYasegura_capacidadestandar( capacidad, nivel_id) VALUES( 35,3);
+INSERT INTO AsignaYasegura_capacidadestandar( capacidad, nivel_id) VALUES( 45,4);
+INSERT INTO AsignaYasegura_capacidadestandar( capacidad, nivel_id) VALUES( 45,5);
+INSERT INTO AsignaYasegura_curso(curso,nivel_id,instruccion_id) VALUES ('Primer año básico',2,1);
+INSERT INTO AsignaYasegura_curso(curso,nivel_id,instruccion_id) VALUES ('Segundo año básico',2,1);

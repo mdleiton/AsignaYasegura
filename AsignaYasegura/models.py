@@ -23,14 +23,6 @@ class Roles(models.Model):
 	def __str__(self):
 		return 'Rol: {}:{}'.format(self.rol, self.descripcion)
 
-class Permiso(models.Model):
-	id_permiso=models.AutoField(primary_key=True)
-	permiso=models.CharField(max_length=35)
-	descripcion=models.CharField(max_length=100)
-	
-	def __str__(self):
-		return '{}'.format(self.permiso)
-
 class Usuariorol(models.Model):
 	id_usuario_rol=models.AutoField(primary_key=True)
 	usuario=models.ForeignKey('Usuario')
@@ -38,6 +30,14 @@ class Usuariorol(models.Model):
 
 	def __str__(self):
 		return 'UsuarioRol: {}:{}'.format(self.rol, self.usuario)
+
+class Permiso(models.Model):
+	id_permiso=models.AutoField(primary_key=True)
+	permiso=models.CharField(max_length=35)
+	descripcion=models.CharField(max_length=100)
+	
+	def __str__(self):
+		return '{}'.format(self.permiso)
 
 class Usuariopermisos(models.Model):
 	id_usuario_permiso=models.AutoField(primary_key=True)
@@ -47,21 +47,27 @@ class Usuariopermisos(models.Model):
 	def __str__(self):
 		return 'UsuarioPermiso: {}:{}'.format(self.permiso, self.usuario)
 
-class Institucion(models.Model):
-	id_institucion= models.AutoField(primary_key=True)
-	nombre=models.CharField(max_length=50)
-	distrito = models.ForeignKey('Distrito')
-	direccion = models.CharField(max_length=50)
-	representante=models.OneToOneField('Director')
-	naulas=models.IntegerField()
-	ofertaacademica=models.ManyToManyField('OfertaAcademica')
-	instruccion=models.ManyToManyField('Instruccion')
-	carreras=models.ManyToManyField('CarrerasTecnicas')
-	horariom=models.IntegerField()
-	horariov=models.IntegerField()
+class Estudiante(models.Model):
+	ci= models.CharField(max_length=10,primary_key=True)
+	nombre = models.CharField(max_length=35)
+	apellidos = models.CharField(max_length=35)
+	direccion=models.CharField(max_length=50)
+	telefono=models.CharField(max_length=13)
+	curso=models.OneToOneField(User,null=True,blank=True)
+	paralelo=models.CharField(max_length=13,null=True,blank=True)
+	representante=models.ForeignKey('Usuario')
+	
+	def __str__(self):
+		return 'Estudiante: {}:{}'.format(self.ci, self.nombre)    
+
+class Discapacidad(models.Model):
+	id_discapacidad=models.AutoField(primary_key=True)
+	discapacidad=models.CharField(max_length=35)
+	porcentaje= models.FloatField()
+	estudiante=models.OneToOneField('Estudiante')
 
 	def __str__(self):
-		return 'Institucion: {}:{}'.format(self.nombre, self.distrito)
+		return 'Discapacidad: {}:{}'.format(self.estudiante, self.discapacidad) 
 
 class Distrito(models.Model):
 	codigo= models.CharField(primary_key=True,max_length=35)
@@ -79,7 +85,6 @@ class Instruccion(models.Model):
 	def __str__(self):
 		return 'Instruccion: {}:{}'.format(self.id_instruccion, self.tipo)
 
-#el director puede acceder al sistema. si asi eleminar y director sera otro usuario
 class Director(models.Model):
 	ci= models.CharField(max_length=10,primary_key=True)
 	nombre = models.CharField(max_length=35)
@@ -105,64 +110,76 @@ class CarrerasTecnicas(models.Model):
 	def __str__(self):
 		return 'CarrerasTecnicas: {}:{}'.format(self.idcarrera,  self.nombre)
 
-class Estudiante(models.Model):
-	ci= models.CharField(max_length=10,primary_key=True)
-	nombre = models.CharField(max_length=35)
-	apellidos = models.CharField(max_length=35)
-	direccion=models.CharField(max_length=50)
-	telefono=models.CharField(max_length=13)
-	curso=models.OneToOneField(User,null=True,blank=True)
-	paralelo=models.CharField(max_length=13,null=True,blank=True)
-	representante=models.ForeignKey('Usuario')
-	
-	def __str__(self):
-		return 'Estudiante: {}:{}'.format(self.ci, self.nombre)    
-
-class Discapacidad(models.Model):
-	id_discapacidad=models.AutoField(primary_key=True)
-	discapacidad=models.CharField(max_length=35)
-	porcentaje= models.FloatField()
-	estudiante=models.OneToOneField('Estudiante')
+class Institucion(models.Model):
+	id_institucion= models.AutoField(primary_key=True)
+	nombre=models.CharField(max_length=50)
+	distrito = models.ForeignKey('Distrito')
+	direccion = models.CharField(max_length=100)
+	representante=models.OneToOneField('Director')
+	naulas=models.IntegerField()
+	ofertaacademica=models.ManyToManyField('OfertaAcademica')
+	instruccion=models.ManyToManyField('Instruccion')
+	carreras=models.ManyToManyField('CarrerasTecnicas')
+	jornada=models.ManyToManyField('Jornada')
+	latitud=models.FloatField()
+	longitud=models.FloatField()
 
 	def __str__(self):
-		return 'Discapacidad: {}:{}'.format(self.estudiante, self.discapacidad) 
+		return 'Institucion: {}:{}'.format(self.nombre, self.distrito)
+
+class Jornada(models.Model):
+	idjornada=models.AutoField(primary_key=True)
+	jornada=models.CharField(max_length=35)
+
+	def __str__(self):
+		return 'Jornada: {}:{}'.format(self.idjornada, self.jornada)
+
+class Nivel(models.Model):
+	id_nivel=models.AutoField(primary_key=True)
+	nivel=models.CharField(max_length=35)
+
+	def __str__(self):
+		return 'nivel: {}:{}'.format(self.id_nivel, self.nivel)
 
 class Curso(models.Model):
 	id_curso=models.AutoField(primary_key=True)
 	curso=models.CharField(max_length=35)
+	nivel=models.ForeignKey('Nivel')
+	instruccion=models.ForeignKey('Instruccion')
+	
+	def __str__(self):
+		return 'curso: {}:{}'.format(self.id_curso, self.curso)
+
+class AulajornadaCurso(models.Model):
+	id_aulacurso=models.AutoField(primary_key=True)
+	aula=models.ForeignKey('Aula')
+	jornada=models.ForeignKey('Jornada')
+	curso=models.ForeignKey('Curso')
+	capacidad=models.IntegerField()
+	paralelo=models.CharField(max_length=35)
 
 	def __str__(self):
-		return 'curso: {}:{}'.format(self.idcurso, self.nombre)
+		return 'Aula-jornada-curso: {}:{}:{}'.format(self.aula, self.jornada,self.curso)
 
 class Aula(models.Model):
 	id_aula=models.AutoField(primary_key=True)
-	aula=models.CharField(max_length=35)
-	curso=models.ForeignKey('Curso')
 	capacidadmax=models.IntegerField()
-	capacidadm=models.IntegerField()
-	capacidadv=models.IntegerField()
-	paralelom=models.CharField(max_length=35)
-	paralelov=models.CharField(max_length=35)
 	capacidadpupitres=models.IntegerField()
-
+	longitud=models.FloatField()
+	amplitud=models.FloatField()
+	institucion=models.ForeignKey('Institucion')
+	
 	def __str__(self):
 		return 'Aula: {}:{}'.format(self.id_aula, self.capacidadmax)
 
-class AulaInstitucion(models.Model):
-	id_aulaInstitucion=models.AutoField(primary_key=True)
-	aula=models.ForeignKey('Aula')
-	institucion=models.ForeignKey('Institucion')
-
-	def __str__(self):
-		return 'Aula-institucion: {}:{}'.format(self.aula, self.institucion)
 
 class CapacidadEstandar(models.Model):
 	id_capacidad=models.AutoField(primary_key=True)
 	capacidad=models.IntegerField()
-	nivelestudio=models.CharField(max_length=35)
+	nivel=models.ForeignKey('Nivel')
 
 	def __str__(self):
-		return 'CapacidadEstandar: {}:{}'.format(self.nivelestudio, self.capacidad)
+		return 'CapacidadEstandar: {}:{}'.format(self.nivel, self.capacidad)
 
 class ProblemasAsignacion(models.Model):
 	id_problemas=models.AutoField(primary_key=True)

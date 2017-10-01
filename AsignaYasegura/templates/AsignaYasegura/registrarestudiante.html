@@ -15,22 +15,65 @@
       <li><a href="#">Ver información solicitudes</a></li>
 {% endblock %}
 {% block contenttitle %} Registro de estudiante {% endblock %}
+
+
+
 {% block content %} 
+{% if obtener %}
 <link href = "{% static 'css/stylemap.css'  %}" rel = "stylesheet" >
 <script src = "http://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyCv2SC4alSoTDCn9bYPyxMTLhiRIUHZgEU" > </script>  
+	<div class="row">
+		<form action="{% url 'AsignaYasegura:registrar_estudiante' %}" method="POST">
+			<div id = "main" class="col-md-6 col-md-offset-3">
+				<div class="form-group">
+	      			<label for="inputEmail" class="col-md-4 control-label">Dirección:</label>
+	      			<div class="col-md-8">
+	        			<input class="form-control" id=direccion type=text name=direccionestudiante size="35" value="{{direccion}}" readonly>
+	      			</div>
+	      		</div>
+	      		<div class="form-group">
+	      			<label for="inputEmail" class="col-md-4 control-label">Latitud:</label>
+	      			<div class="col-md-8">
+	        			<input class="form-control" id=latitud type=text name=latitud size="35">
+	      			</div>
+	      		</div>
+	      		<div class="form-group">
+	      			<label for="inputEmail" class="col-md-4 control-label">Longitud:</label>
+	      			<div class="col-md-8">
+	        			<input class="form-control" id=longitud type=text name=longitud size="35">
+	      			</div>
+	      		</div>
+	      	</div>
+		 		<div id = "mapDiv" class="col-md-6 ">
+		 			<br/>
+		 			<div id="map"></div>
+		 		</div>
+
+	 	</form>
+	</div>  
+
+<script >
+var ubicacion = {
+    "sitio": [{
+        "location": document.getElementById('direccion').value,
+    }],
+};
+ubicacion.sitio[0].location=document.getElementById('direccion').value;	
+console.log(ubicacion.sitio[0].location);
+
+
+</script> <script src = "{% static 'js/helper.js'  %}" > </script>
+{%else %}
 <script>		
-	function controla(f)
-	{
-		if(f.checked==true)
-		{
+	function controla(f){
+		if(f.checked==true){
 			document.getElementById('contr2').cheked=false;
 			document.getElementById('contr2').disabled=true;
 			document.getElementById('contr3').disabled=false;
 			document.getElementById('contr4').disabled=false;
 			document.getElementById('contr5').disabled=false;
 		}
-		else
-		{
+		else{
 			document.getElementById('contr2').cheked=false;
 			document.getElementById('contr2').disabled=false;
 			document.getElementById('contr3').disabled=true;
@@ -41,27 +84,21 @@
 			document.getElementById('contr5').value="";
 		}
 	}
-</script>
-<script>
-	function controlb(f)
-	{
-		if(f.checked==true)
-		{
+	function controlb(f){
+		if(f.checked==true){
 			document.getElementById('contr1').cheked=false;
 			document.getElementById('contr1').disabled=true;	
-		}
-		else
-		{
+		}else{
 			document.getElementById('contr1').cheked=false;
 			document.getElementById('contr1').disabled=false;
 		}
 	}
 </script>
 	<br>
-    <form action=mg.php method=get>
+    <form action="{% url 'AsignaYasegura:registrar_estudiante' %}" method="POST">
     	{% csrf_token %}
 		<div class="row">
-			<div class="col-md-5 col-md-offset-1 "  id=izquierda style="float:left">
+			<div class="col-md-6 col-md-offset-3 "  id=izquierda style="float:left">
 				<div id=estudiante>
 					<br><font color="#CC0000"><strong>Información general del estudiante</strong></font><br><br>
 					<table>
@@ -70,7 +107,7 @@
 						<tr><td>Apellidos:</td><td><input type=text name=apellidosestudiante size="35" required></td></tr>
 						<tr><td>Nombres:</td><td><input type=text name=nombresestudiante size="35" required></td></tr>
 						<tr><td>Fecha de nacimiento:</td><td><input type=text name=nacimientoestudiante size="35" required></td></tr>
-						<tr><td>Dirección:</td><td><input type=text name=direccionestudiante size="35" required></td></tr>
+						<tr><td>Dirección:</td><td><input id=direccion type=text name=direccionestudiante size="35" required></td>
 						<tr><td>Curso:</td><td><select id="optionlist" name=curso>
 		            				<option value="1">Primer año básico</option>
 		            				<option value="2">Segundo año básico</option>
@@ -93,31 +130,16 @@
 				</div>		
 				<br><br>
 			</div>
-		    <div class="col-md-6"  id=derecha  style="float:right">
-		    	<div id = "main" >
-  					<div id = "mapDiv" >
-  						<br><font color="#CC0000"><strong>Indique su dirección exacta</strong></font><br><br>
-    					 <div id = "map" > </div> 
-    				</div>
-    			</div>
-    		</div>
     	</div>	
     	<div class="row text-center block-center">
     		<input type=submit value=Registrar>	<input type=reset value=Cancelar>
 		</div>
 	</form>
-<script >
-    var ubicacion = {
-        "location": "Data de Villamil, Guayas"
-    };
-var education = {
-    "schools": [{
-        "location": "Av. Jaime Roldos Aguilera, Playas",
-    }, {
-        "location": "Campus Prosperina, Guayaquil"
-    }],
-};
-
-
-</script> <script src = "{% static 'js/helper.js'  %}" > </script>
+{% endif %}
+<script>
+$(document).ready(function(){
+    $("#mostrarmodal").modal("show");
+	$(".modal-dialog").attr("style","height: 378px; z-index: 2;")
+});
+</script>
 {% endblock %}

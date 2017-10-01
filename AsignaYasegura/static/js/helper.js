@@ -5,10 +5,22 @@ var map; // declare a global map variable
 /*
 Start here! initializeMap() is called when page is loaded.
 */
+function arrastreTermino(event) {
+        var lat = event.latLng.lat();
+        var lng = event.latLng.lng();
+        document.getElementById('latitud').value=lat;
+        document.getElementById('longitud').value=lon;       
+    }
+
 function initializeMap() {
     var locations;
+    
     var mapOptions = {
-        disableDefaultUI: true
+      zoomControl: true,
+      scaleControl: true,
+      streetViewControl: true,
+      rotateControl: true,
+      fullscreenControl: true
     };
     map = new google.maps.Map(document.querySelector('#map'), mapOptions);
     /*
@@ -16,9 +28,7 @@ function initializeMap() {
     */
     function locationFinder() {
         var locations = [];
-        locations.push(ubicacion.location);
-        // iterates through school locations and appends each location to the locations array. Note that forEach is used for array iteration
-        education.schools.forEach(function(school) {
+        ubicacion.sitio.forEach(function(school) {
             locations.push(school.location);
         });
         
@@ -31,14 +41,18 @@ function initializeMap() {
     function createMapMarker(placeData) {
         // The next lines save location data from the search result object to local variables
         var lat = placeData.geometry.location.lat(); // latitude from the place service
+        document.getElementById('latitud').value=lat;
         var lon = placeData.geometry.location.lng(); // longitude from the place service
+        document.getElementById('longitud').value=lon;
         var name = placeData.formatted_address; // name of the place from the place service
         var bounds = window.mapBounds; // current boundaries of the map window
         // marker is an object with additional data about the pin for a single location
         var marker = new google.maps.Marker({
             map: map,
             position: placeData.geometry.location,
-            title: name
+            title: name,
+            draggable: true,
+            animation: google.maps.Animation.BOUNCE
         });
 
         // infoWindows are the little helper windows that open when you click or hover over a pin on a map. They usually contain more information
@@ -53,6 +67,10 @@ function initializeMap() {
             '</div>';
         var infoWindow = new google.maps.InfoWindow({
             content: contentString
+        });
+        marker.setMap(map);
+        google.maps.event.addListener(marker, "dragend", function (event) {
+            arrastreTermino(event);
         });
 
         google.maps.event.addListener(marker, 'click', function() {
