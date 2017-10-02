@@ -54,14 +54,13 @@ def login(request):
             usuario=Usuario.objects.filter(usuario=user)[0]
             if(user.is_superuser and user.is_staff and tipologin=="administrador" and tipologin==Usuariorol.objects.filter(usuario=usuario)[0].rol.rol):
                 auth_login(request, user)
-                return render(request,'AsignaYasegura/menuadministrador.html',{'estudiantes':Estudiante.objects.all().count(),'usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username}),'porcentajeescuelas':(Institucion.objects.all().count()*100)/Distrito.objects.all().aggregate(Sum('cantidadinstituciones'))['cantidadinstituciones__sum']
-            })
+                return redirect("AsignaYasegura:Menu")
             elif(user.is_superuser and user.is_staff and tipologin=="digitador" and tipologin==Usuariorol.objects.filter(usuario=usuario)[0].rol.rol ):
                 auth_login(request, user)
-                return render(request,'AsignaYasegura/menudigitador.html',{'usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})
+                return redirect("AsignaYasegura:Menu")
             elif(user.is_superuser and user.is_staff and tipologin=="padre" and "padre de familia"==Usuariorol.objects.filter(usuario=usuario)[0].rol.rol ):
                 auth_login(request, user)
-                return render(request,'AsignaYasegura/menupadredefamilia.html',{'usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})
+                return redirect("AsignaYasegura:Menu")
             else:
                 return render(request,'AsignaYasegura/index.html',{'error':"incorrecto : nombre de usuario , contraseña o tipo de usuario"})
         else:
@@ -107,7 +106,7 @@ def PPFF_registrarinicio(request):
                 form=PPFFForm()
                 user1 = authenticate(username=request.POST['usuario'], password=request.POST['contrasena'])
                 auth_login(request, user1)
-                return render(request,'AsignaYasegura/menupadredefamilia.html',{'tipo_objeto':"padre de familia","mjsregistrogeolocalizacion":"Recuerde que antes de registrar estudiantes, debe registrar su ubicación en el mapa.",'usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})
+                return redirect("AsignaYasegura:Menu")
             else:
                 form=PPFFForm()
                 return render(request,'AsignaYasegura/registrarpadreinicio.html',{'tipo_objeto':"padre de familia",'form': form, 'error':"nombre de usuario ya existente o cédula de identidad ya registrado"})    
@@ -402,13 +401,32 @@ def PPFF_registrargeolocalizacion(request):
 
 #-----------------------------------------------------VISTAS PADRE DE FAMILIA-------------------------------------------------
 
+#registar y valida la ubicacion que el padre del familia registre en el mapa
+def Padre_registrargeolocalizacion(request):
+    if request.user.username:
+        usuario=Usuario.objects.filter(usuario=request.user)[0]
+        if(request.user.is_superuser and request.user.is_authenticated and "padre de familia"==Usuariorol.objects.filter(usuario=usuario)[0].rol.rol):
+            if request.method == 'POST': 
+                padre = get_object_or_404(Usuario, pk=request.POST['infoadd'])
+                if validarDireccion(padre.ci,request.POST['latitud'],request.POST['longitud']):
+                    GeolocalizacionPadre(padre=padre,latitud=request.POST['latitud'],longitud=request.POST['longitud'],direccion=request.POST['direccionestudiante']).save()
+                    return render(request,'AsignaYasegura/menupadredefamilia.html',{'mjsexitoso':'Registro exito de ubicación.','usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})
+                else:
+                    return render(request,'AsignaYasegura/menupadredefamilia.html',{'error':"Error la dirección ingresado no concuerda con la almacenada en el INEC",'usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})
+            else:
+                return render(request,'AsignaYasegura/registrargeolocalizacionpadre.html',{'infoadd':usuario.ci,'direccion':usuario.direccion,'usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})
+        else:
+            return render(request,'AsignaYasegura/nopermitido.html')
+    else:
+        return render_to_response('AsignaYasegura/index.html')
+
 def Estudiante_registrar(request):
     if request.user.username:
         usuario=Usuario.objects.filter(usuario=request.user)[0]
         if(request.user.is_superuser and request.user.is_authenticated and "padre de familia"==Usuariorol.objects.filter(usuario=usuario)[0].rol.rol):
             if request.method == 'POST': 
-                print(request.POST['direccionestudiante'])
-                return render(request,'AsignaYasegura/registrarestudiante.html',{'direccion':request.POST['direccionestudiante'],'obtener':'Ahora debe registrar las coordenadas en el mapa','usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})
+                GeolocalizacionPadre(padre=padre,latitud=request.POST['latitud'],longitud=request.POST['longitud'],direccion=request.POST['direccionestudiante']).save()
+                return render(request,'AsignaYasegura/menupadredefamilia.html',{'direccion':request.POST['direccionestudiante'],'obtener':'Ahora debe registrar las coordenadas en el mapa','usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})
             else:
                 return render(request,'AsignaYasegura/registrarestudiante.html',{'usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})
         else:
@@ -424,3 +442,4 @@ def Estudiante_registrar(request):
 #modificar registro instituciones sobre relaciones horarios
 #validar que cada padre de familia tenga su respectiva latitud , longitud antes de registrar algun padre
 #probar funciones de editar info y contrasena de todoslos tipos de usuario
+#validar que cuando ya este registrado solo actuale esa informacion

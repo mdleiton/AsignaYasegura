@@ -1,0 +1,77 @@
+{% extends "AsignaYasegura/base_digitadores.html" %}
+{% load static %}
+{% block title %} Menu Padre de familia {% endblock %} 
+
+{% block menu%}
+  <li ><a href="{% url 'AsignaYasegura:Menu' %}">Información general</a></li>
+  <li class="active"><a href="{% url 'AsignaYasegura:Padre_registrargeolocalizacion' %}">Registrar ubicación en el mapa</a></li>
+  <li class="dropdown">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown"> Estudiantes  <b class="caret"></b></a>
+    <ul class="dropdown-menu">
+       <li><a href="{% url 'AsignaYasegura:registrar_estudiante' %}">Registrar Estudiantes</a></li>
+       <li><a href="#">Editar Informacion estudiantes</a></li>
+      <li><a href="#">Eliminar registro de estudiante</a></li>
+    </ul>
+  </li>
+  <li><a href="#">Ver información solicitudes</a></li>
+{% endblock %}
+{% block contenttitle %} Registrar ubicación en el mapa {% endblock %}
+{% block content %} 
+<link href = "{% static 'css/stylemap.css'  %}" rel = "stylesheet" >
+<script src = "http://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyCv2SC4alSoTDCn9bYPyxMTLhiRIUHZgEU" > </script>  
+	<div class="row">
+		<form action="{% url 'AsignaYasegura:Padre_registrargeolocalizacion' %}" method="POST">
+			<div id = "main" class="col-md-6 col-md-offset-3">
+				{% csrf_token %}
+				<input name="sinlatitud"  value="0" style="display : none;" readonly >
+				<div class="form-group">
+	      			<label for="inputEmail" class="col-md-4 control-label">Dirección:</label>
+	      			<div class="col-md-8">
+	        			<input class="form-control" id=direccion type=text name=direccionestudiante size="35" value="{{direccion}}" readonly>
+	      			</div>
+	      		</div>
+	      		<div class="form-group">
+	      			<label for="inputEmail" class="col-md-4 control-label">Latitud:</label>
+	      			<div class="col-md-8">
+	        			<input class="form-control" id=latitud type=text name=latitud size="35">
+	      			</div>
+	      		</div>
+	      		<div class="form-group">
+	      			<label for="inputEmail" class="col-md-4 control-label">Longitud:</label>
+	      			<div class="col-md-8">
+	        			<input class="form-control" id=longitud type=text name=longitud size="35">
+	      			</div>
+	      		</div>
+	      		<div class="form-group">
+	      			<div class="col-md-8 col-md-offset-4">
+	      			<input name="infoadd"  value="{{infoadd}}" style="visibility:hidden" readonly >
+	      			</div>
+	      		</div>
+	      	</div>
+	      	<br/>
+	      	<div class="col-md-4 col-md-offset-5">
+	      		<div class="form-group">
+	      		 <input class="btn btn-danger block-center" type="submit" value="Registrar geolocalización" />
+	      		</div>
+	      	</div>
+
+	 		<div id = "mapDiv" class="col-md-6 ">
+	 			<br/>
+	 			<div id="map"></div>
+	 		</div>
+	 	</form>
+	</div>  
+
+<script >
+var ubicacion = {
+    "sitio": [{
+        "location": document.getElementById('direccion').value,
+    }],
+};
+ubicacion.sitio[0].location=document.getElementById('direccion').value;	
+console.log(ubicacion.sitio[0].location);
+
+</script> <script src = "{% static 'js/helper.js'  %}" > </script>
+
+
+{% endblock %}

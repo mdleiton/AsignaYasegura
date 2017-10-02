@@ -4,6 +4,7 @@
 
 {% block menu%}
   <li class="active"><a href="{% url 'AsignaYasegura:Menu' %}">Información general</a></li>
+  <li><a href="{% url 'AsignaYasegura:Padre_registrargeolocalizacion' %}">Registrar ubicación en el mapa</a></li>
   <li class="dropdown">
     <a href="#" class="dropdown-toggle" data-toggle="dropdown"> Estudiantes  <b class="caret"></b></a>
     <ul class="dropdown-menu">
@@ -12,7 +13,6 @@
       <li><a href="#">Eliminar registro de estudiante</a></li>
     </ul>
   </li>
-  <li class="active"><a href="#">Registrar ubicación en el mapa</a></li>
   <li><a href="#">Ver información solicitudes</a></li>
 {% endblock %}
 {% block contenttitle %} Bienvenidos {% endblock %}
@@ -23,6 +23,15 @@
     {% if mjsexitoso %}
     	{{mjsexitoso|capfirst}}
 	{% endif %}
+	{% if error %}
+    	{{error|capfirst}}
+	{% endif %}
+	{% if errorcontrasena %}
+        {{ errorcontrasena |capfirst}}
+    {% endif %}
+	{% if mjscontrasena %}
+        {{ mjscontrasena |capfirst}}
+    {% endif %}
 	<div class="block-center ">
 	<table class="table table-responsive table-striped table-hover table-bordered ">
   		<thead>
