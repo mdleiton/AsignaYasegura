@@ -59,10 +59,10 @@ class Usuariopermisos(models.Model):
 
 class Estudiante(models.Model):
 	ci= models.CharField(max_length=10,primary_key=True)
+	nacimiento=models.DateTimeField()
 	nombre = models.CharField(max_length=35)
 	apellidos = models.CharField(max_length=35)
 	direccion=models.CharField(max_length=100)
-	telefono=models.CharField(max_length=13)
 	representante=models.ForeignKey('Usuario')
 	latitud=models.FloatField(null=True,blank=True)
 	longitud=models.FloatField(null=True,blank=True)
@@ -80,7 +80,7 @@ class Registro(models.Model):
 		return 'Estudiante-Aula-Jornada-Curso: {}:{}'.format(self.estudiante, self.aulajornadacurso)
 
 class Discapacidad(models.Model):
-	id_discapacidad=models.AutoField(primary_key=True)
+	codigo=models.CharField(max_length=10,primary_key=True)
 	discapacidad=models.CharField(max_length=35)
 	porcentaje= models.FloatField()
 	estudiante=models.OneToOneField('Estudiante')

@@ -3,17 +3,17 @@
 {% block title %} Menu Padre de familia {% endblock %} 
 
 {% block menu%}
-  <li ><a href="{% url 'AsignaYasegura:Menu' %}">Información general</a></li>
-  <li class="active"><a href="{% url 'AsignaYasegura:Padre_registrargeolocalizacion' %}">Registrar/Actualizar ubicación en el mapa</a></li>
-  <li class="dropdown">
-    <a href="#" class="dropdown-toggle" data-toggle="dropdown"> Estudiantes  <b class="caret"></b></a>
-    <ul class="dropdown-menu">
-       <li><a href="{% url 'AsignaYasegura:registrar_estudiante' %}">Registrar Estudiantes</a></li>
-       <li><a href="#">Editar Informacion estudiantes</a></li>
-      <li><a href="#">Eliminar registro de estudiante</a></li>
-    </ul>
-  </li>
-  <li><a href="#">Ver información solicitudes</a></li>
+ <li ><a href="{% url 'AsignaYasegura:Menu' %}">Información general</a></li>
+  	<li><a href="{% url 'AsignaYasegura:Padre_registrargeolocalizacion' %}">Registrar/Actualizar ubicación en el mapa</a></li>
+  	<li class="dropdown">
+	    <a href="#" class="dropdown-toggle" data-toggle="dropdown"> Estudiantes  <b class="caret"></b></a>
+	    <ul class="dropdown-menu">
+	      	<li class="active"><a href="{% url 'AsignaYasegura:registrar_estudiante' %}">Registrar Estudiantes</a></li>
+	      	<li><a href="#">Editar Informacion estudiantes</a></li>
+	     	<li><a href="#">Eliminar registro de estudiante</a></li>
+	    </ul>
+  	</li>
+  	<li><a href="#">Ver información solicitudes</a></li>
 {% endblock %}
 {% block contenttitle %} Registrar ubicación en el mapa {% endblock %}
 {% block content %}
@@ -21,7 +21,7 @@
 <link href = "{% static 'css/stylemap.css'  %}" rel = "stylesheet" >
 <script src = "http://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyCv2SC4alSoTDCn9bYPyxMTLhiRIUHZgEU" > </script>  
 	<div class="row">
-		<form action="{% url 'AsignaYasegura:Padre_registrargeolocalizacion' %}" method="POST">
+		<form action="{% url 'AsignaYasegura:Estudiante_registrargeolocalizacion' %}" method="POST">
 			<div id = "main" class="col-md-6 col-md-offset-3">
 				{% csrf_token %}
 				<input name="sinlatitud"  value="0" style="display : none;" readonly >

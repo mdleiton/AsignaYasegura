@@ -9,18 +9,19 @@ function arrastreTermino(event) {
         var lat = event.latLng.lat();
         var lng = event.latLng.lng();
         document.getElementById('latitud').value=lat;
-        document.getElementById('longitud').value=lon;       
+        document.getElementById('longitud').value=lng;       
     }
 
 function initializeMap() {
     var locations;
     
     var mapOptions = {
-      zoomControl: true,
-      scaleControl: true,
-      streetViewControl: true,
-      rotateControl: true,
-      fullscreenControl: true
+        zoomControl: true,
+        scaleControl: true,
+        streetViewControl: true,
+        rotateControl: true,
+        fullscreenControl: true,
+        mapTypeId: 'satellite'
     };
     map = new google.maps.Map(document.querySelector('#map'), mapOptions);
     /*
@@ -52,7 +53,7 @@ function initializeMap() {
             position: placeData.geometry.location,
             title: name,
             draggable: true,
-            animation: google.maps.Animation.BOUNCE
+            label:'A'
         });
 
         // infoWindows are the little helper windows that open when you click or hover over a pin on a map. They usually contain more information

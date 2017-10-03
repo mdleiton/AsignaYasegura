@@ -3,6 +3,8 @@ from .models import *
 from django.contrib.auth import login as auth_login,logout as auth_logout,authenticate
 from .forms import *
 from django.db.models import Sum
+import datetime
+from datetime import timedelta, date
 
 #------------------------------------------------FUNCIONES GENERALES----------------------------------------------------------------
 #permite obtener una lista de diccionario con la informacion completa de todos los usuario de rol digitador(informacion personal, permisos)
@@ -406,27 +408,39 @@ def Padre_registrargeolocalizacion(request):
     if request.user.username:
         usuario=Usuario.objects.filter(usuario=request.user)[0]
         if(request.user.is_superuser and request.user.is_authenticated and "padre de familia"==Usuariorol.objects.filter(usuario=usuario)[0].rol.rol):
+            registro=GeolocalizacionPadre.objects.filter(padre=usuario)
             if request.method == 'POST': 
                 padre = get_object_or_404(Usuario, pk=request.POST['infoadd'])
+                if registro:
+                    GeolocalizacionPadre.objects.filter(padre=usuario).delete()
+                    GeolocalizacionPadre(padre=padre,latitud=request.POST['latitud'],longitud=request.POST['longitud'],direccion=request.POST['direccionestudiante']).save()
+                    return render(request,'AsignaYasegura/menupadredefamilia.html',{'mjsexitoso':'Actualización exitosa de ubicación.','usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})
                 if validarDireccion(padre.ci,request.POST['latitud'],request.POST['longitud']):
                     GeolocalizacionPadre(padre=padre,latitud=request.POST['latitud'],longitud=request.POST['longitud'],direccion=request.POST['direccionestudiante']).save()
-                    return render(request,'AsignaYasegura/menupadredefamilia.html',{'mjsexitoso':'Registro exito de ubicación.','usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})
+                    return render(request,'AsignaYasegura/menupadredefamilia.html',{'mjsexitoso':'Registro exitoso de ubicación.','usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})
                 else:
                     return render(request,'AsignaYasegura/menupadredefamilia.html',{'error':"Error la dirección ingresado no concuerda con la almacenada en el INEC",'usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})
             else:
+                if registro:
+                    return render(request,'AsignaYasegura/registrargeolocalizacionpadre.html',{'latitud':registro[0].latitud,'longitud':registro[0].longitud,"mjsactualizar":"usted ya registro su ubicación. Desea actualizar??",'infoadd':usuario.ci,'direccion':usuario.direccion,'usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})    
                 return render(request,'AsignaYasegura/registrargeolocalizacionpadre.html',{'infoadd':usuario.ci,'direccion':usuario.direccion,'usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})
         else:
             return render(request,'AsignaYasegura/nopermitido.html')
     else:
         return render_to_response('AsignaYasegura/index.html')
 
+#registrar los estudiantes, primero valida que el padre ya tenga registrada la información de ubicación
 def Estudiante_registrar(request):
     if request.user.username:
         usuario=Usuario.objects.filter(usuario=request.user)[0]
         if(request.user.is_superuser and request.user.is_authenticated and "padre de familia"==Usuariorol.objects.filter(usuario=usuario)[0].rol.rol):
-            if request.method == 'POST': 
-                GeolocalizacionPadre(padre=padre,latitud=request.POST['latitud'],longitud=request.POST['longitud'],direccion=request.POST['direccionestudiante']).save()
-                return render(request,'AsignaYasegura/menupadredefamilia.html',{'direccion':request.POST['direccionestudiante'],'obtener':'Ahora debe registrar las coordenadas en el mapa','usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})
+            if request.method == 'POST':
+                curso = get_object_or_404(Curso, pk=request.POST['curso'])
+                estudiante=Estudiante(ci=request.POST['cedula'],nombre=request.POST['nombres'],apellidos=request.POST['apellidos'],direccion=request.POST['direccion'],nacimiento=datetime.datetime.strptime(request.POST['nacimiento'],"%Y-%m-%d"),representante=usuario,curso=curso)
+                estudiante.save()
+                if request.POST['discapacidad']=="1":
+                    Discapacidad(discapacidad=request.POST['conadistipo'],codigo=request.POST['conadis'],porcentaje=request.POST['conadisd'],estudiante=estudiante).save()                   
+                return render(request,'AsignaYasegura/registrargeolocalizacionestudiante.html',{'infoadd':estudiante.ci,'direccion':request.POST['direccion'],'obtener':'Ahora debe registrar las coordenadas en el mapa','usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})
             else:
                 return render(request,'AsignaYasegura/registrarestudiante.html',{'usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})
         else:
@@ -434,12 +448,24 @@ def Estudiante_registrar(request):
     else:
         return render_to_response('AsignaYasegura/index.html')
 
+def Estudiante_registrargeolocalizacion(request):
+    if request.user.username:
+        usuario=Usuario.objects.filter(usuario=request.user)[0]
+        if(request.user.is_superuser and request.user.is_authenticated and "padre de familia"==Usuariorol.objects.filter(usuario=usuario)[0].rol.rol):
+            if request.method == 'POST' and validarDireccion(usuario.ci,request.POST['latitud'],request.POST['longitud']):
+                estudiante = get_object_or_404(Estudiante, pk=request.POST['infoadd'])
+                estudiante.latitud=request.POST['latitud']
+                estudiante.longitud=request.POST['longitud']
+                estudiante.save()
+                return render(request,'AsignaYasegura/registrarestudiante.html',{'mjsexitoso':'Registro exitoso de ubicación del estudiante.','usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})
+            else:
+                return render(request,'AsignaYasegura/registroestudiante.html',{'usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})
+        else:
+            return render(request,'AsignaYasegura/nopermitido.html')
+    else:
+        return render_to_response('AsignaYasegura/index.html')
 #validar cambio de pk de inrf de administradores
 #validar username
 #validar en los registros que username sea unico
 #arreglar cupos admin: ejecutar asignacion
-#SE CAE EL SISTEMA CUANDO LO ACTUALIZA DESPUES DE INICIAR SESION
-#modificar registro instituciones sobre relaciones horarios
 #validar que cada padre de familia tenga su respectiva latitud , longitud antes de registrar algun padre
-#probar funciones de editar info y contrasena de todoslos tipos de usuario
-#validar que cuando ya este registrado solo actuale esa informacion

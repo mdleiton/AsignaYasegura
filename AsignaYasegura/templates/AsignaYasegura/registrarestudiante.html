@@ -4,7 +4,7 @@
 
 {% block menu%}
 	<li ><a href="{% url 'AsignaYasegura:Menu' %}">Información general</a></li>
-  	<li><a href="{% url 'AsignaYasegura:Padre_registrargeolocalizacion' %}">Registrar ubicación en el mapa</a></li>
+  	<li><a href="{% url 'AsignaYasegura:Padre_registrargeolocalizacion' %}">Registrar/Actualizar ubicación en el mapa</a></li>
   	<li class="dropdown">
 	    <a href="#" class="dropdown-toggle" data-toggle="dropdown"> Estudiantes  <b class="caret"></b></a>
 	    <ul class="dropdown-menu">
@@ -19,51 +19,6 @@
 
 
 {% block content %} 
-{% if obtener %}
-<link href = "{% static 'css/stylemap.css'  %}" rel = "stylesheet" >
-<script src = "http://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyCv2SC4alSoTDCn9bYPyxMTLhiRIUHZgEU" > </script>  
-	<div class="row">
-		<form action="{% url 'AsignaYasegura:registrar_estudiante' %}" method="POST">
-			<div id = "main" class="col-md-6 col-md-offset-3">
-				<div class="form-group">
-	      			<label for="inputEmail" class="col-md-4 control-label">Dirección:</label>
-	      			<div class="col-md-8">
-	        			<input class="form-control" id=direccion type=text name=direccionestudiante size="35" value="{{direccion}}" readonly>
-	      			</div>
-	      		</div>
-	      		<div class="form-group">
-	      			<label for="inputEmail" class="col-md-4 control-label">Latitud:</label>
-	      			<div class="col-md-8">
-	        			<input class="form-control" id=latitud type=text name=latitud size="35">
-	      			</div>
-	      		</div>
-	      		<div class="form-group">
-	      			<label for="inputEmail" class="col-md-4 control-label">Longitud:</label>
-	      			<div class="col-md-8">
-	        			<input class="form-control" id=longitud type=text name=longitud size="35">
-	      			</div>
-	      		</div>
-	      	</div>
-		 		<div id = "mapDiv" class="col-md-6 ">
-		 			<br/>
-		 			<div id="map"></div>
-		 		</div>
-
-	 	</form>
-	</div>  
-
-<script >
-var ubicacion = {
-    "sitio": [{
-        "location": document.getElementById('direccion').value,
-    }],
-};
-ubicacion.sitio[0].location=document.getElementById('direccion').value;	
-console.log(ubicacion.sitio[0].location);
-
-
-</script> <script src = "{% static 'js/helper.js'  %}" > </script>
-{%else %}
 <script>		
 	function controla(f){
 		if(f.checked==true){
@@ -94,52 +49,72 @@ console.log(ubicacion.sitio[0].location);
 		}
 	}
 </script>
-	<br>
-    <form action="{% url 'AsignaYasegura:registrar_estudiante' %}" method="POST">
-    	{% csrf_token %}
-		<div class="row">
-			<div class="col-md-6 col-md-offset-3 "  id=izquierda style="float:left">
-				<div id=estudiante>
-					<br><font color="#CC0000"><strong>Información general del estudiante</strong></font><br><br>
-					<table>
-						<tr><td>Número de matrícula:</td><td><input type=text name=matricula size="35" required></td></tr>
-						<tr><td>Número de cédula:</td><td><input type=text name=cedula size="35" required></td></tr>
-						<tr><td>Apellidos:</td><td><input type=text name=apellidosestudiante size="35" required></td></tr>
-						<tr><td>Nombres:</td><td><input type=text name=nombresestudiante size="35" required></td></tr>
-						<tr><td>Fecha de nacimiento:</td><td><input type=text name=nacimientoestudiante size="35" required></td></tr>
-						<tr><td>Dirección:</td><td><input id=direccion type=text name=direccionestudiante size="35" required></td>
-						<tr><td>Curso:</td><td><select id="optionlist" name=curso>
-		            				<option value="1">Primer año básico</option>
-		            				<option value="2">Segundo año básico</option>
-		            				<option value="3">Tercer año básico</option>3 - Antigua Dirección 	Provincial de Educación-Colegio Vicente Rocafuerte</option>
-		            				<option value="4">Cuarto año básico</option>
-		            				<option value="5">Quinto año básico</option>
-		            				<option value="6">Sexto año básico</option>
-		            				<option value="7">Séptimo año básico</option>
-		            				<option value="8">Octavo año básico</option>
-		            				<option value="9">Noveno año básico</option>
-		            				<option value="10">Décimo año básico</option>
-		            				<option value="11">Primero bachillerato</option>
-							<option value="12">Segundo bachillerato</option>
-		            				<option value="13">Tercero bachillerato</option></select></td></tr>
-						<tr><td>Capacidades especiales:</td><td>Sí<input type="checkbox" id="contr1" name="discapacidad[]" value="1" onClick="controla(this)">    No<input type="checkbox" id="contr2" name="discapacidad[]" value="2" onClick="controlb(this)"></td></tr>
-						<tr><td>Código del Conadis:</td><td><input type=text id="contr4" name=conadis size="35" disabled></td></tr>
-						<tr><td>Tipo de discapacidad:</td><td><input type=text id="contr5" name=conadis size="35" disabled></td></tr>
-						<tr><td>Porcentaje de discapacidad:</td><td><input type=text id="contr3" name=porcentajed size="35" disabled></td></tr>       
-					</table> 
-				</div>		
-				<br><br>
-			</div>
-    	</div>	
-    	<div class="row text-center block-center">
-    		<input type=submit value=Registrar>	<input type=reset value=Cancelar>
+<br>
+<form action="{% url 'AsignaYasegura:registrar_estudiante' %}" method="POST">
+	{% csrf_token %}
+	<div class="row">
+		<div class="col-md-6 col-md-offset-3 "  id=izquierda style="float:left">
+			<div id=estudiante>
+				<br><font color="#CC0000"><strong>Información general del estudiante</strong></font><br><br>
+				<table>
+					<tr><td>Número de cédula:</td><td><input type=text name=cedula size="35" required></td></tr>
+					<tr><td>Apellidos:</td><td><input type=text name=apellidos size="35" required></td></tr>
+					<tr><td>Nombres:</td><td><input type=text name=nombres size="35" required></td></tr>
+					<tr><td>Fecha de nacimiento:</td><td><input type="date" name=nacimiento size="35" placeholder="fecha: AA-MM-DD" required></td></tr>
+					<tr><td>Dirección:</td><td><input id=direccion type=text name=direccion size="35" required></td>
+					<tr><td>Curso:</td><td><select id="optionlist" name=curso>
+	            				<option value="1">Primer año básico</option>
+	            				<option value="2">Segundo año básico</option>
+	            				<option value="3">Tercer año básico</option>3 - Antigua Dirección 	Provincial de Educación-Colegio Vicente Rocafuerte</option>
+	            				<option value="4">Cuarto año básico</option>
+	            				<option value="5">Quinto año básico</option>
+	            				<option value="6">Sexto año básico</option>
+	            				<option value="7">Séptimo año básico</option>
+	            				<option value="8">Octavo año básico</option>
+	            				<option value="9">Noveno año básico</option>
+	            				<option value="10">Décimo año básico</option>
+	            				<option value="11">Primero bachillerato</option>
+						<option value="12">Segundo bachillerato</option>
+	            				<option value="13">Tercero bachillerato</option></select></td></tr>
+					<tr><td>Capacidades especiales:</td><td>Sí<input type="checkbox" id="contr1" name="discapacidad" value="1" onClick="controla(this)">    No<input type="checkbox" id="contr2" name="discapacidad" value="2" onClick="controlb(this)"></td></tr>
+					<tr><td>Código del Conadis:</td><td><input type=text id="contr4" name=conadis size="35" disabled></td></tr>
+					<tr><td>Tipo de discapacidad:</td><td><input type=text id="contr5" name=conadistipo size="35" disabled></td></tr>
+					<tr><td>Porcentaje de discapacidad:</td><td><input type=text id="contr3" name=porcentajed size="35" disabled></td></tr>       
+				</table> 
+			</div>		
+			<br><br>
 		</div>
-	</form>
-{% endif %}
-<script>
-$(document).ready(function(){
-    $("#mostrarmodal").modal("show");
+		<input class="btn btn-primary col-md-1 col-md-offset-3" type=submit value=Registrar>
+			<input class="btn btn-danger col-md-1 col-md-offset-1" type=reset value=Limpiar><a class="btn btn-danger col-md-1 col-md-offset-1" href="{% url 'AsignaYasegura:Menu' %}">Menú</a>
+	</div>	
+</form>
+
+{% if mjsexitoso %}
+    <div class="modal fade" id="mostrarmodalactualizar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+       <div class="modal-dialog" role="document">
+          <div class="modal-content">
+             <div class="modal-header">
+            	<button href="/login/" type="button" class="close" data-dismiss="modal" aria-label="close"><span aria-hidden="true">&times;</span></button>
+                <h3 class="modal-title" id="myModalLabel">Registro completo de estudiante.</h3>
+        	</div>
+         	<div class="modal-body">
+              	<h4> {{mjsexitoso}}</h4>   
+            <a type="button" href="{% url 'AsignaYasegura:Menu' %}" class="btn btn-danger block-center">Menú</a>
+         	</div>
+         	<div class="modal-footer">
+            	<a data-dismiss="modal" class="btn btn-danger">Registrar otro estudiante</a>
+         	</div>
+         </div>
+       </div>
+    </div>
+	<script >
+	$(document).ready(function(){
+	$("#mostrarmodalactualizar").modal("show");
 	$(".modal-dialog").attr("style","height: 378px; z-index: 2;")
-});
-</script>
+	});
+
+	</script>
+
+{% endif %}
+
 {% endblock %}
