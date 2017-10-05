@@ -31,3 +31,9 @@
 
 }
 
+#formulariop p input, select{
+	text-align: center;
+	position: relative;
+	left:1%;
+
+}

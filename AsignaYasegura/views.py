@@ -299,17 +299,6 @@ def Adquisicion_datos(request):
         usuario=Usuario.objects.filter(usuario=request.user)[0]
         permiso=validarpermiso(usuario,"Registrar instituciones")
         if(request.user.is_superuser and permiso and request.user.is_authenticated and "digitador"==Usuariorol.objects.filter(usuario=usuario)[0].rol.rol):
-            return render(request,'AsignaYasegura/Adquisicion_datos.php',{'carreras':CarrerasTecnicas.objects.all(),'distritos':Distrito.objects.all(),'usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})
-        else:
-            return render(request,'AsignaYasegura/nopermitido.html')
-    else:
-        return render_to_response('AsignaYasegura/index.html')
-
-#permite ingresar la informacion de la infraestructura capacidad de la institucion
-def Calcular_capacidad(request):
-    if request.user.username:
-        usuario=Usuario.objects.filter(usuario=request.user)[0]
-        if(request.user.is_superuser and validarpermiso(usuario,"Registrar instituciones") and request.user.is_authenticated and "digitador"==Usuariorol.objects.filter(usuario=usuario)[0].rol.rol):
             if request.method=='POST':
                 director=Director.objects.filter(ci=request.POST['cedularector'])
                 if not director:
@@ -338,13 +327,33 @@ def Calcular_capacidad(request):
                     instituto.save()
                     return render(request,'AsignaYasegura/calcular_capacidad.php',{'mjsregistroinfinstituto':"Se registró correctamente la información general de la empresa. Por favor ahorra ingresar las especificaciones técnicas de la empresa",'usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})
                 else:
-                     return render(request,'AsignaYasegura/Adquisicion_datos.php',{'error':'Dicho representante ya se encuentra registrado','carreras':CarrerasTecnicas.objects.all(),'distritos':Distrito.objects.all(),'usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})   
-            else:
-                return render(request,'AsignaYasegura/calcular_capacidad.php',{'instituto':Institucion.objects.all()[0],'usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})
+                    return render(request,'AsignaYasegura/Adquisicion_datos.php',{'error':'Dicho representante ya se encuentra registrado','carreras':CarrerasTecnicas.objects.all(),'distritos':Distrito.objects.all(),'usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})   
+            return render(request,'AsignaYasegura/Adquisicion_datos.php',{'carreras':CarrerasTecnicas.objects.all(),'distritos':Distrito.objects.all(),'usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})
         else:
             return render(request,'AsignaYasegura/nopermitido.html')
     else:
         return render_to_response('AsignaYasegura/index.html')
+
+#permite ingresar la informacion de la infraestructura capacidad de la institucion
+def Calcular_capacidad(request):
+    if request.user.username:
+        usuario=Usuario.objects.filter(usuario=request.user)[0]
+        if(request.user.is_superuser and validarpermiso(usuario,"Registrar instituciones") and request.user.is_authenticated and "digitador"==Usuariorol.objects.filter(usuario=usuario)[0].rol.rol):
+            return render(request,'AsignaYasegura/calcular_capacidad.php',{'instituto':Institucion.objects.all()[0],'usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})
+        else:
+            return render(request,'AsignaYasegura/nopermitido.html')
+    else:
+        return render_to_response('AsignaYasegura/index.html')
+
+def Registrar_capacidad(request):
+    if request.user.username:
+        usuario=Usuario.objects.filter(usuario=request.user)[0]
+        if(request.user.is_superuser and validarpermiso(usuario,"Registrar instituciones") and request.user.is_authenticated and "digitador"==Usuariorol.objects.filter(usuario=usuario)[0].rol.rol):
+            return render(request,'AsignaYasegura/calcular_capacidad.php',{'instruccion':['secundaria',],'niveles':Nivel.objects.all(),'numaulas':range(5), 'matutina':True,'vespertina':True,'mjsregistroinfinstituto':"Se registró correctamente la información general de la empresa. Por favor ahorra ingresar las especificaciones técnicas de la empresa",'usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})
+        else:
+            return render(request,'AsignaYasegura/nopermitido.html')
+    else:
+        return render_to_response('AsignaYasegura/index.html')            
 
 #registra padres de familia si el digitador tiene los permisos necesarios para hacerlo
 def PPFF_registrar(request):
@@ -464,8 +473,10 @@ def Estudiante_registrargeolocalizacion(request):
             return render(request,'AsignaYasegura/nopermitido.html')
     else:
         return render_to_response('AsignaYasegura/index.html')
+
 #validar cambio de pk de inrf de administradores
 #validar username
 #validar en los registros que username sea unico
 #arreglar cupos admin: ejecutar asignacion
 #validar que cada padre de familia tenga su respectiva latitud , longitud antes de registrar algun padre
+#validar ci y username unico al registrar algo

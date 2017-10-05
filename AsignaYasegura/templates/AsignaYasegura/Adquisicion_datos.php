@@ -121,7 +121,7 @@
 	}
 </script>    
     <br>
-    <form action="{% url 'AsignaYasegura:calcular_capacidad' %}" method=post>
+    <form action="{% url 'AsignaYasegura:Adquisicion_datos' %}" method=post>
     	 {% csrf_token %}
 		<div class="row">
 			<div class="col-md-5 col-md-offset-1 "  id=izquierda style="float:left">
