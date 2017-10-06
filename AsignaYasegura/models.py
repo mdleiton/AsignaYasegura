@@ -15,12 +15,23 @@ class Usuario(models.Model):
     def __str__(self):
     	return 'Usuario: {}:{}'.format(self.ci, self.usuario)
 
+class PadreInfo(models.Model):
+	id_padre=models.AutoField(primary_key=True)
+	condicionp=models.CharField(max_length=100)
+	parentescop=models.CharField(max_length=100)
+	usuario=models.ForeignKey('Usuario')
+	codigoluz=models.CharField(max_length=100)
+
+	def __str__(self):
+		return 'Padre vivienda: {}:{}'.format(self.condicionp, self.usuario)
+
 class GeolocalizacionPadre(models.Model):
 	idgeolocalizacion=models.AutoField(primary_key=True)
 	direccion=models.CharField(max_length=100)
 	latitud=models.FloatField()
 	longitud=models.FloatField()
 	padre=models.ForeignKey('Usuario')
+	
 
 	def __str__(self):
 		return 'GeolocalizacionPadre: {}:{}'.format(self.padre,self.direccion)

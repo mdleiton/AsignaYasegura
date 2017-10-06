@@ -1,0 +1,109 @@
+{% extends "AsignaYasegura/base_digitadores.html" %}
+{% load static %}
+{% block title %} Menu Padre de familia {% endblock %} 
+
+{% block menu%}
+<li ><a href="{% url 'AsignaYasegura:Menu' %}">Información general</a></li>
+  <li class="active" class="dropdown">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Instituciones <b class="caret"></b></a>
+    <ul class="dropdown-menu">
+       <li class="active"><a href="{% url 'AsignaYasegura:Adquisicion_datos' %}">Registrar Instituciones</a></li>
+       <li><a href="#">Editar Informacion Instituciones</a></li>
+      <li><a href="#">Eliminar Instituciones</a></li>
+    </ul>
+  </li>
+  <li><a href="{% url 'AsignaYasegura:calcular_capacidad' %}">Registrar capacidad institución</a></li>
+  
+  <li class="dropdown">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Estudiantes <b class="caret"></b></a>
+    <ul class="dropdown-menu">
+       <li><a href="{% url 'AsignaYasegura:Registrar_PPFF' %}">Registrar Padres de Familia</a></li>
+       <li><a href="#">Registrar estudiantes</a></li>
+    </ul>
+  </li>	
+{% endblock %}
+{% block contenttitle %} Registrar ubicación en el mapa {% endblock %}
+{% block content %}
+   
+<link href = "{% static 'css/stylemap.css'  %}" rel = "stylesheet" >
+<script src = "http://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyCv2SC4alSoTDCn9bYPyxMTLhiRIUHZgEU" > </script>  
+	<div class="row">
+		<form action="{% url 'AsignaYasegura:Registrar_geolocalizacioninstitucion' %}" method="POST">
+			<div id = "main" class="col-md-6 col-md-offset-3">
+				{% csrf_token %}
+				<div class="form-group">
+	      			<label for="inputEmail" class="col-md-4 control-label">Dirección:</label>
+	      			<div class="col-md-8">
+	        			<input class="form-control" id=direccion type=text name=direccionestudiante size="35" value="{{direccion}}" readonly>
+	      			</div>
+	      		</div>
+	      		<div class="form-group">
+	      			<label for="inputEmail" class="col-md-4 control-label">Latitud:</label>
+	      			<div class="col-md-8">
+	        			<input class="form-control" id=latitud type=text name=latitud size="35">
+	      			</div>
+	      		</div>
+	      		<div class="form-group">
+	      			<label for="inputEmail" class="col-md-4 control-label">Longitud:</label>
+	      			<div class="col-md-8">
+	        			<input class="form-control" id=longitud type=text name=longitud size="35">
+	      			</div>
+	      		</div>
+	      		<div class="form-group">
+	      			<div class="col-md-8 col-md-offset-4">
+	      			<input name="infoadd"  value="{{infoadd}}" style="visibility:hidden" readonly >
+	      			</div>
+	      		</div>
+	      	</div>
+	      	<br/>
+	      	<div class="col-md-4 col-md-offset-5">
+	      		<div class="form-group">
+	      		 <input class="btn btn-danger block-center" type="submit" value="Registrar geolocalización" />
+	      		</div>
+	      	</div>
+
+	 		<div id = "mapDiv" class="col-md-6 ">
+	 			<br/>
+	 			<div id="map"></div>
+	 		</div>
+	 	</form>
+	</div>  
+
+<script >
+
+var ubicacion = {
+    "sitio": [{
+        "location": document.getElementById('direccion').value,
+    }],
+};
+ubicacion.sitio[0].location=document.getElementById('direccion').value;	
+
+</script> <script src = "{% static 'js/helper.js'  %}" > </script>
+
+{% if mjsregistroinfinstituto %}
+    <div class="modal fade" id="mostrarmodalMJS" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+       <div class="modal-dialog" role="document">
+          <div class="modal-content">
+             <div class="modal-header">
+            	<button href="/login/" type="button" class="close" data-dismiss="modal" aria-label="close"><span aria-hidden="true">&times;</span></button>
+                <h3 class="modal-title" id="myModalLabel">Registro información general institución</h3>
+        	</div>
+         	<div class="modal-body">
+              	<h4> {{mjsregistroinfinstituto}}</h4>
+         	</div>
+         	<div class="modal-footer">
+            	<a data-dismiss="modal" class="btn btn-danger">Cerrar</a>
+         	</div>
+         </div>
+       </div>
+    </div>
+{% endif %}  
+
+<script>
+$(document).ready(function(){
+    $("#mostrarmodalMJS").modal("show");
+	$(".modal-dialog").attr("style","height: 378px; z-index: 2;")
+
+});
+</script>
+{% endblock %}

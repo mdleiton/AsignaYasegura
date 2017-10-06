@@ -79,8 +79,8 @@
   </div>
   <form class="form-signin" action="{% url 'AsignaYasegura:Registrar_PPFF' %}" method="post">
     <div class="row"> 
-      <div class="col-lg-offset-3 col-lg-6 ">
-        <div id="formulario" >
+      <div class="col-md-offset-3 col-md-6 ">
+        <div id="formularioPADRE" >
           {% csrf_token %}
           {{ form.as_p }}
         </div>

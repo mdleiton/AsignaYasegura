@@ -34,6 +34,19 @@
 #formulariop p input, select{
 	text-align: center;
 	position: relative;
-	left:1%;
+	left:45%;
+
+}
+#formularioPADRE p label{
+	text-align: center;
+	position: relative;
+	left: 15%;
+	margin-top: 8px;
+}
+
+#formularioPADRE p input, select{
+	text-align: center;
+	position: absolute;
+	left: 45%;
 
 }

@@ -3,24 +3,24 @@
 {% block title %} Adquisición de datos {% endblock %} 
 
 {% block menu%}
-      <li ><a href="{% url 'AsignaYasegura:Menu' %}">Información general</a></li>
-      <li class="active" class="dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Instituciones <b class="caret"></b></a>
-        <ul class="dropdown-menu">
-           <li class="active"><a href="{% url 'AsignaYasegura:Adquisicion_datos' %}">Registrar Instituciones</a></li>
-           <li><a href="#">Editar Informacion Instituciones</a></li>
-          <li><a href="#">Eliminar Instituciones</a></li>
-        </ul>
-      </li>
-      <li><a href="{% url 'AsignaYasegura:calcular_capacidad' %}">Registrar capacidad institución</a></li>
-      
-      <li class="dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Estudiantes <b class="caret"></b></a>
-        <ul class="dropdown-menu">
-           <li><a href="{% url 'AsignaYasegura:Registrar_PPFF' %}">Registrar Padres de Familia</a></li>
-           <li><a href="#">Registrar estudiantes</a></li>
-        </ul>
-      </li>
+  <li ><a href="{% url 'AsignaYasegura:Menu' %}">Información general</a></li>
+  <li class="active" class="dropdown">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Instituciones <b class="caret"></b></a>
+    <ul class="dropdown-menu">
+       <li class="active"><a href="{% url 'AsignaYasegura:Adquisicion_datos' %}">Registrar Instituciones</a></li>
+       <li><a href="#">Editar Informacion Instituciones</a></li>
+      <li><a href="#">Eliminar Instituciones</a></li>
+    </ul>
+  </li>
+  <li><a href="{% url 'AsignaYasegura:calcular_capacidad' %}">Registrar capacidad institución</a></li>
+  
+  <li class="dropdown">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Estudiantes <b class="caret"></b></a>
+    <ul class="dropdown-menu">
+       <li><a href="{% url 'AsignaYasegura:Registrar_PPFF' %}">Registrar Padres de Familia</a></li>
+       <li><a href="#">Registrar estudiantes</a></li>
+    </ul>
+  </li>	
 {% endblock %}
 
 {% block content %} 
@@ -131,7 +131,7 @@
 				        <table>
 							<tr>
 								<td>Nombre de la Institución:</td>
-								<td><input type=text name=nombreescuela size="35"></td>
+								<td><input type=text name=nombreescuela size="37"></td>
 							</tr>
 				        	<tr>
 				        		<td>Distrito:</td>
@@ -144,7 +144,7 @@
 						        </select>
 						    	</td>
 						    </tr>
-							<tr><td>Dirección:</td><td><input type=text name=direccion size="35"></td></tr>
+							<tr><td>Dirección:</td><td><input type=text name=direccion size="37"></td></tr>
 				            <tr><td>Tipo de instrucción:</td><td>Primaria <input id="primaria" type="checkbox" name="tipo[]" value="primaria"  >
 				            	Secundaria <input id="secundaria" type="checkbox" name="tipo[]" value="secundaria" onClick="controla(this)" ></td></tr>
 				        </table>
@@ -183,7 +183,10 @@
 			        </table>
 			        <br><br>
 			    </div>
-	            <input type=submit value=Aceptar>     <input type=reset value=Cancelar>
+	        </div>
+	        <div class="center-block">
+	            <input class="btn btn-primary" type=submit value=Aceptar>     
+	            <input class="btn btn-danger" type=reset value=Cancelar>
 	        </div>
 	    </div>
 	</form>
@@ -204,7 +207,9 @@
          </div>
        </div>
     </div>
-{% endif %}           
+{% endif %}  
+
+
 <script>
 $(document).ready(function(){
     $("#mostrarmodal").modal("show");
