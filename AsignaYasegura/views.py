@@ -7,12 +7,14 @@ import datetime
 from datetime import timedelta, date
 
 #-----------------------VARIABLES GLOBALES-----------------------------------------------------
+
 condicionVivienda = {
     '1': 'Vivienda propia',
     '2': 'Vivienda cedida',
     '3': 'Vivienda alquilada',
     '4': 'Vivienda compartida',
-    '5': 'Vivienda encomendada'
+    '5': 'Vivienda encomendada',
+    '6': 'Otros'
 }
 
 parentescoPropietario = {
@@ -23,9 +25,11 @@ parentescoPropietario = {
     '5': 'Amigo',
     '6': 'Sobrino',
     '7': 'Abuelos',
+    '8': 'Otros'
 }
 
 #------------------------------------------------FUNCIONES GENERALES----------------------------------------------------------------
+
 #permite obtener una lista de diccionario con la informacion completa de todos los usuario de rol digitador(informacion personal, permisos)
 def digitadorescompletodata():
     ur=Usuariorol.objects.filter(rol__rol="digitador")
@@ -63,6 +67,14 @@ def validarpermiso(usuario,permiso):
 #verifica si la direccion ingresada por el padre de familia o estudiante es la almacena en la base de datos del INEC
 def validarDireccion(ci,latitud,longitud):
     return True
+
+#retorna la cantidad maxima de estudiante deacuerdo a la cantidad de estudiante
+def capacidadXnivel(nivel):
+    ni=Nivel.objects.filter(id_nivel=int(nivel))[0]
+    for i in CapacidadEstandar.objects.all():
+        if ni==i.nivel:
+            return i.capacidad
+
 '''
 ------------------------------------------------------VISTAS GENERALES------------------------------------------------------------------
 permite definir el tipo de usuario y determinar el tipo de menu de inicio que debe presentar
@@ -336,7 +348,7 @@ def Adquisicion_datos(request):
                         jornada1=Jornada.objects.filter(jornada="vespertina")[0]
                         instituto.jornada.add(jornada1)
                     if 'matutina' in request.POST.getlist('jornadas'):
-                        jornada1=Jornada.objects.filter(jornada="vespertina")[0]
+                        jornada1=Jornada.objects.filter(jornada="matutina")[0]
                         instituto.jornada.add(jornada1)
                     for i in request.POST.getlist('tipo[]'):
                         instruccion=Instruccion.objects.filter(tipo=i)[0]
@@ -391,14 +403,24 @@ def Calcular_capacidad(request):
         if(request.user.is_superuser and validarpermiso(usuario,"Registrar instituciones") and request.user.is_authenticated and "digitador"==Usuariorol.objects.filter(usuario=usuario)[0].rol.rol):
             if request.method=='POST':
                 instituto = get_object_or_404(Institucion, pk=request.POST['infoadd'])
-                for i in instituto.instruccion.all():
-                    if i.tipo=="primaria":
-                        for i in range(instituto.naulas):
-                            print(i)
-                    if i.tipo=="secundaria":
-                        instruccion.append(i.tipo)
-                for i in range(instituto.naulas):
-                    print(i)
+                for i in instituto.jornada.all():
+                    if i.jornada=="matutina":
+                        for j in range(instituto.naulas):
+                            capacidadpotencial=(int(request.POST["longitud"+str(j+1)])-2)*int(request.POST["amplitud"+str(j+1)])
+                            estandar=capacidadXnivel(request.POST['nivel1-'+str(j+1)])
+                            aula=Aula(capacidadmax=capacidadpotencial,capacidadpupitres=estandar,longitud=request.POST['longitud'+str(j+1)],amplitud=request.POST['amplitud'+str(j+1)],institucion=instituto)
+                            aula.save()
+                            curso=Curso.objects.filter(id_curso=int(request.POST['curso1-'+str(j+1)]))[0]
+                            AulajornadaCurso(aula=aula,jornada=i,curso=curso,capacidad=estandar,paralelo=request.POST['paralelo1'+str(j+1)],cupos=estandar).save()
+                    if i.jornada=="vespertina":
+                        for j in range(instituto.naulas):
+                            capacidadpotencial=(int(request.POST["longitud"+str(j+1)])-2)*int(request.POST["amplitud"+str(j+1)])
+                            estandar=capacidadXnivel(request.POST['nivel2-'+str(j+1)])
+                            aula=Aula(capacidadmax=capacidadpotencial,capacidadpupitres=estandar,longitud=request.POST['longitud'+str(j+1)],amplitud=request.POST['amplitud'+str(j+1)],institucion=instituto)
+                            aula.save()
+                            curso=Curso.objects.filter(id_curso=int(request.POST['curso2-'+str(j+1)]))[0]
+                            AulajornadaCurso(aula=aula,jornada=i,curso=curso,capacidad=estandar,paralelo=request.POST['paralelo2'+str(j+1)],cupos=estandar).save()
+                return render(request,'AsignaYasegura/resultadosCapacidad.php',{'mjsexitoso':"Se registró correctamente la insitución",'usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})    
         else:
             return render(request,'AsignaYasegura/nopermitido.html')
     else:
@@ -433,7 +455,6 @@ def PPFF_registrar(request):
                     return render(request,'AsignaYasegura/registrarpfYes.html',{'tipo_objeto':"padre de familia",'form': form, 'error':"no llenó correctamente la información.Quizás el nombre de usuario ya existe",'usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})
             else:
                 form = PPFFForm()  
-                print(form)  
                 return render(request,'AsignaYasegura/registrarpfYes.html',{'tipo_objeto':"padre de familia",'form': form,'usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})
         else:
             return render(request,'AsignaYasegura/nopermitido.html')

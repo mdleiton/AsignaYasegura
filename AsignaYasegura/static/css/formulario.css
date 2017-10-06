@@ -50,3 +50,8 @@
 	left: 45%;
 
 }
+#formularioAULA p input, select{
+	text-align: center;
+	position: static;
+
+}

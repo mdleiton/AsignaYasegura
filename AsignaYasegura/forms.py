@@ -10,6 +10,7 @@ condicionVivienda = (
     ('3', 'Vivienda alquilada'),
     ('4', 'Vivienda compartida'),
     ('5', 'Vivienda encomendada'),
+    ('6', 'Otros'),
 )
 
 parentescoPropietario = (
@@ -20,6 +21,7 @@ parentescoPropietario = (
     ('5', 'Amigo'),
     ('6', 'Sobrino'),
     ('7', 'Abuelos'),
+    ('8', 'Otros'),
 )
 
 class UsuarioForm(forms.ModelForm):

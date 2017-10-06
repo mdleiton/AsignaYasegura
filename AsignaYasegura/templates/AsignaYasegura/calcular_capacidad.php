@@ -25,12 +25,12 @@
         </ul>
       </li>
 {% endblock %}
-{% block contenttitle %} Calcular información {% endblock %}
+{% block contenttitle %} Calcular capacidad {% endblock %}
 {% block content %}
 	<div class="row">
 		<div clas="col-md-8 col-md-offset-2" >
 			<font color=red class="text-center"> *Nota: Es necesario ingresar todas las medidas en metros </font><br><br>
-			<form id="formulariop" action="{% url 'AsignaYasegura:calcular_capacidad' %}" method=post>
+			<form id="formularioAULA" action="{% url 'AsignaYasegura:calcular_capacidad' %}" method=post>
 				{% csrf_token %}
 				<table border=5 align=center>
 					<tr>
@@ -40,17 +40,19 @@
 						{% if matutina %}
 							<td><strong>Horario matutino  </strong></td>
 							<td><strong>Curso matutino  </strong></td>
+							<td><strong>Paralelo matutino  </strong></td>
 						{% endif %}
 						{% if vespertina %}
 							<td><strong>Horario vespertino  </strong></td>
 							<td><strong>Curso vespertino  </strong></td>
+							<td><strong>Paralelo vespertino  </strong></td>
 						{% endif %}
 					</tr>	
 					{%for i in numaulas %}
 						<tr>
 							<td>{{i|add:1}}</td>
-							<td><input type=text name="longitud{{i|add:1}}" size="10" required></td>
-							<td><input type=text name="amplitud{{i|add:1}}" size="10" required></td>
+							<td><input type=text name="longitud{{i|add:1}}" size="5" required></td>
+							<td><input type=text name="amplitud{{i|add:1}}" size="5" required></td>
 							{% if matutina %}
 								<td><select  name="nivel1-{{i|add:1}}">
 									{%for i in niveles %}
@@ -68,8 +70,6 @@
 										{% endfor %}
 									{% endfor %}
 								</select></td>
-							{% endif %}
-							{% if matutina %}
 								<td><select  name="curso1-{{i|add:1}}">
 									{%for j in instruccion %}
 										{% ifequal j "primaria" %}
@@ -86,6 +86,7 @@
 										{% endifequal %}
 									{% endfor %}
 								</select></td>
+								<td><input class="bock-center" type=text name="paralelo1{{i|add:1}}" size="8" required></td>
 							{% endif %}
 							{% if vespertina %}
 								<td><select name="nivel2-{{i|add:1}}">"
@@ -104,8 +105,6 @@
 										{% endfor %}
 									{% endfor %}
 								</select></td>
-							{% endif %}	
-							{% if vespertina %}
 								<td><select  name="curso2-{{i|add:1}}">
 									{%for j in instruccion %}
 										{% ifequal j "primaria" %}
@@ -122,6 +121,7 @@
 										{% endifequal %}
 									{% endfor %}
 								</select></td>
+								<td><input class="bock-center" type=text name="paralelo2{{i|add:1}}" size="8" required></td>
 							{% endif %}					
 						</tr>
 					{% endfor %}
