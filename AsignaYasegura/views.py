@@ -52,6 +52,69 @@ def digitadorescompletodata():
         usuariofinal=[] 
     return digitadores
 
+#permite obtener una lista de diccionario con la informacion completa de todas las aulas de una determinada institucion
+def Aulasescompletodata(instituto):
+    aulas=Aula.objects.filter(institucion=instituto)           
+    aulascompleto=[]
+    aulafinal=[]
+    for i in aulas:
+        jornadas=AulajornadaCurso.objects.filter(aula=i)
+        aulafinal=i.__dict__
+        for j in jornadas:
+            if j.jornada.jornada=="matutina" :
+                aulafinal['capacidadmatutina']=j.capacidad
+                aulafinal['paralelomatutina']=j.paralelo
+                aulafinal['cursomatutina']=j.curso.curso
+                aulafinal['nivelmatutina']=j.curso.nivel.nivel
+            if j.jornada.jornada=="vespertina" :
+                aulafinal['capacidadvespertina']=j.capacidad
+                aulafinal['paralelovespertina']=j.paralelo
+                aulafinal['cursovespertina']=j.curso.curso
+                aulafinal['nivelvespertina']=j.curso.nivel.nivel
+        aulascompleto.append(aulafinal)
+        aulafinal=[] 
+    return aulascompleto
+
+def totalesinstituto(cupos,instituto):
+    total={}
+    total['preparatorio']=0
+    total['Basicoelemental']=0
+    total['Basicomedia']=0
+    total['BasicoSuperior']=0
+    total['Bachillerato']=0
+    total['pupitres']=0
+    maxmparalelo=0
+    for i in cupos:
+        if Institucion.objects.filter(id_institucion=instituto.id_institucion,jornada__jornada="matutina"):
+            if i['nivelmatutina']=="Preparatoria":
+                total['preparatorio']+=i['capacidadmatutina']
+            elif i['nivelmatutina']=="Básica elemental":
+                total['Basicoelemental']+=i['capacidadmatutina']
+            elif i['nivelmatutina']=="Básica media":
+                total['Basicomedia']+=i['capacidadmatutina']
+            elif i['nivelmatutina']=="Básica superior":
+                total['BasicoSuperior']+=i['capacidadmatutina']
+            elif i['nivelmatutina']=="Bachillerato":
+                total['Bachillerato']+=i['capacidadmatutina']
+            if maxmparalelo<=int(i['capacidadmatutina']):
+                maxmparalelo=i['capacidadmatutina']
+        if Institucion.objects.filter(id_institucion=instituto.id_institucion,jornada__jornada="vespertina"):
+            if i['nivelvespertina']=="Preparatoria":
+                total['preparatorio']+=i['capacidadvespertina']
+            elif i['nivelvespertina']=="Básica elemental":
+                total['Basicoelemental']+=i['capacidadvespertina']
+            elif i['nivelvespertina']=="Básica media":
+                total['Basicomedia']+=i['capacidadvespertina']
+            elif i['nivelvespertina']=="Básica superior":
+                total['BasicoSuperior']+=i['capacidadvespertina']
+            elif i['nivelvespertina']=="Bachillerato":
+                total['Bachillerato']+=i['capacidadvespertina']
+            if maxmparalelo<=int(i['capacidadvespertina']):
+                maxmparalelo=i['capacidadvespertina']
+        total['pupitres']+=maxmparalelo
+    total['total']=total['preparatorio']+total['Basicoelemental']+total['Basicomedia']+total['BasicoSuperior']+total['Bachillerato']
+    return total
+
 #algoritmo para asignar cupos a los estudiantes
 def asignaryasegura():
     return True
@@ -403,24 +466,24 @@ def Calcular_capacidad(request):
         if(request.user.is_superuser and validarpermiso(usuario,"Registrar instituciones") and request.user.is_authenticated and "digitador"==Usuariorol.objects.filter(usuario=usuario)[0].rol.rol):
             if request.method=='POST':
                 instituto = get_object_or_404(Institucion, pk=request.POST['infoadd'])
-                for i in instituto.jornada.all():
-                    if i.jornada=="matutina":
-                        for j in range(instituto.naulas):
-                            capacidadpotencial=(int(request.POST["longitud"+str(j+1)])-2)*int(request.POST["amplitud"+str(j+1)])
+                for j in range(instituto.naulas):
+                    capacidadpotencial=(int(request.POST["longitud"+str(j+1)])-2)*int(request.POST["amplitud"+str(j+1)])
+                    aula=Aula(capacidadmax=capacidadpotencial,capacidadpupitres=capacidadpotencial,longitud=request.POST['longitud'+str(j+1)],amplitud=request.POST['amplitud'+str(j+1)],institucion=instituto)
+                    aula.save()     
+                    for i in instituto.jornada.all():
+                        if i.jornada=="matutina":
                             estandar=capacidadXnivel(request.POST['nivel1-'+str(j+1)])
-                            aula=Aula(capacidadmax=capacidadpotencial,capacidadpupitres=estandar,longitud=request.POST['longitud'+str(j+1)],amplitud=request.POST['amplitud'+str(j+1)],institucion=instituto)
-                            aula.save()
                             curso=Curso.objects.filter(id_curso=int(request.POST['curso1-'+str(j+1)]))[0]
                             AulajornadaCurso(aula=aula,jornada=i,curso=curso,capacidad=estandar,paralelo=request.POST['paralelo1'+str(j+1)],cupos=estandar).save()
-                    if i.jornada=="vespertina":
-                        for j in range(instituto.naulas):
-                            capacidadpotencial=(int(request.POST["longitud"+str(j+1)])-2)*int(request.POST["amplitud"+str(j+1)])
+                        if i.jornada=="vespertina":
                             estandar=capacidadXnivel(request.POST['nivel2-'+str(j+1)])
-                            aula=Aula(capacidadmax=capacidadpotencial,capacidadpupitres=estandar,longitud=request.POST['longitud'+str(j+1)],amplitud=request.POST['amplitud'+str(j+1)],institucion=instituto)
-                            aula.save()
                             curso=Curso.objects.filter(id_curso=int(request.POST['curso2-'+str(j+1)]))[0]
                             AulajornadaCurso(aula=aula,jornada=i,curso=curso,capacidad=estandar,paralelo=request.POST['paralelo2'+str(j+1)],cupos=estandar).save()
-                return render(request,'AsignaYasegura/resultadosCapacidad.php',{'mjsexitoso':"Se registró correctamente la insitución",'usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})    
+                cupos=Aulasescompletodata(instituto)
+                m=Institucion.objects.filter(id_institucion=instituto.id_institucion,jornada__jornada="matutina")
+                v=Institucion.objects.filter(id_institucion=instituto.id_institucion,jornada__jornada="vespertina")
+                dic=totalesinstituto(cupos,instituto)
+                return render(request,'AsignaYasegura/resultadosCapacidad.php',{'total':dic,'matutina':m,'vespertina':v,"cupos":cupos,'mjsexitoso':"Se registró correctamente la institución",'usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})    
         else:
             return render(request,'AsignaYasegura/nopermitido.html')
     else:
