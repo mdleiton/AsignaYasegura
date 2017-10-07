@@ -84,5 +84,3 @@ class PPFFForm(forms.ModelForm):
             'direccion' : 'Dirección',
             'telefono' : 'Teléfono',
         }
-
-

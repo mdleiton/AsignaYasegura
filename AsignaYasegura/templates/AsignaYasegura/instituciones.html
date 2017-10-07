@@ -1,0 +1,55 @@
+{% extends "AsignaYasegura/base_lista.html" %}
+{% load static %}
+
+{% block title %} Lista de instituciones{% endblock %} 
+{% block contenttitle %} Ver información instituciones{% endblock %}
+{% block tipo %}<h3 class="bock-center text-center" style="font-weight: bold;">Digitadores</h3>{% endblock %}
+
+{% block menu%}
+    <li ><a href="{% url 'AsignaYasegura:Menu' %}">Información general</a></li>
+    <li class="active" class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Instituciones <b class="caret"></b></a>
+        <ul class="dropdown-menu">
+            <li ><a href="{% url 'AsignaYasegura:Adquisicion_datos' %}">Registrar Instituciones</a></li>
+            <li class="active"><a href="{% url 'AsignaYasegura:Instituciones' %}">Ver Información Instituciones</a></li>
+            <li><a href="{% url 'AsignaYasegura:Institucion_eliminar' %}">Eliminar Instituciones</a></li>
+        </ul>
+    </li>
+    <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Estudiantes <b class="caret"></b></a>
+        <ul class="dropdown-menu">
+            <li><a href="{% url 'AsignaYasegura:Registrar_PPFF' %}">Registrar Padres de Familia</a></li>
+            <li><a href="{% url 'AsignaYasegura:Registrar_estudiante' %}">Registrar estudiantes</a></li>
+        </ul>
+    </li> 
+{% endblock %}
+
+{%block encabezadotablas%}
+        <th>N°</th>
+        <th>Nombre</th>
+        <th>Distrito</th>
+        <th>Dirección</th>
+        <th>Representante</th>
+        <th>Jornadas</th>
+        <th>Instrucciones</th>
+        <th>Aulas</th>
+{% endblock %}
+{%block elementostablas%}
+        <td>{{ forloop.counter   }}</td>
+        <td>{{ registro.nombre      }}</td>
+        <td>{{ registro.distrito.nombre   }}</td>
+        <td>{{ registro.direccion}}</td>
+        <td>{{ registro.representante.apellidos}} {{registro.representante.nombre}}</td >
+        <td>
+            {% for i in registro.jornada.all %}
+                {{i.jornada}}-
+            {% endfor %}
+        </td>
+        <td>
+            {% for i in registro.instruccion.all %}
+                {{i.tipo}}-
+            {% endfor %}
+        </td>
+        <td>{{registro.naulas}}</td>
+
+{% endblock %}

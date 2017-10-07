@@ -28,11 +28,17 @@ urlpatterns = [
     #opciones digitador
 	url(r'^adquisiciondatos/$', views.Adquisicion_datos, name="Adquisicion_datos"),
     url(r'^registrargeolocalizacioninstitucion/$', views.Registrar_geoInstitucion, name="Registrar_geolocalizacioninstitucion"),
-
 	url(r'^calcularcapacidad/$', views.Calcular_capacidad, name="calcular_capacidad"),
     url(r'^registrarPPFF/$', views.PPFF_registrar, name="Registrar_PPFF"),
     url(r'^registrarPPFFgeolocalizacion/$', views.PPFF_registrargeolocalizacion, name="Registrar_PPFFgeolocalizacion"),
-
+    
+    url(r'^instituciones/$', views.Instituciones, name="Instituciones"),  
+    url(r'^institucioneseliminar/$', views.Institucion_eliminar, name="Institucion_eliminar"), 
+    url(r'^institucioneseliminarU/(?P<item>\d+)$', views.Institucion_eliminarU, name="Institucion_eliminarU"), 
+    
+    url(r'^registrarEstudiante/$', views.Estudiante_registrarD, name="Registrar_estudiante"),
+    url(r'^registrarEstudianteU/(?P<item>\d+)$', views.Estudiante_registrarU, name="Registrar_estudianteU"), 
+    
     #opciones padre de familia
     url(r'^registrargeolocalizacionpadre/$', views.Padre_registrargeolocalizacion, name="Padre_registrargeolocalizacion"),
     url(r'^registrargeolocalizacionestudiante/$', views.Estudiante_registrargeolocalizacion, name="Estudiante_registrargeolocalizacion"),

@@ -1,0 +1,115 @@
+{% extends "AsignaYasegura/base_digitadores.html" %}
+{% load static %}
+{% block title %} Registro de estudiante {% endblock %} 
+
+{% block menu%}
+	 <li ><a href="{% url 'AsignaYasegura:Menu' %}">Información general</a></li>
+    <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Instituciones <b class="caret"></b></a>
+        <ul class="dropdown-menu">
+            <li ><a href="{% url 'AsignaYasegura:Adquisicion_datos' %}">Registrar Instituciones</a></li>
+            <li ><a href="{% url 'AsignaYasegura:Instituciones' %}">Ver Información Instituciones</a></li>
+            <li><a href="{% url 'AsignaYasegura:Institucion_eliminar' %}">Eliminar Instituciones</a></li>
+        </ul>
+    </li>
+    <li class="dropdown active">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Estudiantes <b class="caret"></b></a>
+        <ul class="dropdown-menu">
+            <li><a href="{% url 'AsignaYasegura:Registrar_PPFF' %}">Registrar Padres de Familia</a></li>
+            <li class="active"><a href="{% url 'AsignaYasegura:Registrar_estudiante' %}">Registrar estudiantes</a></li>
+        </ul>
+    </li>
+{% endblock %}
+{% block contenttitle %} Registro de estudiante {% endblock %}
+
+{% block content %} 
+<script>		
+	function controla(f){
+		if(f.checked==true){
+			document.getElementById('contr2').cheked=false;
+			document.getElementById('contr2').disabled=true;
+			document.getElementById('contr3').disabled=false;
+			document.getElementById('contr4').disabled=false;
+			document.getElementById('contr5').disabled=false;
+		}
+		else{
+			document.getElementById('contr2').cheked=false;
+			document.getElementById('contr2').disabled=false;
+			document.getElementById('contr3').disabled=true;
+			document.getElementById('contr4').disabled=true;
+			document.getElementById('contr5').disabled=true;
+			document.getElementById('contr3').value="";
+			document.getElementById('contr4').value="";
+			document.getElementById('contr5').value="";
+		}
+	}
+	function controlb(f){
+		if(f.checked==true){
+			document.getElementById('contr1').cheked=false;
+			document.getElementById('contr1').disabled=true;	
+		}else{
+			document.getElementById('contr1').cheked=false;
+			document.getElementById('contr1').disabled=false;
+		}
+	}
+</script>
+<form action="{% url 'AsignaYasegura:Registrar_estudiante' %}" method="POST">
+	{% csrf_token %}
+	<div class="row">
+		<div class="col-md-6 col-md-offset-3 "  id=izquierda style="float:left">
+			<div id=estudiante>
+				<br><font color="#CC0000"><strong>Información general del estudiante</strong></font><br>
+				<table>
+					<tr><td>Número de cédula:</td><td><input type=text name=cedula size="35" required></td></tr>
+					<tr><td>Apellidos:</td><td><input type=text name=apellidos size="35" required></td></tr>
+					<tr><td>Nombres:</td><td><input type=text name=nombres size="35" required></td></tr>
+					<tr><td>Fecha de nacimiento:</td><td><input type="date" name=nacimiento size="35" placeholder="fecha: AA-MM-DD" required></td></tr>
+					<tr><td>Dirección:</td><td><input id=direccion type=text name=direccion size="35" required></td>
+					<tr><td>Curso:</td><td><select id="optionlist" name=curso>
+						{% for i in cursos %}
+							<option value="{{i.id_curso}}">{{i.curso}}</option>
+	            		{% endfor %}			
+	            	</select></td></tr>
+					<tr><td>Capacidades especiales:</td><td>Sí<input type="checkbox" id="contr1" name="discapacidad" value="1" onClick="controla(this)">    No<input type="checkbox" id="contr2" name="discapacidad" value="2" onClick="controlb(this)"></td></tr>
+					<tr><td>Código del Conadis:</td><td><input type=text id="contr4" name=conadis size="35" disabled></td></tr>
+					<tr><td>Tipo de discapacidad:</td><td><input type=text id="contr5" name=conadistipo size="35" disabled></td></tr>
+					<tr><td>Porcentaje de discapacidad:</td><td><input type=text id="contr3" name=porcentajed size="35" disabled></td></tr>       
+				</table> 
+			</div>		
+			<br>
+		</div>
+	</div>	
+	<div class="col-md-offset-4">
+	<input class="btn btn-primary" type=submit value="Registrar estudiante">
+	<input class="btn btn-danger " type=reset value="Limpiar campos">
+	<a class="btn btn-danger" href="{% url 'AsignaYasegura:Menu' %}">Menú</a>
+	</div>
+</form>
+{% if mjsexitoso %}
+    <div class="modal fade" id="mostrarmodalactualizar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+       <div class="modal-dialog" role="document">
+          <div class="modal-content">
+             <div class="modal-header">
+            	<button href="/login/" type="button" class="close" data-dismiss="modal" aria-label="close"><span aria-hidden="true">&times;</span></button>
+                <h3 class="modal-title" id="myModalLabel">Registro completo de estudiante.</h3>
+        	</div>
+         	<div class="modal-body">
+              	<h4> {{mjsexitoso}}</h4>   
+            <a type="button" href="{% url 'AsignaYasegura:Menu' %}" class="btn btn-danger block-center">Menú</a>
+         	</div>
+         	<div class="modal-footer">
+            	<a data-dismiss="modal" class="btn btn-danger">Registrar otro estudiante</a>
+         	</div>
+         </div>
+       </div>
+    </div>
+{% endif %}
+
+<script >
+	$(document).ready(function(){
+	$("#mostrarmodalactualizar").modal("show");
+	$(".modal-dialog").attr("style","height: 378px; z-index: 2;")
+	});
+</script>
+
+{% endblock %}

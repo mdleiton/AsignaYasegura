@@ -75,6 +75,7 @@ def Aulasescompletodata(instituto):
         aulafinal=[] 
     return aulascompleto
 
+#retorna un diccionario con todos los totales de cupos para cada nivel por institucion
 def totalesinstituto(cupos,instituto):
     total={}
     total['preparatorio']=0
@@ -550,6 +551,87 @@ def PPFF_registrargeolocalizacion(request):
     else:
         return render_to_response('AsignaYasegura/index.html')    
 
+#presenta una lista de todas las instituciones registradas
+def Instituciones(request):
+    if request.user.username:
+        usuario=Usuario.objects.filter(usuario=request.user)[0]
+        permiso=validarpermiso(usuario,"Registrar instituciones")
+        if(request.user.is_superuser and permiso and request.user.is_authenticated and "digitador"==Usuariorol.objects.filter(usuario=usuario)[0].rol.rol):
+            instituciones=Institucion.objects.all()
+            return render(request,'AsignaYasegura/instituciones.html',{'objects':instituciones,'tipo_objeto':"Instituciones",'usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})
+        else:
+            return render(request,'AsignaYasegura/nopermitido.html')
+    else:
+        return render_to_response('AsignaYasegura/index.html')    
+
+#lista todas las instituciones y permite elegir una para eliminar
+def Institucion_eliminar(request):
+    if request.user.username:
+        usuario=Usuario.objects.filter(usuario=request.user)[0]
+        permiso=validarpermiso(usuario,"Registrar instituciones")
+        if(request.user.is_superuser and permiso and request.user.is_authenticated and "digitador"==Usuariorol.objects.filter(usuario=usuario)[0].rol.rol):
+            instituciones=Institucion.objects.all()
+            return render(request,'AsignaYasegura/instituciones_eliminar.html',{'objects':instituciones,'tipo_objeto':"Instituciones",'usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})
+        else:
+            return render(request,'AsignaYasegura/nopermitido.html')
+    else:
+        return render_to_response('AsignaYasegura/index.html')    
+
+#permite elimimar una determina institucion
+def Institucion_eliminarU(request,item):
+    if request.user.username:
+        usuario=Usuario.objects.filter(usuario=request.user)[0]
+        permiso=validarpermiso(usuario,"Registrar instituciones")
+        if(request.user.is_superuser and permiso and request.user.is_authenticated and "digitador"==Usuariorol.objects.filter(usuario=usuario)[0].rol.rol):
+            institucion = get_object_or_404(Institucion, pk=item)    
+            if request.method=='POST':
+                aulas=Aula.objects.filter(institucion=institucion)
+                for i in aulas:
+                    AulajornadaCurso.objects.filter(aula=i).delete()
+                aulas.delete()
+                institucion.delete()
+                return redirect('AsignaYasegura:Institucion_eliminar')
+            return render(request,'AsignaYasegura/instituciones_eliminar.html',{'objects':Institucion.objects.all(),'object':institucion, 'eliminar': 'True','usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})
+        else:
+            return render(request,'AsignaYasegura/nopermitido.html')
+    else:
+        return render_to_response('AsignaYasegura/index.html')
+
+#lista todos los padres de familia para luego registrar un hijo
+def Estudiante_registrarD(request):
+    if request.user.username:
+        usuario=Usuario.objects.filter(usuario=request.user)[0]
+        permiso=validarpermiso(usuario,"Registrar estudiantes")
+        print(permiso)
+        if(request.user.is_superuser and permiso and request.user.is_authenticated and "digitador"==Usuariorol.objects.filter(usuario=usuario)[0].rol.rol):
+            if request.method == 'POST':
+                curso = get_object_or_404(Curso, pk=request.POST['curso'])
+                estudiante=Estudiante(ci=request.POST['cedula'],nombre=request.POST['nombres'],apellidos=request.POST['apellidos'],direccion=request.POST['direccion'],nacimiento=datetime.datetime.strptime(request.POST['nacimiento'],"%Y-%m-%d"),representante=usuario,curso=curso)
+                estudiante.save()
+                if request.POST['discapacidad']=="1":
+                    Discapacidad(discapacidad=request.POST['conadistipo'],codigo=request.POST['conadis'],porcentaje=request.POST['conadisd'],estudiante=estudiante).save()                   
+            usuariorol=Usuariorol.objects.filter(rol__rol='padre de familia')
+            padres=[]
+            for i in usuariorol:
+                padres.append(i.usuario)
+            return render(request,'AsignaYasegura/registrar_estudiantes.html',{'mjsexitoso':"Se registró correctamente el estudiante",'objects':padres,'tipo_objeto':"estudiantes",'usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})
+        else:
+            return render(request,'AsignaYasegura/nopermitido.html')
+    else:
+        return render_to_response('AsignaYasegura/index.html')    
+
+#registrar un estudiante a un padre de familia asociado
+def Estudiante_registrarU(request,item):
+    if request.user.username:
+        usuario=Usuario.objects.filter(usuario=request.user)[0]
+        permiso=validarpermiso(usuario,"Registrar estudiantes")
+        if(request.user.is_superuser and permiso and request.user.is_authenticated and "digitador"==Usuariorol.objects.filter(usuario=usuario)[0].rol.rol):
+            usuario = get_object_or_404(Usuario, pk=item)    
+            return render(request,'AsignaYasegura/registrar_estudiantesform.html',{"cursos":Curso.objects.all(),'usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})
+        else:
+            return render(request,'AsignaYasegura/nopermitido.html')
+    else:
+        return render_to_response('AsignaYasegura/index.html')
 
 #-----------------------------------------------------VISTAS PADRE DE FAMILIA-------------------------------------------------
 

@@ -1,0 +1,74 @@
+{% extends "AsignaYasegura/base_lista.html" %}
+{% load static %}
+
+{% block title %} Lista de padres de familia{% endblock %} 
+{% block contenttitle %} Registrar estudiantes{% endblock %}
+{% block tipo %}<h3 class="bock-center text-center" style="font-weight: bold;">Estudiantes</h3>{% endblock %}
+
+{% block menu%}
+    <li ><a href="{% url 'AsignaYasegura:Menu' %}">Información general</a></li>
+    <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Instituciones <b class="caret"></b></a>
+        <ul class="dropdown-menu">
+            <li ><a href="{% url 'AsignaYasegura:Adquisicion_datos' %}">Registrar Instituciones</a></li>
+            <li ><a href="{% url 'AsignaYasegura:Instituciones' %}">Ver Información Instituciones</a></li>
+            <li><a href="{% url 'AsignaYasegura:Institucion_eliminar' %}">Eliminar Instituciones</a></li>
+        </ul>
+    </li>
+    <li class="dropdown active">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Estudiantes <b class="caret"></b></a>
+        <ul class="dropdown-menu">
+            <li><a href="{% url 'AsignaYasegura:Registrar_PPFF' %}">Registrar Padres de Familia</a></li>
+            <li class="active"><a href="{% url 'AsignaYasegura:Registrar_estudiante' %}">Registrar estudiantes</a></li>
+        </ul>
+    </li> 
+{% endblock %}
+
+{%block encabezadotablas%}
+        <th>N°</th>
+        <th>ci</th>
+        <th>Nombres</th>
+        <th>Apellidos</th>
+        <th>Dirección</th>
+        <th>Teléfono</th>
+        <th>Correo</th>
+        <th>Registrar estudiantes</th>
+{% endblock %}
+{%block elementostablas%}
+        <td>{{ forloop.counter   }}</td>
+        <td>{{ registro.ci      }}</td>
+        <td>{{ registro.nombre      }}</td>
+        <td>{{ registro.apellidos   }}</td>
+        <td>{{ registro.direccion}}</td>
+        <td>{{ registro.telefono}}</td>
+        <td>{{ registro.correo}}</td>
+        <td><a class="btn btn-danger"   href="{% url 'AsignaYasegura:Registrar_estudianteU'  registro.ci %}" 
+          value="Registrar" class="btn btn-primary btn-sm"  >Registrar</a></td>
+
+{% if mjsexitoso %}
+  <div class="modal fade" id="mostrarmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+   <div class="modal-dialog" role="document">
+      <div class="modal-content">
+         <div class="modal-header">
+          <button href="{% url 'AsignaYasegura:digitador_registrar' %}" type="button" class="close" data-dismiss="modal" aria-label="close"><span aria-hidden="true">&times;</span></button>
+            <h3 class="modal-title" id="myModalLabel">Estado registro estudiante</h3>
+      </div>
+      <div class="modal-body">
+            <h4>  {{mjsexitoso|capfirst}}</h4>   
+      </div>
+      <div class="modal-footer">
+          <a data-dismiss="modal" class="btn btn-danger">Cerrar</a>
+      </div>
+     </div>
+   </div>
+  </div>
+{% endif %}
+
+<script>
+$(document).ready(function(){
+  $("#mostrarmodal").modal("show");
+  $(".modal-dialog").attr("style","height: 378px; z-index: 2;")
+});
+</script>
+
+{% endblock %}
