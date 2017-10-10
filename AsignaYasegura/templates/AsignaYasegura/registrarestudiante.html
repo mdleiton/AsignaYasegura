@@ -9,7 +9,7 @@
 	    <a href="#" class="dropdown-toggle" data-toggle="dropdown"> Estudiantes  <b class="caret"></b></a>
 	    <ul class="dropdown-menu">
 	      	<li class="active"><a href="{% url 'AsignaYasegura:registrar_estudiante' %}">Registrar Estudiantes</a></li>
-	      	<li><a href="#">Editar Informacion estudiantes</a></li>
+	      	<li><a href="{% url 'AsignaYasegura:estudiantes' %}">Editar Informacion estudiantes</a></li>
 	     	<li><a href="#">Eliminar registro de estudiante</a></li>
 	    </ul>
   	</li>
@@ -55,7 +55,7 @@
 	<div class="row">
 		<div class="col-md-6 col-md-offset-3 "  id=izquierda style="float:left">
 			<div id=estudiante>
-				<br><font color="#CC0000"><strong>Información general del estudiante</strong></font><br><br>
+				<br><font color="#CC0000"><strong>Información general del estudiante</strong></font><br>
 				<table>
 					<tr><td>Número de cédula:</td><td><input type=text name=cedula size="35" required></td></tr>
 					<tr><td>Apellidos:</td><td><input type=text name=apellidos size="35" required></td></tr>
@@ -63,32 +63,25 @@
 					<tr><td>Fecha de nacimiento:</td><td><input type="date" name=nacimiento size="35" placeholder="fecha: AA-MM-DD" required></td></tr>
 					<tr><td>Dirección:</td><td><input id=direccion type=text name=direccion size="35" required></td>
 					<tr><td>Curso:</td><td><select id="optionlist" name=curso>
-	            				<option value="1">Primer año básico</option>
-	            				<option value="2">Segundo año básico</option>
-	            				<option value="3">Tercer año básico</option>3 - Antigua Dirección 	Provincial de Educación-Colegio Vicente Rocafuerte</option>
-	            				<option value="4">Cuarto año básico</option>
-	            				<option value="5">Quinto año básico</option>
-	            				<option value="6">Sexto año básico</option>
-	            				<option value="7">Séptimo año básico</option>
-	            				<option value="8">Octavo año básico</option>
-	            				<option value="9">Noveno año básico</option>
-	            				<option value="10">Décimo año básico</option>
-	            				<option value="11">Primero bachillerato</option>
-						<option value="12">Segundo bachillerato</option>
-	            				<option value="13">Tercero bachillerato</option></select></td></tr>
+						{% for i in cursos %}
+							<option value="{{i.id_curso}}">{{i.curso}}</option>
+	            		{% endfor %}			
+	            	</select></td></tr>
 					<tr><td>Capacidades especiales:</td><td>Sí<input type="checkbox" id="contr1" name="discapacidad" value="1" onClick="controla(this)">    No<input type="checkbox" id="contr2" name="discapacidad" value="2" onClick="controlb(this)"></td></tr>
 					<tr><td>Código del Conadis:</td><td><input type=text id="contr4" name=conadis size="35" disabled></td></tr>
 					<tr><td>Tipo de discapacidad:</td><td><input type=text id="contr5" name=conadistipo size="35" disabled></td></tr>
 					<tr><td>Porcentaje de discapacidad:</td><td><input type=text id="contr3" name=porcentajed size="35" disabled></td></tr>       
 				</table> 
 			</div>		
-			<br><br>
+			<br>
 		</div>
-		<input class="btn btn-primary col-md-1 col-md-offset-3" type=submit value=Registrar>
-			<input class="btn btn-danger col-md-1 col-md-offset-1" type=reset value=Limpiar><a class="btn btn-danger col-md-1 col-md-offset-1" href="{% url 'AsignaYasegura:Menu' %}">Menú</a>
 	</div>	
+	<div class="col-md-offset-4">
+	<input class="btn btn-primary" type=submit value="Registrar estudiante">
+	<input class="btn btn-danger " type=reset value="Limpiar campos">
+	<a class="btn btn-danger" href="{% url 'AsignaYasegura:Menu' %}">Menú</a>
+	</div>
 </form>
-
 {% if mjsexitoso %}
     <div class="modal fade" id="mostrarmodalactualizar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
        <div class="modal-dialog" role="document">
@@ -107,14 +100,13 @@
          </div>
        </div>
     </div>
-	<script >
+{% endif %}
+
+<script >
 	$(document).ready(function(){
 	$("#mostrarmodalactualizar").modal("show");
 	$(".modal-dialog").attr("style","height: 378px; z-index: 2;")
 	});
-
-	</script>
-
-{% endif %}
+</script>
 
 {% endblock %}

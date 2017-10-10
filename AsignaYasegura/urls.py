@@ -42,5 +42,6 @@ urlpatterns = [
     #opciones padre de familia
     url(r'^registrargeolocalizacionpadre/$', views.Padre_registrargeolocalizacion, name="Padre_registrargeolocalizacion"),
     url(r'^registrargeolocalizacionestudiante/$', views.Estudiante_registrargeolocalizacion, name="Estudiante_registrargeolocalizacion"),
-    url(r'^registrarEstudiante/$', views.Estudiante_registrar, name="registrar_estudiante"),
+    url(r'^registrarestudiante/$', views.Estudiante_registrar, name="registrar_estudiante"),
+    url(r'^estudiantes/$', views.Estudiantes, name="estudiantes"),
 ]

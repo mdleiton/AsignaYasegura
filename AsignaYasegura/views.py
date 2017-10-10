@@ -602,7 +602,6 @@ def Estudiante_registrarD(request):
     if request.user.username:
         usuario=Usuario.objects.filter(usuario=request.user)[0]
         permiso=validarpermiso(usuario,"Registrar estudiantes")
-        print(permiso)
         if(request.user.is_superuser and permiso and request.user.is_authenticated and "digitador"==Usuariorol.objects.filter(usuario=usuario)[0].rol.rol):
             if request.method == 'POST':
                 curso = get_object_or_404(Curso, pk=request.POST['curso'])
@@ -674,7 +673,7 @@ def Estudiante_registrar(request):
                     Discapacidad(discapacidad=request.POST['conadistipo'],codigo=request.POST['conadis'],porcentaje=request.POST['conadisd'],estudiante=estudiante).save()                   
                 return render(request,'AsignaYasegura/registrargeolocalizacionestudiante.html',{'infoadd':estudiante.ci,'direccion':request.POST['direccion'],'obtener':'Ahora debe registrar las coordenadas en el mapa','usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})
             else:
-                return render(request,'AsignaYasegura/registrarestudiante.html',{'usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})
+                return render(request,'AsignaYasegura/registrarestudiante.html',{"cursos":Curso.objects.all(),'usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})
         else:
             return render(request,'AsignaYasegura/nopermitido.html')
     else:
@@ -696,6 +695,17 @@ def Estudiante_registrargeolocalizacion(request):
             return render(request,'AsignaYasegura/nopermitido.html')
     else:
         return render_to_response('AsignaYasegura/index.html')
+
+def Estudiantes(request):
+    if request.user.username:
+        usuario=Usuario.objects.filter(usuario=request.user)[0]
+        if(request.user.is_superuser and request.user.is_authenticated and "padre de familia"==Usuariorol.objects.filter(usuario=usuario)[0].rol.rol):
+            estudiantes=Estudiante.objects.filter(representante=usuario)
+            return render(request,'AsignaYasegura/estudiantes.html',{'objects':estudiantes,'tipo_objeto':"Estudiantes",'usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})
+        else:
+            return render(request,'AsignaYasegura/nopermitido.html')
+    else:
+        return render_to_response('AsignaYasegura/index.html')    
 
 #validar cambio de pk de inrf de administradores
 #arreglar cupos admin: ejecutar asignacion

@@ -1,0 +1,42 @@
+{% extends "AsignaYasegura/base_lista.html" %}
+{% load static %}
+
+{% block title %} Lista de estudiantes{% endblock %} 
+{% block contenttitle %} Ver información estudiantes{% endblock %}
+{% block tipo %}<h3 class="bock-center text-center" style="font-weight: bold;">Estudiantes</h3>{% endblock %}
+
+{% block menu%}
+    <li ><a href="{% url 'AsignaYasegura:Menu' %}">Información general</a></li>
+    <li><a href="{% url 'AsignaYasegura:Padre_registrargeolocalizacion' %}">Registrar/Actualizar ubicación en el mapa</a></li>
+    <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown"> Estudiantes  <b class="caret"></b></a>
+        <ul class="dropdown-menu">
+            <li><a href="{% url 'AsignaYasegura:registrar_estudiante' %}">Registrar Estudiantes</a></li>
+          <li class="active"><a href="{% url 'AsignaYasegura:estudiantes' %}">Editar Informacion estudiantes</a></li>
+            <li><a href="#">Eliminar registro de estudiante</a></li>
+        </ul>
+    </li>
+    <li><a href="#">Ver información solicitudes</a></li>
+{% endblock %}
+
+{%block encabezadotablas%}
+        <th>N°</th>
+        <th>Ci</th>
+        <th>Nombre</th>
+        <th>Apellido</th>
+        <th>Dirección</th>
+        <th>Curso</th>
+        <th>Nacimiento</th>
+{% endblock %}
+{%block elementostablas%}
+        <td>{{ forloop.counter   }}</td>
+        <th>{{ registro.ci}}</th>
+        <td>{{ registro.nombre      }}</td>
+        <td>{{ registro.apellidos   }}</td>
+        <td>{{ registro.direccion   }}</td>
+        <td>{{ registro.curso   }}</td>
+        <td>{{ registro.nacimiento }}</td>
+
+{% endblock %}
+
+    n
