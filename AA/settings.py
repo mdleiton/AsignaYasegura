@@ -31,13 +31,14 @@ ALLOWED_HOSTS = ['192.168.0.107','172.18.24.4','127.0.0.1','172.18.26.4']
 # Application definition
 
 INSTALLED_APPS = [
+    'AsignaYasegura',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'AsignaYasegura',
+    
 ]
 
 MIDDLEWARE_CLASSES = [

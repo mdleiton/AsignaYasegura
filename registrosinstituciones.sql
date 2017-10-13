@@ -1,9 +1,7 @@
-﻿-- plantilla para registro de una sola institucion
--- inf director     						SIMON BOLIVAR
+﻿-- inf director     						SIMON BOLIVAR
 INSERT INTO AsignaYasegura_director(ci,nombre,apellidos,telefono,correo) VALUES('1111111111','Ernesto','Toledo','0984830623','ed@yahoo.com');
 -- inf general instituto ...distrito(debe ser el codigo),representante(ci del director),horariom (1 si es matutino o 0 sino lo es),horariom (0 si es vespertino o 0 sino lo es)
-INSERT INTO AsignaYasegura_institucion(nombre,distrito_id,direccion,representante_id,naulas,latitud,longitud) VALUES ('Tecnologico Simon Bolivar','c1','Av. de las Américas y Plaza Dañin
-,Guayaquil,Guayas,Ecuador','1111111111',9,-2.1739218,-79.8950192);
+INSERT INTO AsignaYasegura_institucion(nombre,distrito_id,direccion,representante_id,naulas,latitud,longitud) VALUES ('Tecnologico Simon Bolivar','c1','Av. de las Américas y Plaza Dañin,Guayaquil,Guayas,Ecuador','1111111111',9,-2.1739218,-79.8950192);
 -- inf instruccion institucion_id(debe ser secuencial 1...2..3 ) , instruccion_id(1 primaria , 2 si tiene secundaria)
 INSERT INTO AsignaYasegura_institucion_instruccion(institucion_id,instruccion_id) VALUES (1,2); 
 -- inf  oferta academica horariom (1 si es matutino o 0 sino lo es) , ofertaacademica_id(1 'Bachillerato General Unificado' o 2 'Bachillerato Internacional' o 3 'Bachillerato Técnico')
@@ -68,15 +66,15 @@ INSERT INTO AsignaYasegura_director(ci,nombre,apellidos,telefono,correo) VALUES(
 -- inf general instituto ...distrito(debe ser el codigo),representante(ci del director),horariom (1 si es matutino o 0 sino lo es),horariom (0 si es vespertino o 0 sino lo es)
 INSERT INTO AsignaYasegura_institucion(nombre,distrito_id,direccion,representante_id,naulas,latitud,longitud) VALUES ('Colegio Fiscal Provincia de Tungurahua','c1','Sauces II Mz. 74 - 75,Guayaquil,Guayas,Ecuador','1111111113',9, -2.139508437094389,-79.88636612892151);
 -- inf instruccion institucion_id(debe ser secuencial 1...2..3 ) , instruccion_id(1 primaria , 2 si tiene secundaria)
-INSERT INTO AsignaYasegura_institucion_instruccion(institucion_id,instruccion_id) VALUES (1,2);
+INSERT INTO AsignaYasegura_institucion_instruccion(institucion_id,instruccion_id) VALUES (3,2);
 -- inf  oferta academica horariom (1 si es matutino o 0 sino lo es) , ofertaacademica_id(1 'Bachillerato General Unificado' o 2 'Bachillerato Internacional' o 3 'Bachillerato Técnico')
-INSERT INTO AsignaYasegura_institucion_ofertaacademica(institucion_id,ofertaacademica_id) VALUES (1,3);
+INSERT INTO AsignaYasegura_institucion_ofertaacademica(institucion_id,ofertaacademica_id) VALUES (3,3);
 -- Inf de las carreras en caso que posea carreras tecnicas es autonumerico ver orden en registros.sql
-INSERT INTO AsignaYasegura_institucion_carreras(institucion_id,carrerastecnicas_id) VALUES (1,1);
-INSERT INTO AsignaYasegura_institucion_carreras(institucion_id,carrerastecnicas_id) VALUES (1,5);                        
+INSERT INTO AsignaYasegura_institucion_carreras(institucion_id,carrerastecnicas_id) VALUES (3,1);
+INSERT INTO AsignaYasegura_institucion_carreras(institucion_id,carrerastecnicas_id) VALUES (3,5);                        
 -- Inf de las jornadas de la institucion(1 matutina , 2, vesterpina)
-INSERT INTO AsignaYasegura_institucion_jornada(institucion_id,jornada_id) VALUES (1,1);
-INSERT INTO AsignaYasegura_institucion_jornada(institucion_id,jornada_id) VALUES (1,2);
+INSERT INTO AsignaYasegura_institucion_jornada(institucion_id,jornada_id) VALUES (3,1);
+INSERT INTO AsignaYasegura_institucion_jornada(institucion_id,jornada_id) VALUES (3,2);
 -- inf de las aulas de la institucion
 INSERT INTO AsignaYasegura_aula(capacidadmax,capacidadpupitres,longitud,amplitud,institucion_id) VALUES(49,49,7,9,3);
 INSERT INTO AsignaYasegura_aula(capacidadmax,capacidadpupitres,longitud,amplitud,institucion_id) VALUES(49,49,7,9,3);
@@ -239,7 +237,7 @@ INSERT INTO AsignaYasegura_aulajornadacurso(aula_id,jornada_id,curso_id,capacida
 -- inf director						COLEGIO FISCAL  JOSE JOAQUIN PINO ICAZA 									
 INSERT INTO AsignaYasegura_director(ci,nombre,apellidos,telefono,correo) VALUES('1111111118','Orfa','Rodriguez','0997845958','jjp@yahoo.com');
 -- inf general instituto ...distrito(debe ser el codigo),representante(ci del director),horariom (1 si es matutino o 0 sino lo es),horariom (0 si es vespertino o 0 sino lo es)
-INSERT INTO AsignaYasegura_institucion(nombre,distrito_id,direccion,representante_id,naulas,latitud,longitud) VALUES ('Colegio Fiscal Jose Joaquin Pino Icaza','c1','Cdla. Atarazana Mz. L3 Villa 1,Guayaquil,Guayas,Ecuador','1111111111',12,-2.154805,-79.9015574);
+INSERT INTO AsignaYasegura_institucion(nombre,distrito_id,direccion,representante_id,naulas,latitud,longitud) VALUES ('Colegio Fiscal Jose Joaquin Pino Icaza','c1','Cdla. Atarazana Mz. L3 Villa 1,Guayaquil,Guayas,Ecuador','1111111118',12,-2.154805,-79.9015574);
 -- inf instruccion institucion_id(debe ser secuencial 1...2..3 ) , instruccion_id(1 primaria , 2 si tiene secundaria)
 INSERT INTO AsignaYasegura_institucion_instruccion(institucion_id,instruccion_id) VALUES (8,2);
 -- inf  oferta academica horariom (1 si es matutino o 0 sino lo es) , ofertaacademica_id(1 'Bachillerato General Unificado' o 2 'Bachillerato Internacional' o 3 'Bachillerato Técnico')
@@ -247,7 +245,7 @@ INSERT INTO AsignaYasegura_institucion_ofertaacademica(institucion_id,ofertaacad
 INSERT INTO AsignaYasegura_institucion_ofertaacademica(institucion_id,ofertaacademica_id) VALUES (8,2);
 -- Inf de las carreras en caso que posea carreras tecnicas es autonumerico ver orden en registros.sql
 INSERT INTO AsignaYasegura_institucion_carreras(institucion_id,carrerastecnicas_id) VALUES (8,4);
-INSERT INTO AsignaYasegura_institucion_carreras(institucion_id,carrerastecnicas_id) VALUES (1,5);                        
+INSERT INTO AsignaYasegura_institucion_carreras(institucion_id,carrerastecnicas_id) VALUES (8,5);                        
 -- Inf de las jornadas de la institucion(1 matutina , 2, vesterpina)
 INSERT INTO AsignaYasegura_institucion_jornada(institucion_id,jornada_id) VALUES (8,1);
 INSERT INTO AsignaYasegura_institucion_jornada(institucion_id,jornada_id) VALUES (8,2);
@@ -382,9 +380,9 @@ INSERT INTO AsignaYasegura_aulajornadacurso(aula_id,jornada_id,curso_id,capacida
 INSERT INTO AsignaYasegura_aulajornadacurso(aula_id,jornada_id,curso_id,capacidad,paralelo,cupos) VALUES (14,1,7,49,'Paralelo A',35);
 -- plantilla para registro de una sola institucion
 -- inf director							ESC. FISCAL MIXTA # 357 ENRIQUE GRAU RUIZ 
-INSERT INTO AsignaYasegura_director(ci,nombre,apellidos,telefono,correo) VALUES('1111111122',Gioconda'','Alvarado',' 0994082551','egra@yahoo.com');
+INSERT INTO AsignaYasegura_director(ci,nombre,apellidos,telefono,correo) VALUES('1111111122','Gioconda','Alvarado',' 0994082551','egra@yahoo.com');
 -- inf general instituto ...distrito(debe ser el codigo),representante(ci del director),horariom (1 si es matutino o 0 sino lo es),horariom (0 si es vespertino o 0 sino lo es)
-INSERT INTO AsignaYasegura_institucion(nombre,distrito_id,direccion,representante_id,naulas,latitud,longitud) VALUES ('Escuela Fiscal Enrique Grau Ruiz,'c1','Av. 3a y Av. 2a (Urdesa Norte),Guayaquil,Guayas,Ecuador','11111111122',7,-2.1630436,-79.9061401);
+INSERT INTO AsignaYasegura_institucion(nombre,distrito_id,direccion,representante_id,naulas,latitud,longitud) VALUES ('Escuela Fiscal Enrique Grau Ruiz','c1','Av. 3a y Av. 2a (Urdesa Norte),Guayaquil,Guayas,Ecuador','11111111122',7,-2.1630436,-79.9061401);
 -- inf instruccion institucion_id(debe ser secuencial 1...2..3 ) , instruccion_id(1 primaria , 2 si tiene secundaria)
 INSERT INTO AsignaYasegura_institucion_instruccion(institucion_id,instruccion_id) VALUES (12,1);
 -- inf  oferta academica horariom (1 si es matutino o 0 sino lo es) , ofertaacademica_id(1 'Bachillerato General Unificado' o 2 'Bachillerato Internacional' o 3 'Bachillerato Técnico')
@@ -408,9 +406,9 @@ INSERT INTO AsignaYasegura_aulajornadacurso(aula_id,jornada_id,curso_id,capacida
 INSERT INTO AsignaYasegura_aulajornadacurso(aula_id,jornada_id,curso_id,capacidad,paralelo,cupos) VALUES (7,1,7,49,'Paralelo A',35);
 -- plantilla para registro de una sola institucion
 -- inf director							JUAN BENIGNO VELA  
-INSERT INTO AsignaYasegura_director(ci,nombre,apellidos,telefono,correo) VALUES('1111111123',Norma'','Orellana','O939174662','njbo@yahoo.com');
+INSERT INTO AsignaYasegura_director(ci,nombre,apellidos,telefono,correo) VALUES('1111111123','Norma','Orellana','O939174662','njbo@yahoo.com');
 -- inf general instituto ...distrito(debe ser el codigo),representante(ci del director),horariom (1 si es matutino o 0 sino lo es),horariom (0 si es vespertino o 0 sino lo es)
-INSERT INTO AsignaYasegura_institucion(nombre,distrito_id,direccion,representante_id,naulas,latitud,longitud) VALUES ('Escuela Fiscal Juan Benigno Vela,'c1','Av. 3a y Av. 2a (Urdesa Norte),Guayaquil,Guayas,Ecuador','11111111123',7,-2.1630436,-79.9061401);
+INSERT INTO AsignaYasegura_institucion(nombre,distrito_id,direccion,representante_id,naulas,latitud,longitud) VALUES ('Escuela Fiscal Juan Benigno Vela','c1','Av. 3a y Av. 2a (Urdesa Norte),Guayaquil,Guayas,Ecuador','11111111123',7,-2.1630436,-79.9061401);
 -- inf instruccion institucion_id(debe ser secuencial 1...2..3 ) , instruccion_id(1 primaria , 2 si tiene secundaria)
 INSERT INTO AsignaYasegura_institucion_instruccion(institucion_id,instruccion_id) VALUES (13,2);
 -- inf  oferta academica horariom (1 si es matutino o 0 sino lo es) , ofertaacademica_id(1 'Bachillerato General Unificado' o 2 'Bachillerato Internacional' o 3 'Bachillerato Técnico')
@@ -433,9 +431,9 @@ INSERT INTO AsignaYasegura_aulajornadacurso(aula_id,jornada_id,curso_id,capacida
 INSERT INTO AsignaYasegura_aulajornadacurso(aula_id,jornada_id,curso_id,capacidad,paralelo,cupos) VALUES (6,1,6,49,'Paralelo A',35);
 INSERT INTO AsignaYasegura_aulajornadacurso(aula_id,jornada_id,curso_id,capacidad,paralelo,cupos) VALUES (7,1,7,49,'Paralelo A',35);
 -- plantilla para registro de una sola institucion				Ab. Nestor perez Valencia  
-INSERT INTO AsignaYasegura_director(ci,nombre,apellidos,telefono,correo) VALUES('1111111124',Normita'','Orellana','O939174652','neorm@yahoo.com');
+INSERT INTO AsignaYasegura_director(ci,nombre,apellidos,telefono,correo) VALUES('1111111124','Normita','Orellana','O939174652','neorm@yahoo.com');
 -- inf general instituto ...distrito(debe ser el codigo),representante(ci del director),horariom (1 si es matutino o 0 sino lo es),horariom (0 si es vespertino o 0 sino lo es)
-INSERT INTO AsignaYasegura_institucion(nombre,distrito_id,direccion,representante_id,naulas,latitud,longitud) VALUES ('Escuela Fiscal Ab. Nestor Perez Valencia,'c1','Complejo deportivo Tres Cerritos: Cdla. Ietel,Guayaquil,Guayas,Ecuador','11111111124',7,-2.150202953216465,-79.89589601755142);
+INSERT INTO AsignaYasegura_institucion(nombre,distrito_id,direccion,representante_id,naulas,latitud,longitud) VALUES ('Escuela Fiscal Ab. Nestor Perez Valencia','c1','Complejo deportivo Tres Cerritos: Cdla. Ietel,Guayaquil,Guayas,Ecuador','11111111124',7,-2.150202953216465,-79.89589601755142);
 -- inf instruccion institucion_id(debe ser secuencial 1...2..3 ) , instruccion_id(1 primaria , 2 si tiene secundaria)
 INSERT INTO AsignaYasegura_institucion_instruccion(institucion_id,instruccion_id) VALUES (14,1);
 -- inf  oferta academica horariom (1 si es matutino o 0 sino lo es) , ofertaacademica_id(1 'Bachillerato General Unificado' o 2 'Bachillerato Internacional' o 3 'Bachillerato Técnico')
@@ -458,9 +456,9 @@ INSERT INTO AsignaYasegura_aulajornadacurso(aula_id,jornada_id,curso_id,capacida
 INSERT INTO AsignaYasegura_aulajornadacurso(aula_id,jornada_id,curso_id,capacidad,paralelo,cupos) VALUES (6,1,6,49,'Paralelo A',35);
 INSERT INTO AsignaYasegura_aulajornadacurso(aula_id,jornada_id,curso_id,capacidad,paralelo,cupos) VALUES (7,1,7,49,'Paralelo A',35);
 -- plantilla para registro de una sola institucion				Colegio Luis Bonnini Pino  
-INSERT INTO AsignaYasegura_director(ci,nombre,apellidos,telefono,correo) VALUES('1111111125',Hector'','Alvarez','O986975562','lbo@yahoo.com');
+INSERT INTO AsignaYasegura_director(ci,nombre,apellidos,telefono,correo) VALUES('1111111125','Hector','Alvarez','O986975562','lbo@yahoo.com');
 -- inf general instituto ...distrito(debe ser el codigo),representante(ci del director),horariom (1 si es matutino o 0 sino lo es),horariom (0 si es vespertino o 0 sino lo es)
-INSERT INTO AsignaYasegura_institucion(nombre,distrito_id,direccion,representante_id,naulas,latitud,longitud) VALUES ('Colegio Fiscal Luis Bonnini Pino,'c1','Complejo deportivo Tres Cerritos: Cdla. Ietel,Guayaquil,Guayas,Ecuador','11111111125',6,-2.150202953216465,-79.89589601755142);
+INSERT INTO AsignaYasegura_institucion(nombre,distrito_id,direccion,representante_id,naulas,latitud,longitud) VALUES ('Colegio Fiscal Luis Bonnini Pino','c1','Complejo deportivo Tres Cerritos: Cdla. Ietel,Guayaquil,Guayas,Ecuador','11111111125',6,-2.150202953216465,-79.89589601755142);
 -- inf instruccion institucion_id(debe ser secuencial 1...2..3 ) , instruccion_id(1 primaria , 2 si tiene secundaria)
 INSERT INTO AsignaYasegura_institucion_instruccion(institucion_id,instruccion_id) VALUES (15,2);
 -- inf  oferta academica horariom (1 si es matutino o 0 sino lo es) , ofertaacademica_id(1 'Bachillerato General Unificado' o 2 'Bachillerato Internacional' o 3 'Bachillerato Técnico')
@@ -815,7 +813,7 @@ INSERT INTO AsignaYasegura_aulajornadacurso(aula_id,jornada_id,curso_id,capacida
 INSERT INTO AsignaYasegura_aulajornadacurso(aula_id,jornada_id,curso_id,capacidad,paralelo,cupos) VALUES (15,2,10,49,'Paralelo A',40);
 -- plantilla para registro de una sola institucion
 -- inf director							ESCUELA DE EDUCACIÓN BÁSICA "CALICUCHIMA"
-INSERT INTO AsignaYasegura_director(ci,nombre,apellidos,telefono,correo) VALUES('1111111136','Gladys','Recalde,'2175740','col.calli@yahoo.com');
+INSERT INTO AsignaYasegura_director(ci,nombre,apellidos,telefono,correo) VALUES('1111111136','Gladys','Recalde','2175740','col.calli@yahoo.com');
 -- inf general instituto ...distrito(debe ser el codigo),representante(ci del director),horariom (1 si es matutino o 0 sino lo es),horariom (0 si es vespertino o 0 sino lo es)
 INSERT INTO AsignaYasegura_institucion(nombre,distrito_id,direccion,representante_id,naulas,latitud,longitud) VALUES ('Escuela de Educación Básica Fiscal Calicuchima','c1','Sauces 8 Area comunal,Guayaquil,Guayas,Ecuador','1111111136',18,-2.1294132,-79.9029259);
 -- inf instruccion institucion_id(debe ser secuencial 1...2..3 ) , instruccion_id(1 primaria , 2 si tiene secundaria)
@@ -1248,7 +1246,7 @@ INSERT INTO AsignaYasegura_aulajornadacurso(aula_id,jornada_id,curso_id,capacida
 -- inf director							ESCUELA DE EDUCACIÓN BÁSICA DR. CARLOS LUIS PLAZA
 INSERT INTO AsignaYasegura_director(ci,nombre,apellidos,telefono,correo) VALUES('1111111150','Mirian','Regalado','2233935','gollo@yahoo.com');
 -- inf general instituto ...distrito(debe ser el codigo),representante(ci del director),horariom (1 si es matutino o 0 sino lo es),horariom (0 si es vespertino o 0 sino lo es)
-INSERT INTO AsignaYasegura_institucion(nombre,distrito_id,direccion,representante_id,naulas,latitud,longitud) VALUES ('Escuela de Educación Básica Fiscal DR. CARLOS LUIS PLAZA','c1','Rocafuerte y Buitrón,Guayaquil,Guayas,Ecuador','1111111150,7,-2.1822374,-79.8771893);
+INSERT INTO AsignaYasegura_institucion(nombre,distrito_id,direccion,representante_id,naulas,latitud,longitud) VALUES ('Escuela de Educación Básica Fiscal DR. CARLOS LUIS PLAZA','c1','Rocafuerte y Buitrón,Guayaquil,Guayas,Ecuador','1111111150',7,-2.1822374,-79.8771893);
 -- inf instruccion institucion_id(debe ser secuencial 1...2..3 ) , instruccion_id(1 primaria , 2 si tiene secundaria)
 INSERT INTO AsignaYasegura_institucion_instruccion(institucion_id,instruccion_id) VALUES (40,1);
 -- inf  oferta academica horariom (1 si es matutino o 0 sino lo es) , ofertaacademica_id(1 'Bachillerato General Unificado' o 2 'Bachillerato Internacional' o 3 'Bachillerato Técnico')
@@ -1274,7 +1272,7 @@ INSERT INTO AsignaYasegura_aulajornadacurso(aula_id,jornada_id,curso_id,capacida
 -- inf director							ESCUELA DE EDUCACIÓN BÁSICA CERRO DEL CARMEN
 INSERT INTO AsignaYasegura_director(ci,nombre,apellidos,telefono,correo) VALUES('1111111151','Byron','Baque','2233573','bbaque@yahoo.com');
 -- inf general instituto ...distrito(debe ser el codigo),representante(ci del director),horariom (1 si es matutino o 0 sino lo es),horariom (0 si es vespertino o 0 sino lo es)
-INSERT INTO AsignaYasegura_institucion(nombre,distrito_id,direccion,representante_id,naulas,latitud,longitud) VALUES ('Escuela de Educación Básica Fiscal CERRO DEL CARMEN','c1','Circunvalación Baquerizo Moreno 5ta. Vuelta,Guayaquil,Guayas,Ecuador','1111111151,7,-2.1822374,-79.8771893);
+INSERT INTO AsignaYasegura_institucion(nombre,distrito_id,direccion,representante_id,naulas,latitud,longitud) VALUES ('Escuela de Educación Básica Fiscal CERRO DEL CARMEN','c1','Circunvalación Baquerizo Moreno 5ta. Vuelta,Guayaquil,Guayas,Ecuador','1111111151',7,-2.1822374,-79.8771893);
 -- inf instruccion institucion_id(debe ser secuencial 1...2..3 ) , instruccion_id(1 primaria , 2 si tiene secundaria)
 INSERT INTO AsignaYasegura_institucion_instruccion(institucion_id,instruccion_id) VALUES (41,1);
 -- inf  oferta academica horariom (1 si es matutino o 0 sino lo es) , ofertaacademica_id(1 'Bachillerato General Unificado' o 2 'Bachillerato Internacional' o 3 'Bachillerato Técnico')
@@ -1300,7 +1298,7 @@ INSERT INTO AsignaYasegura_aulajornadacurso(aula_id,jornada_id,curso_id,capacida
 -- inf director							ESCUELA DE EDUCACIÓN BÁSICA UNIDAD EDUCATIVA FAE N° 2  
 INSERT INTO AsignaYasegura_director(ci,nombre,apellidos,telefono,correo) VALUES('1111111152','Luisa','Isurieta','2293817','cerrocar@yahoo.com');
 -- inf general instituto ...distrito(debe ser el codigo),representante(ci del director),horariom (1 si es matutino o 0 sino lo es),horariom (0 si es vespertino o 0 sino lo es)
-INSERT INTO AsignaYasegura_institucion(nombre,distrito_id,direccion,representante_id,naulas,latitud,longitud) VALUES ('Escuela de Educación Básica Fiscal UNIDAD EDUCATIVA FAE N° 2','c1','Pedro Menéndez. Base Aérea Simón Bolívar y Plaza Dañín,Guayaquil,Guayas,Ecuador','1111111152,13,-2.0496771,-79.952391);
+INSERT INTO AsignaYasegura_institucion(nombre,distrito_id,direccion,representante_id,naulas,latitud,longitud) VALUES ('Escuela de Educación Básica Fiscal UNIDAD EDUCATIVA FAE N° 2','c1','Pedro Menéndez. Base Aérea Simón Bolívar y Plaza Dañín,Guayaquil,Guayas,Ecuador','1111111152',13,-2.0496771,-79.952391);
 -- inf instruccion institucion_id(debe ser secuencial 1...2..3 ) , instruccion_id(1 primaria , 2 si tiene secundaria)
 INSERT INTO AsignaYasegura_institucion_instruccion(institucion_id,instruccion_id) VALUES (42,1);
 INSERT INTO AsignaYasegura_institucion_instruccion(institucion_id,instruccion_id) VALUES (42,2);
@@ -1341,7 +1339,7 @@ INSERT INTO AsignaYasegura_aulajornadacurso(aula_id,jornada_id,curso_id,capacida
 -- inf director							ESCUELA DE EDUCACIÓN BÁSICA Liceo Naval  
 INSERT INTO AsignaYasegura_director(ci,nombre,apellidos,telefono,correo) VALUES('1111111153','Fernando','Recalde','2212963','licena@yahoo.com');
 -- inf general instituto ...distrito(debe ser el codigo),representante(ci del director),horariom (1 si es matutino o 0 sino lo es),horariom (0 si es vespertino o 0 sino lo es)
-INSERT INTO AsignaYasegura_institucion(nombre,distrito_id,direccion,representante_id,naulas,latitud,longitud) VALUES ('Escuela de Educación Básica Fiscal Liceo Naval','c1','Pedro Menéndez Gilbert junto al Puente Nacional,Guayaquil,Guayas,Ecuador','1111111153,19,-2.1577667,-79.8779452);
+INSERT INTO AsignaYasegura_institucion(nombre,distrito_id,direccion,representante_id,naulas,latitud,longitud) VALUES ('Escuela de Educación Básica Fiscal Liceo Naval','c1','Pedro Menéndez Gilbert junto al Puente Nacional,Guayaquil,Guayas,Ecuador','1111111153',19,-2.1577667,-79.8779452);
 -- inf instruccion institucion_id(debe ser secuencial 1...2..3 ) , instruccion_id(1 primaria , 2 si tiene secundaria)
 INSERT INTO AsignaYasegura_institucion_instruccion(institucion_id,instruccion_id) VALUES (43,1);
 INSERT INTO AsignaYasegura_institucion_instruccion(institucion_id,instruccion_id) VALUES (43,2);
@@ -1394,7 +1392,7 @@ INSERT INTO AsignaYasegura_aulajornadacurso(aula_id,jornada_id,curso_id,capacida
 -- inf director							ESCUELA DE EDUCACIÓN BÁSICA TNTE. HUGO ORTIZ GARCES 
 INSERT INTO AsignaYasegura_director(ci,nombre,apellidos,telefono,correo) VALUES('1111111154','Fernando','Arevalo Marcial','2213268','tntehu@yahoo.com');
 -- inf general instituto ...distrito(debe ser el codigo),representante(ci del director),horariom (1 si es matutino o 0 sino lo es),horariom (0 si es vespertino o 0 sino lo es)
-INSERT INTO AsignaYasegura_institucion(nombre,distrito_id,direccion,representante_id,naulas,latitud,longitud) VALUES ('Escuela de Educación Básica Fiscal Av. Fco. de Orellana frente a Samanes 6,Guayaquil,Guayas,Ecuador','1111111154,19,-2.1076171,-79.9061134);
+INSERT INTO AsignaYasegura_institucion(nombre,distrito_id,direccion,representante_id,naulas,latitud,longitud) VALUES ('Escuela de Educación Básica Fiscal','c1',' Av. Fco. de Orellana frente a Samanes 6,Guayaquil,Guayas,Ecuador','1111111154',19,-2.1076171,-79.9061134);
 -- inf instruccion institucion_id(debe ser secuencial 1...2..3 ) , instruccion_id(1 primaria , 2 si tiene secundaria)
 INSERT INTO AsignaYasegura_institucion_instruccion(institucion_id,instruccion_id) VALUES (44,1);
 INSERT INTO AsignaYasegura_institucion_instruccion(institucion_id,instruccion_id) VALUES (44,2);
@@ -1445,9 +1443,9 @@ INSERT INTO AsignaYasegura_aulajornadacurso(aula_id,jornada_id,curso_id,capacida
 INSERT INTO AsignaYasegura_aulajornadacurso(aula_id,jornada_id,curso_id,capacidad,paralelo,cupos) VALUES (18,2,12,49,'Paralelo A',45);
 INSERT INTO AsignaYasegura_aulajornadacurso(aula_id,jornada_id,curso_id,capacidad,paralelo,cupos) VALUES (19,2,13,49,'Paralelo A',45); 
 -- inf director							ESCUELA DE EDUCACIÓN BÁSICA MARIA MONTESSORI
-INSERT INTO AsignaYasegura_director(ci,nombre,apellidos,telefono,correo) VALUES('1111111151','Luis','Aviles','2744059','marmon@yahoo.com');
+INSERT INTO AsignaYasegura_director(ci,nombre,apellidos,telefono,correo) VALUES('1111111155','Luis','Aviles','2744059','marmon@yahoo.com');
 -- inf general instituto ...distrito(debe ser el codigo),representante(ci del director),horariom (1 si es matutino o 0 sino lo es),horariom (0 si es vespertino o 0 sino lo es)
-INSERT INTO AsignaYasegura_institucion(nombre,distrito_id,direccion,representante_id,naulas,latitud,longitud) VALUES ('Escuela de Educación Básica Fiscal MARIA MONTESSORI','c1','Cdla. Mantilla frente al cuartel militar,Guayaquil,Guayas,Ecuador','1111111152,7,-2.1264952,-79.9383744);
+INSERT INTO AsignaYasegura_institucion(nombre,distrito_id,direccion,representante_id,naulas,latitud,longitud) VALUES ('Escuela de Educación Básica Fiscal MARIA MONTESSORI','c1','Cdla. Mantilla frente al cuartel militar,Guayaquil,Guayas,Ecuador','1111111155',7,-2.1264952,-79.9383744);
 -- inf instruccion institucion_id(debe ser secuencial 1...2..3 ) , instruccion_id(1 primaria , 2 si tiene secundaria)
 INSERT INTO AsignaYasegura_institucion_instruccion(institucion_id,instruccion_id) VALUES (42,1);
 -- inf  oferta academica horariom (1 si es matutino o 0 sino lo es) , ofertaacademica_id(1 'Bachillerato General Unificado' o 2 'Bachillerato Internacional' o 3 'Bachillerato Técnico')
