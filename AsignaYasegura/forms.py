@@ -10,19 +10,19 @@ condicionVivienda = (
     ('3', 'Vivienda alquilada'),
     ('4', 'Vivienda compartida'),
     ('5', 'Vivienda encomendada'),
-    ('6', 'Otros'),
 )
 
 parentescoPropietario = (
-    ('1', 'Padres'),
-    ('2', 'Hermanos'),
-    ('3', 'Tíos'),
-    ('4', 'No familiar'),
-    ('5', 'Amigo'),
-    ('6', 'Sobrino'),
-    ('7', 'Abuelos'),
-    ('8', 'Otros'),
+    ('1', 'A nombre mio'),
+    ('2', 'Padres'),
+    ('3', 'Hermanos'),
+    ('4', 'Tíos'),
+    ('5', 'No familiar'),
+    ('6', 'Amigo'),
+    ('7', 'Sobrino'),
+    ('8', 'Abuelos'),
 )
+
 
 class UsuarioForm(forms.ModelForm):
     usuario=forms.CharField(max_length=20)
@@ -69,7 +69,7 @@ class PPFFForm(forms.ModelForm):
     usuario=forms.CharField(max_length=20)
     contrasena=forms.CharField(max_length=200,widget=forms.PasswordInput,label='Contraseña')
     condicionp=forms.ChoiceField(choices=condicionVivienda,label='Condición de vivienda')
-    parentescop=forms.ChoiceField(choices=parentescoPropietario,label='Parentesco con dueño')
+    parentescop=forms.ChoiceField(choices=parentescoPropietario,label='Relación con dueño de servicio E')
     codigoluz=forms.CharField(max_length=100,label='Cód. servicio eléctrico ')
 
     widgets = {

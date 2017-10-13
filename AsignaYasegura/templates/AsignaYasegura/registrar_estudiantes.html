@@ -1,7 +1,7 @@
 {% extends "AsignaYasegura/base_lista.html" %}
 {% load static %}
 
-{% block title %} Lista de padres de familia{% endblock %} 
+{% block title %} Lista de Representantes{% endblock %} 
 {% block contenttitle %} Registrar estudiantes{% endblock %}
 {% block tipo %}<h3 class="bock-center text-center" style="font-weight: bold;">Estudiantes</h3>{% endblock %}
 
@@ -18,7 +18,7 @@
     <li class="dropdown active">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Estudiantes <b class="caret"></b></a>
         <ul class="dropdown-menu">
-            <li><a href="{% url 'AsignaYasegura:Registrar_PPFF' %}">Registrar Padres de Familia</a></li>
+            <li><a href="{% url 'AsignaYasegura:Registrar_PPFF' %}">Registrar Representante</a></li>
             <li class="active"><a href="{% url 'AsignaYasegura:Registrar_estudiante' %}">Registrar estudiantes</a></li>
         </ul>
     </li> 

@@ -78,6 +78,7 @@ class Estudiante(models.Model):
 	latitud=models.FloatField(null=True,blank=True)
 	longitud=models.FloatField(null=True,blank=True)
 	curso=models.ForeignKey('Curso')
+	parentescorepresentante=models.CharField(max_length=100)
 
 	def __str__(self):
 		return 'Estudiante: {}:{}'.format(self.ci, self.nombre)    

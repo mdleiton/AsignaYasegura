@@ -61,7 +61,12 @@
 					<tr><td>Apellidos:</td><td><input type=text name=apellidos size="35" required></td></tr>
 					<tr><td>Nombres:</td><td><input type=text name=nombres size="35" required></td></tr>
 					<tr><td>Fecha de nacimiento:</td><td><input type="date" name=nacimiento size="35" placeholder="fecha: AA-MM-DD" required></td></tr>
-					<tr><td>Dirección:</td><td><input id=direccion type=text name=direccion size="35" required></td>
+					<tr><td>Dirección:</td><td><input id=direccion type=text name=direccion size="35" required></td></tr>
+					<tr><td>Parentesco estudiante:</td><td><select id="optionlist1" name=parentesco>
+						{% for i,k in parentescor.items %}
+							<option value="{{i}}">{{k}}</option>
+	            		{% endfor %}			
+	            	</select></td></tr>
 					<tr><td>Curso:</td><td><select id="optionlist" name=curso>
 						{% for i in cursos %}
 							<option value="{{i.id_curso}}">{{i.curso}}</option>

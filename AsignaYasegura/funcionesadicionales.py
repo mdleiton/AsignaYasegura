@@ -1,6 +1,35 @@
 from .models import *
 from .forms import *
 from django.db.models import Sum
+#-----------------------VARIABLES GLOBALES-----------------------------------------------------
+
+condicionVivienda = {
+    '1': 'Vivienda propia',
+    '2': 'Vivienda cedida',
+    '3': 'Vivienda alquilada',
+    '4': 'Vivienda compartida',
+    '5': 'Vivienda encomendada',
+    '6': 'Otros'
+}
+
+parentescoPropietario = {
+    '1': 'A nombre mio',
+    '2': 'Padres',
+    '3': 'Hermanos',
+    '4': 'Tíos',
+    '5': 'No familiar',
+    '6': 'Amigo',
+    '7': 'Sobrino',
+    '8': 'Abuelos'
+}
+parentescorepresentante = {
+    '1': 'Padres',
+    '2': 'Hermanos',
+    '3': 'Tíos',
+    '4': 'No familiar',
+    '5': 'Amigo',
+    '6': 'Abuelos'
+}
 #------------------------------------------------FUNCIONES GENERALES----------------------------------------------------------------
 
 #permite obtener una lista de diccionario con la informacion completa de todos los usuario de rol digitador(informacion personal, permisos)

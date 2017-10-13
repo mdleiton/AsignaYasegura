@@ -1,6 +1,6 @@
 {% extends "AsignaYasegura/base_digitadores.html" %}
 {% load static %}
-{% block title %} Menu Padre de familia {% endblock %} 
+{% block title %} Menu Representante {% endblock %} 
 
 {% block menu%}
   <li ><a href="{% url 'AsignaYasegura:Menu' %}">Información general</a></li>
@@ -70,14 +70,14 @@
           <div class="modal-content">
              <div class="modal-header">
             	<button href="/login/" type="button" class="close" data-dismiss="modal" aria-label="close"><span aria-hidden="true">&times;</span></button>
-                <h3 class="modal-title" id="myModalLabel">Actualizar ubicación.</h3>
+                <h3 class="modal-title" id="myModalLabel">Ver ubicación.</h3>
         	</div>
          	<div class="modal-body">
-              	<h4> {{mjsactualizar}}</h4>   
+              	<h4> usted ya registro su ubicación. Desea ver su ubicación actual??</h4>   
             <a type="button" href="{% url 'AsignaYasegura:Menu' %}" class="btn btn-danger block-center">Menú</a>
          	</div>
          	<div class="modal-footer">
-            	<a data-dismiss="modal" class="btn btn-danger">Actualizar</a>
+            	<a data-dismiss="modal" class="btn btn-danger">Ver ubicación actual</a>
          	</div>
          </div>
        </div>
@@ -90,7 +90,7 @@ $(".modal-dialog").attr("style","height: 378px; z-index: 2;")
 });
 
 </script>
-</script> <script src = "{% static 'js/actualizarmapa.js'  %}" > </script>
+</script> <script src = "{% static 'js/estaticomapa.js'  %}" > </script>
 <script
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCv2SC4alSoTDCn9bYPyxMTLhiRIUHZgEU&callback=initMap" async defer>
     </script>
