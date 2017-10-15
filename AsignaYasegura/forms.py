@@ -69,9 +69,10 @@ class PPFFForm(forms.ModelForm):
     usuario=forms.CharField(max_length=20)
     contrasena=forms.CharField(max_length=200,widget=forms.PasswordInput,label='Contraseña')
     condicionp=forms.ChoiceField(choices=condicionVivienda,label='Condición de vivienda')
+    registro=forms.CharField(max_length=100,label='Registro propiedad o arrendamiento ')
     parentescop=forms.ChoiceField(choices=parentescoPropietario,label='Relación con dueño de servicio E')
-    codigoluz=forms.CharField(max_length=100,label='Cód. servicio eléctrico ')
-
+    codigoluz=forms.CharField(max_length=100,label='Cód. servicio eléctrico')
+   
     widgets = {
             'contrasena': forms.PasswordInput(),
         }

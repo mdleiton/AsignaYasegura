@@ -26,9 +26,7 @@ parentescorepresentante = {
     '1': 'Padres',
     '2': 'Hermanos',
     '3': 'Tíos',
-    '4': 'No familiar',
-    '5': 'Amigo',
-    '6': 'Abuelos'
+    '4': 'Abuelos'
 }
 #------------------------------------------------FUNCIONES GENERALES----------------------------------------------------------------
 
@@ -135,8 +133,8 @@ def validarDireccion(ci,latitud,longitud):
     return True
 
 #retorna la cantidad maxima de estudiante deacuerdo a la cantidad de estudiante
-def capacidadXnivel(nivel):
-    ni=Nivel.objects.filter(id_nivel=int(nivel))[0]
+def capacidadXnivel(curso):
+    ni=curso.nivel
     for i in CapacidadEstandar.objects.all():
         if ni==i.nivel:
             return i.capacidad

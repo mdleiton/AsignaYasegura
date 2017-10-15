@@ -133,7 +133,7 @@
 							</tr>
 				        	<tr>
 				        		<td>Distrito:</td>
-				        		<td><select id="optionlist" name=distrito>
+				        		<td><select id="optionlist" name=distrito class="text-left">
 				        		{% for distrito in distritos%}
 				        			<option value="{{distrito.codigo}}-{{distrito.nombre}}">{{distrito.codigo}} - {{distrito.nombre}}</option>
 				        		{% empty %}

@@ -53,8 +53,7 @@ def Admin_ejecutar(request):
                 est=Estudiante.objects.all().count()
                 inst=Institucion.objects.all().count()
                 insttotal=Distrito.objects.all().aggregate(Sum('cantidadinstituciones'))['cantidadinstituciones__sum']
-                #cupos=Aula.objects.all().aggregate(Sum('capacidadm'))['capacidadm__sum']+Aula.objects.all().aggregate(Sum('capacidadv'))['capacidadv__sum']
-                cupos=0
+                cupos=AulajornadaCurso.objects.all().aggregate(Sum('capacidad'))['capacidad__sum']
                 return render(request,'AsignaYasegura/ejecutarAsignacion.html',{'estudiantes':est,'instituciones':inst,'insttotal':insttotal,'cupos':cupos,'usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})
         else:
             return render(request,'AsignaYasegura/nopermitido.html')

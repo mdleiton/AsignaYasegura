@@ -62,10 +62,12 @@ def Registrar_geoInstitucion(request):
                 instruccion=[]
                 for i in instituto.instruccion.all():
                     if i.tipo=="primaria":
+                        primaria=i
                         instruccion.append(i.tipo)
                     if i.tipo=="secundaria":
+                        secundaria=i
                         instruccion.append(i.tipo)
-                return render(request,'AsignaYasegura/calcular_capacidad.php',{'cp':Curso.objects.all(),'cs':Curso.objects.all(),'infoadd':request.POST['infoadd'],'instruccion':instruccion,'niveles':Nivel.objects.all(),'numaulas':range(instituto.naulas), 'matutina':Institucion.objects.filter(id_institucion=instituto.id_institucion,jornada__jornada="matutina"),'vespertina':Institucion.objects.filter(id_institucion=instituto.id_institucion,jornada__jornada="vespertina"),'mjsregistroinfinstituto':"Se registró correctamente la información general de la institución. Por favor ahora ingresar las especificaciones técnicas de la institución.",'usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})
+                return render(request,'AsignaYasegura/calcular_capacidad.php',{'cp':Curso.objects.filter(instruccion=primaria),'cs':Curso.objects.filter(instruccion=secundaria)[:6],'infoadd':request.POST['infoadd'],'instruccion':instruccion,'niveles':Nivel.objects.all(),'numaulas':range(instituto.naulas), 'matutina':Institucion.objects.filter(id_institucion=instituto.id_institucion,jornada__jornada="matutina"),'vespertina':Institucion.objects.filter(id_institucion=instituto.id_institucion,jornada__jornada="vespertina"),'mjsregistroinfinstituto':"Se registró correctamente la información general de la institución. Por favor ahora ingresar las especificaciones técnicas de la institución.",'usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})
             else:
                 #aqui debe estar la opcion para registrar solo la ubicacion de alguna institucion
                 return render(request,'AsignaYasegura/registrar_geoInstitucion.html',{'infoadd':request.POST['infoadd'],'direccion':request.POST['direccion'],'tipo_objeto':"padre de familia",'usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})  
@@ -87,13 +89,19 @@ def Calcular_capacidad(request):
                     aula.save()     
                     for i in instituto.jornada.all():
                         if i.jornada=="matutina":
-                            estandar=capacidadXnivel(request.POST['nivel1-'+str(j+1)])
                             curso=Curso.objects.filter(id_curso=int(request.POST['curso1-'+str(j+1)]))[0]
-                            AulajornadaCurso(aula=aula,jornada=i,curso=curso,capacidad=estandar,paralelo=request.POST['paralelo1'+str(j+1)],cupos=estandar).save()
+                            estandar=capacidadXnivel(curso)
+                            if capacidadpotencial<=estandar:
+                                 AulajornadaCurso(aula=aula,jornada=i,curso=curso,capacidad=capacidadpotencial,paralelo=request.POST['paralelo1'+str(j+1)],cupos=estandar).save()
+                            else:
+                                AulajornadaCurso(aula=aula,jornada=i,curso=curso,capacidad=estandar,paralelo=request.POST['paralelo1'+str(j+1)],cupos=estandar).save()   
                         if i.jornada=="vespertina":
-                            estandar=capacidadXnivel(request.POST['nivel2-'+str(j+1)])
                             curso=Curso.objects.filter(id_curso=int(request.POST['curso2-'+str(j+1)]))[0]
-                            AulajornadaCurso(aula=aula,jornada=i,curso=curso,capacidad=estandar,paralelo=request.POST['paralelo2'+str(j+1)],cupos=estandar).save()
+                            estandar=capacidadXnivel(curso)
+                            if capacidadpotencial<=estandar:
+                                AulajornadaCurso(aula=aula,jornada=i,curso=curso,capacidad=capacidadpotencial,paralelo=request.POST['paralelo2'+str(j+1)],cupos=estandar).save()
+                            else:
+                                AulajornadaCurso(aula=aula,jornada=i,curso=curso,capacidad=estandar,paralelo=request.POST['paralelo2'+str(j+1)],cupos=estandar).save()
                 cupos=Aulasescompletodata(instituto)
                 m=Institucion.objects.filter(id_institucion=instituto.id_institucion,jornada__jornada="matutina")
                 v=Institucion.objects.filter(id_institucion=instituto.id_institucion,jornada__jornada="vespertina")
@@ -121,7 +129,7 @@ def PPFF_registrar(request):
                         usuario=Usuario.objects.filter(usuario=user)[0]
                         global condicionVivienda
                         global parentescoPropietario
-                        PadreInfo(condicionp=condicionVivienda[request.POST['condicionp']],parentescop=parentescoPropietario[request.POST['parentescop']],usuario=usuario,codigoluz=request.POST['codigoluz']).save()
+                        PadreInfo(direccion=usuario.direccion,registropropiedad=request.POST['registro'],condicionp=condicionVivienda[request.POST['condicionp']],parentescop=parentescoPropietario[request.POST['parentescop']],usuario=usuario,codigoluz=request.POST['codigoluz']).save()
                         Usuariorol(usuario=usuario,rol=rol).save()
                         form=PPFFForm()
                         return render(request,'AsignaYasegura/registrarpfYes.html',{'infoadd':np.ci,'direccion':np.direccion,'tipo_objeto':"padre de familia",'form': form, 'mjsexitoso':"Se registró correctamente el padre de familia",'usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})
@@ -149,7 +157,7 @@ def PPFF_registrargeolocalizacion(request):
                 if request.POST['sinlatitud']=='0' :
                     padre = get_object_or_404(Usuario, pk=request.POST['infoadd'])
                     if validarDireccion(padre.ci,request.POST['latitud'],request.POST['longitud']):
-                        GeolocalizacionPadre(padre=padre,latitud=request.POST['latitud'],longitud=request.POST['longitud'],direccion=request.POST['direccionestudiante']).save()
+                        PadreInfo.objects.filter(usuario=padre).update(latitud=request.POST['latitud'],longitud=request.POST['longitud'])
                         form=PPFFForm()
                         return render(request,'AsignaYasegura/registrarpfYes.html',{'form':form,'mjsregistrolocalizacion':'registro completo del padre de familia. puede ingresar otro padre de familia.','tipo_objeto':"padre de familia",'usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})
                     else:
@@ -217,10 +225,11 @@ def Estudiante_registrarD(request):
         usuario=Usuario.objects.filter(usuario=request.user)[0]
         permiso=validarpermiso(usuario,"Registrar estudiantes")
         if(request.user.is_superuser and permiso and request.user.is_authenticated and "digitador"==Usuariorol.objects.filter(usuario=usuario)[0].rol.rol):
+            global parentescorepresentante
             if request.method == 'POST':
                 curso = get_object_or_404(Curso, pk=request.POST['curso'])
-                global parentescorepresentante
-                estudiante=Estudiante(parentescorepresentante=parentescorepresentante[request.POST['parentesco']],ci=request.POST['cedula'],nombre=request.POST['nombres'],apellidos=request.POST['apellidos'],direccion=request.POST['direccion'],nacimiento=datetime.datetime.strptime(request.POST['nacimiento'],"%Y-%m-%d"),representante=usuario,curso=curso)
+                usuarios=Usuario.objects.filter(ci=request.POST['representante'])[0]
+                estudiante=Estudiante(parentescorepresentante=parentescorepresentante[request.POST['parentesco']],ci=request.POST['cedula'],nombre=request.POST['nombres'],apellidos=request.POST['apellidos'],direccion=request.POST['direccion'],nacimiento=datetime.datetime.strptime(request.POST['nacimiento'],"%Y-%m-%d"),representante=usuarios,curso=curso)
                 estudiante.save()
                 if request.POST['discapacidad']=="1":
                     Discapacidad(discapacidad=request.POST['conadistipo'],codigo=request.POST['conadis'],porcentaje=request.POST['conadisd'],estudiante=estudiante).save()                   
@@ -233,7 +242,6 @@ def Estudiante_registrarD(request):
             padres=[]
             for i in usuariorol:
                 padres.append(i.usuario)
-            global parentescorepresentante
             return render(request,'AsignaYasegura/registrar_estudiantes.html',{'parentescor':parentescorepresentante,'objects':padres,'tipo_objeto':"estudiantes",'usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})
         else:
             return render(request,'AsignaYasegura/nopermitido.html')
@@ -246,9 +254,9 @@ def Estudiante_registrarU(request,item):
         usuario=Usuario.objects.filter(usuario=request.user)[0]
         permiso=validarpermiso(usuario,"Registrar estudiantes")
         if(request.user.is_superuser and permiso and request.user.is_authenticated and "digitador"==Usuariorol.objects.filter(usuario=usuario)[0].rol.rol):
-            usuario = get_object_or_404(Usuario, pk=item)    
+            usuarios = get_object_or_404(Usuario, pk=item)    
             global parentescorepresentante
-            return render(request,'AsignaYasegura/registrar_estudiantesform.html',{'parentescor': parentescorepresentante ,"cursos":Curso.objects.all(),'usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})
+            return render(request,'AsignaYasegura/registrar_estudiantesform.html',{'representante':usuarios.ci,'parentescor': parentescorepresentante ,"cursos":Curso.objects.all(),'usuarioform':AdminForm(instance=usuario,initial={'usuario':request.user.username})})
         else:
             return render(request,'AsignaYasegura/nopermitido.html')
     else:

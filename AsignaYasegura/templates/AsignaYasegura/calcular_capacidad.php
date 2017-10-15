@@ -37,12 +37,10 @@
 						<td><strong>Longitud  </strong></td>
 						<td><strong>Amplitud  </strong></td>
 						{% if matutina %}
-							<td><strong>Horario matutino  </strong></td>
 							<td><strong>Curso matutino  </strong></td>
 							<td><strong>Paralelo matutino  </strong></td>
 						{% endif %}
 						{% if vespertina %}
-							<td><strong>Horario vespertino  </strong></td>
 							<td><strong>Curso vespertino  </strong></td>
 							<td><strong>Paralelo vespertino  </strong></td>
 						{% endif %}
@@ -53,23 +51,7 @@
 							<td><input type=text name="longitud{{i|add:1}}" size="5" required></td>
 							<td><input type=text name="amplitud{{i|add:1}}" size="5" required></td>
 							{% if matutina %}
-								<td><select  name="nivel1-{{i|add:1}}">
-									{%for i in niveles %}
-										{%for j in instruccion %}
-											{% ifequal j "primaria" %}
-												{% if i.id_nivel == 1 or i.id_nivel == 2 or i.id_nivel == 3  or i.id_nivel == 4 %}
-													<option value="{{i.id_nivel}}">{{i.nivel}}</option>
-												{% endif %}
-											{% endifequal %}
-											{% ifequal j "secundaria" %}
-												{% if i.id_nivel == 5 %}
-													<option value="{{i.id_nivel}}">{{i.nivel}}</option>
-												{% endif %}
-											{% endifequal %}
-										{% endfor %}
-									{% endfor %}
-								</select></td>
-								<td><select  name="curso1-{{i|add:1}}">
+								<td><select  class="text-left" name="curso1-{{i|add:1}}">
 									{%for j in instruccion %}
 										{% ifequal j "primaria" %}
 											{% for k in cp %}
@@ -88,23 +70,7 @@
 								<td><input class="bock-center" type=text name="paralelo1{{i|add:1}}" size="8" required></td>
 							{% endif %}
 							{% if vespertina %}
-								<td><select name="nivel2-{{i|add:1}}">"
-									{%for i in niveles %}
-										{%for j in instruccion %}
-											{% ifequal j "primaria" %}
-												{% if i.id_nivel == 1 or i.id_nivel == 2 or i.id_nivel == 3 or i.id_nivel == 4 %}
-													<option value="{{i.id_nivel}}">{{i.nivel}}</option>
-												{% endif %}
-											{% endifequal %}
-											{% ifequal j "secundaria" %}
-												{% if i.id_nivel == 5 %}
-													<option value="{{i.id_nivel}}">{{i.nivel}}</option>
-												{% endif %}
-											{% endifequal %}
-										{% endfor %}
-									{% endfor %}
-								</select></td>
-								<td><select  name="curso2-{{i|add:1}}">
+								<td><select  class="text-left"  name="curso2-{{i|add:1}}">
 									{%for j in instruccion %}
 										{% ifequal j "primaria" %}
 											{% for k in cp %}

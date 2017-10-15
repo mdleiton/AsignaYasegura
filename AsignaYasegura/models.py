@@ -18,23 +18,16 @@ class Usuario(models.Model):
 class PadreInfo(models.Model):
 	id_padre=models.AutoField(primary_key=True)
 	condicionp=models.CharField(max_length=100)
+	registropropiedad=models.CharField(max_length=100)
 	parentescop=models.CharField(max_length=100)
 	usuario=models.ForeignKey('Usuario')
 	codigoluz=models.CharField(max_length=100)
+	direccion=models.CharField(max_length=100)
+	latitud=models.FloatField(null=True,blank=True)
+	longitud=models.FloatField(null=True,blank=True)
 
 	def __str__(self):
 		return 'Padre vivienda: {}:{}'.format(self.condicionp, self.usuario)
-
-class GeolocalizacionPadre(models.Model):
-	idgeolocalizacion=models.AutoField(primary_key=True)
-	direccion=models.CharField(max_length=100)
-	latitud=models.FloatField()
-	longitud=models.FloatField()
-	padre=models.ForeignKey('Usuario')
-	
-
-	def __str__(self):
-		return 'GeolocalizacionPadre: {}:{}'.format(self.padre,self.direccion)
 
 class Roles(models.Model):
 	id_rol=models.AutoField(primary_key=True)
@@ -75,8 +68,6 @@ class Estudiante(models.Model):
 	apellidos = models.CharField(max_length=35)
 	direccion=models.CharField(max_length=100)
 	representante=models.ForeignKey('Usuario')
-	latitud=models.FloatField(null=True,blank=True)
-	longitud=models.FloatField(null=True,blank=True)
 	curso=models.ForeignKey('Curso')
 	parentescorepresentante=models.CharField(max_length=100)
 

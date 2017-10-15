@@ -59,7 +59,7 @@ INSERT INTO AsignaYasegura_curso(curso,nivel_id,instruccion_id) VALUES ('Sexto a
 INSERT INTO AsignaYasegura_curso(curso,nivel_id,instruccion_id) VALUES ('Septimo año básico',2,1);
 INSERT INTO AsignaYasegura_curso(curso,nivel_id,instruccion_id) VALUES ('Octavo año básico',2,2);
 INSERT INTO AsignaYasegura_curso(curso,nivel_id,instruccion_id) VALUES ('Noveno año básico',2,2);
-INSERT INTO AsignaYasegura_curso(curso,nivel_id,instruccion_id) VALUES ('Decimoo año básico',2,2);
+INSERT INTO AsignaYasegura_curso(curso,nivel_id,instruccion_id) VALUES ('Decimo año básico',2,2);
 INSERT INTO AsignaYasegura_curso(curso,nivel_id,instruccion_id) VALUES ('B.G.U. 1',5,2);
 INSERT INTO AsignaYasegura_curso(curso,nivel_id,instruccion_id) VALUES ('B.G.U. 2',5,2);
 INSERT INTO AsignaYasegura_curso(curso,nivel_id,instruccion_id) VALUES ('B.G.U. 3',5,2);
