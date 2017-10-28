@@ -1,9 +1,10 @@
 {% extends "AsignaYasegura/base_digitadores.html" %}
 {% load static %}
+
 {% block title %} Registro de estudiante {% endblock %} 
 
 {% block menu%}
-	 <li ><a href="{% url 'AsignaYasegura:Menu' %}">Información general</a></li>
+	<li ><a href="{% url 'AsignaYasegura:Menu' %}">Información general</a></li>
     <li class="dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Instituciones <b class="caret"></b></a>
         <ul class="dropdown-menu">
@@ -20,9 +21,11 @@
         </ul>
     </li>
 {% endblock %}
+
 {% block contenttitle %} Registro de estudiante {% endblock %}
 
 {% block content %} 
+
 <script>		
 	function controla(f){
 		if(f.checked==true){
@@ -61,9 +64,9 @@
 				<br><font color="#CC0000"><strong>Información general del estudiante</strong></font><br>
 				<table>
 					<tr><td>Representante:</td><td><input type=text name=representante size="35" value="{{representante}}" readonly></td></tr>
-					<tr><td>Número de cédula:</td><td><input type=text name=cedula size="35" required></td></tr>
-					<tr><td>Apellidos:</td><td><input type=text name=apellidos size="35" required></td></tr>
-					<tr><td>Nombres:</td><td><input type=text name=nombres size="35" required></td></tr>
+					<tr><td>Número de cédula:</td><td><input type=text pattern="[0-9]{10}" name=cedula size="35" required></td></tr>
+					<tr><td>Apellidos:</td><td><input type=text pattern="[a-z A-Z]*[a-z A-Z]{2,30}" name=apellidos size="35"  required></td></tr>
+					<tr><td>Nombres:</td><td><input type=text pattern="[a-z A-Z]*[a-z A-Z]{2,30}" name=nombres size="35" required></td></tr>
 					<tr><td>Fecha de nacimiento:</td><td><input type="date" name=nacimiento size="35" placeholder="fecha: AA-MM-DD" required></td></tr>
 					<tr><td>Dirección:</td><td><input id=direccion type=text name=direccion size="35" required></td></tr>
 					<tr><td>Parentesco estudiante:</td><td><select id="optionlist1" name=parentesco>
@@ -79,7 +82,7 @@
 					<tr><td>Capacidades especiales:</td><td>Sí<input type="checkbox" id="contr1" name="discapacidad" value="1" onClick="controla(this)">    No<input type="checkbox" id="contr2" name="discapacidad" value="2" onClick="controlb(this)"></td></tr>
 					<tr><td>Código del Conadis:</td><td><input type=text id="contr4" name=conadis size="35" disabled></td></tr>
 					<tr><td>Tipo de discapacidad:</td><td><input type=text id="contr5" name=conadistipo size="35" disabled></td></tr>
-					<tr><td>Porcentaje de discapacidad:</td><td><input type=text id="contr3" name=porcentajed size="35" disabled></td></tr>       
+					<tr><td>Porcentaje de discapacidad:</td><td><input type=number min=1 max=100 step=1 id="contr3" name=porcentajed size="35" disabled>%</td></tr>       
 				</table> 
 			</div>		
 			<br>

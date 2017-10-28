@@ -1,11 +1,11 @@
 from django.shortcuts import render,render_to_response,get_object_or_404,redirect
-from .models import *
+from AsignaYasegura.models import *
 from django.contrib.auth import login as auth_login,logout as auth_logout,authenticate
-from .forms import *
+from AsignaYasegura.forms import *
 from django.db.models import Sum
 import datetime
 from datetime import timedelta, date
-from .funcionesadicionales import *
+from AsignaYasegura.funcionesadicionales import *
 #---------------------------------------------------VISTAS ADMINISTRADOR-------------------------------------------------------------------------
 #permite registrar digitar (informacion personal , permisos)
 def Digitador_registrar(request):

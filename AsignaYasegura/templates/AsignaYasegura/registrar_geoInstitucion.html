@@ -1,5 +1,6 @@
 {% extends "AsignaYasegura/base_digitadores.html" %}
 {% load static %}
+
 {% block title %} Menu Representante {% endblock %} 
 
 {% block menu%}
@@ -20,7 +21,9 @@
     </ul>
   </li>	
 {% endblock %}
+
 {% block contenttitle %} Registrar ubicación en el mapa {% endblock %}
+
 {% block content %}
    
 <link href = "{% static 'css/stylemap.css'  %}" rel = "stylesheet" >
@@ -59,7 +62,6 @@
 	      		 <input class="btn btn-danger block-center" type="submit" value="Registrar geolocalización" />
 	      		</div>
 	      	</div>
-
 	 		<div id = "mapDiv" class="col-md-6 ">
 	 			<br/>
 	 			<div id="map"></div>

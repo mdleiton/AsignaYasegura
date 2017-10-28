@@ -1,5 +1,6 @@
 {% extends "AsignaYasegura/base_digitadores.html" %}
 {% load static %}
+
 {% block title %} Menu Representante {% endblock %} 
 
 {% block menu%}
@@ -15,7 +16,9 @@
   </li>
   <li><a href="#">Ver información solicitudes</a></li>
 {% endblock %}
+
 {% block contenttitle %} Registrar ubicación en el mapa {% endblock %}
+
 {% block content %}
    
 <link href = "{% static 'css/stylemap.css'  %}" rel = "stylesheet" >
@@ -52,12 +55,13 @@
 	      		</div>
 	      	</div>
 	      	<br/>
+	      	{% if not mjsactualizar %}
 	      	<div class="col-md-4 col-md-offset-5">
 	      		<div class="form-group">
 	      		 <input class="btn btn-danger block-center" type="submit" value="Registrar geolocalización" />
 	      		</div>
 	      	</div>
-
+	      	{% endif %}
 	 		<div id = "mapDiv" class="col-md-6 ">
 	 			<br/>
 	 			<div id="map"></div>
@@ -95,7 +99,6 @@ $(".modal-dialog").attr("style","height: 378px; z-index: 2;")
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCv2SC4alSoTDCn9bYPyxMTLhiRIUHZgEU&callback=initMap" async defer>
     </script>
 
-
 {% else %}
 <script >
 
@@ -109,7 +112,5 @@ ubicacion.sitio[0].location=document.getElementById('direccion').value;
 </script> <script src = "{% static 'js/helper.js'  %}" > </script>
 
 {% endif %}   
-
-
 
 {% endblock %}

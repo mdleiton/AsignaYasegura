@@ -1,27 +1,29 @@
 {% extends "AsignaYasegura/base.html" %}
 {% load static %}
+
 {% block title %} Menu Administrador {% endblock %} 
 
 {% block menu%}
-      <li ><a href="{% url 'AsignaYasegura:Menu' %}">Avance de Procesos</a></li>
-      <li class="dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Digitadores <b class="caret"></b></a>
-        <ul class="dropdown-menu">
-           <li><a href="{% url 'AsignaYasegura:digitador_registrar' %}">Registrar Digitador</a></li>
-            <li><a href="/verdigitador/">Ver Información/permisos digitadores</a></li>
-            <li><a href="{% url 'AsignaYasegura:digitador_editar' %}" >Editar Información/permisos digitadores</a></li>
-          	<li><a href="{% url 'AsignaYasegura:digitador_eliminar' %}">Eliminar digitador</a></li>
-        </ul>
-      </li>
-      <li class="active"><a href="{% url 'AsignaYasegura:Admin_ejecutar' %}">Ejecutar Asignación de cupos</a></li>
-   
-    <li><a href="{% url 'AsignaYasegura:Admin_problemasasignacion' %}">Problemas asociados a la asignación</a></li>
+  <li ><a href="{% url 'AsignaYasegura:Menu' %}">Avance de Procesos</a></li>
+  <li class="dropdown">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Digitadores <b class="caret"></b></a>
+    <ul class="dropdown-menu">
+      <li><a href="{% url 'AsignaYasegura:digitador_registrar' %}">Registrar Digitador</a></li>
+      <li><a href="/verdigitador/">Ver Información/permisos digitadores</a></li>
+      <li><a href="{% url 'AsignaYasegura:digitador_editar' %}" >Editar Información/permisos digitadores</a></li>
+      <li><a href="{% url 'AsignaYasegura:digitador_eliminar' %}">Eliminar digitador</a></li>
+    </ul>
+  </li>
+  <li class="active"><a href="{% url 'AsignaYasegura:Admin_ejecutar' %}">Ejecutar Asignación de cupos</a></li>
+  <li><a href="{% url 'AsignaYasegura:Admin_problemasasignacion' %}">Problemas asociados a la asignación</a></li>
 {% endblock %}
+
 {% block contenttitle %} Ejecutar procesos {% endblock %}
+
 {% block content %} 
 <div class="text-center" >
   {% if mjsexitoso %}
-      {{mjsexitoso|capfirst}}
+    {{mjsexitoso|capfirst}}
   {% endif %}
   {% if error %}
     {{error }}
@@ -30,7 +32,7 @@
 <div class="row text-center">
 	<div class="container">
     <form method="post" action="{% url 'AsignaYasegura:Admin_ejecutar' %}">
-       {% csrf_token %}
+      {% csrf_token %}
       <h1>Datos generales previos a la inicialización del proceso:</h1>
       <br/>
       <div class="row">
@@ -38,7 +40,7 @@
           <label>Cantidad de estudiantes registrados: </label>
         </div>
         <div class="col-md-2 text-right">
-           <label>{{estudiantes}} </label>
+          <label>{{estudiantes}} </label>
         </div>
       </div>
       <div class="row">
@@ -46,7 +48,7 @@
           <label>Cantidad de estudiantes especiales registrados: </label>
         </div>
         <div class="col-md-2 text-right">
-           <label> 0 </label>
+          <label> 0 </label>
         </div>
       </div>
       <div class="row">
@@ -54,7 +56,7 @@
           <label>Cantidad de Instituciones registrados:</label>
         </div>
         <div class="col-md-2 text-right">
-           <label>{{instituciones}} </label>
+          <label>{{instituciones}} </label>
         </div>
       </div>
       <div class="row">
@@ -62,7 +64,7 @@
           <label>Total de instituciones (Distrito): </label>
         </div>
         <div class="col-md-2 text-right">
-           <label>{{insttotal}} </label>
+          <label>{{insttotal}} </label>
         </div>
       </div>
       <div class="row">
@@ -70,25 +72,25 @@
           <label>Cantidad de cupos disponibles: </label>
         </div>
         <div class="col-md-2 text-right">
-           <label>{{cupos}} </label>
+          <label>{{cupos}} </label>
         </div>
       </div>
       <br/>
       <fieldset>
         <legend>Requisitos para ejecutar la acción</legend>
         <div class="form-group">
-            <div class="col-md-offset-2 col-md-6 text-left">
-              <input type="checkbox" id="requisito1" name="completoinstiticiones" value="completoinstiticiones" required>
-          <label for="requisito1" >Registro completo de información/capacidad de estudiantes</label>
-             </div>
-          </div>
-        <div>
-        <div class="form-group">
-          <div class="col-md-offset-2 col-md-6 text-left">  
-            <input type="checkbox" id="requisito2" name="finregistroestudiantes" value="finregistroestudiantes" required>
-            <label for="requisito2">Fecha final del registro estudiantil</label>
+          <div class="col-md-offset-2 col-md-6 text-left">
+            <input type="checkbox" id="requisito1" name="completoinstiticiones" value="completoinstiticiones" required>
+            <label for="requisito1" >Registro completo de información/capacidad de estudiantes</label>
           </div>
         </div>
+        <div>
+          <div class="form-group">
+            <div class="col-md-offset-2 col-md-6 text-left">  
+              <input type="checkbox" id="requisito2" name="finregistroestudiantes" value="finregistroestudiantes" required>
+              <label for="requisito2">Fecha final del registro estudiantil</label>
+            </div>
+          </div>
         <br/><br/>
         <div class="form-group">
           <div class="col-md-12 text-center">  
@@ -96,11 +98,8 @@
           </div>
         </div>        
         <br/>
-    </fieldset>
-
-
+      </fieldset>
     </form>
-	
 	</div>
 </div>
 

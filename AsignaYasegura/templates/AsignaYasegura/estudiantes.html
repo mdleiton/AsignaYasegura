@@ -2,8 +2,12 @@
 {% load static %}
 
 {% block title %} Lista de estudiantes{% endblock %} 
+
 {% block contenttitle %} Ver información estudiantes{% endblock %}
-{% block tipo %}<h3 class="bock-center text-center" style="font-weight: bold;">Estudiantes</h3>{% endblock %}
+
+{% block tipo %}
+<h3 class="bock-center text-center" ><strong>Estudiantes</strong></h3>
+{% endblock %}
 
 {% block menu%}
     <li ><a href="{% url 'AsignaYasegura:Menu' %}">Información general</a></li>
@@ -12,7 +16,7 @@
         <a href="#" class="dropdown-toggle" data-toggle="dropdown"> Estudiantes  <b class="caret"></b></a>
         <ul class="dropdown-menu">
             <li><a href="{% url 'AsignaYasegura:registrar_estudiante' %}">Registrar Estudiantes</a></li>
-          <li class="active"><a href="{% url 'AsignaYasegura:estudiantes' %}">Editar Informacion estudiantes</a></li>
+            <li class="active"><a href="{% url 'AsignaYasegura:estudiantes' %}">Editar Informacion estudiantes</a></li>
             <li><a href="#">Eliminar registro de estudiante</a></li>
         </ul>
     </li>
@@ -28,6 +32,7 @@
         <th>Curso</th>
         <th>Nacimiento</th>
 {% endblock %}
+
 {%block elementostablas%}
         <td>{{ forloop.counter   }}</td>
         <th>{{ registro.ci}}</th>
@@ -38,5 +43,3 @@
         <td>{{ registro.nacimiento }}</td>
 
 {% endblock %}
-
-    n

@@ -1,5 +1,6 @@
 {% extends "AsignaYasegura/base_digitadores.html" %}
 {% load static %}
+
 {% block title %} Registro {{tipo_objeto}} {% endblock %} 
 
 {% block extra-style %}
@@ -7,6 +8,7 @@
 {% endblock %}
 
 {% block contenttitle %}Registro {{tipo_objeto}} {% endblock %}
+
 {% block content %} 
 <div class="container">
     <form class="form-signin" action="{% url 'AsignaYasegura:Registrar_PPFFinicio' %}" method="post">
@@ -45,6 +47,7 @@
         </div>
     </form>
 </div>
+
 <script>
 $(document).ready(function(){
     $("#mostrarmodalregistro").modal("show");

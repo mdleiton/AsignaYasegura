@@ -2,26 +2,31 @@
 {% load static %}
 
 {% block title %} Lista de Representantes{% endblock %} 
+
 {% block contenttitle %} Registrar estudiantes{% endblock %}
-{% block tipo %}<h3 class="bock-center text-center" style="font-weight: bold;">Estudiantes</h3>{% endblock %}
+
+{% block tipo %}
+<h3 class="bock-center text-center" ><strong>Estudiantes</strong></h3>
+{% endblock %}
 
 {% block menu%}
-    <li ><a href="{% url 'AsignaYasegura:Menu' %}">Información general</a></li>
-    <li class="dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Instituciones <b class="caret"></b></a>
-        <ul class="dropdown-menu">
-            <li ><a href="{% url 'AsignaYasegura:Adquisicion_datos' %}">Registrar Instituciones</a></li>
-            <li ><a href="{% url 'AsignaYasegura:Instituciones' %}">Ver Información Instituciones</a></li>
-            <li><a href="{% url 'AsignaYasegura:Institucion_eliminar' %}">Eliminar Instituciones</a></li>
-        </ul>
-    </li>
-    <li class="dropdown active">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Estudiantes <b class="caret"></b></a>
-        <ul class="dropdown-menu">
-            <li><a href="{% url 'AsignaYasegura:Registrar_PPFF' %}">Registrar Representante</a></li>
-            <li class="active"><a href="{% url 'AsignaYasegura:Registrar_estudiante' %}">Registrar estudiantes</a></li>
-        </ul>
-    </li> 
+  <li ><a href="{% url 'AsignaYasegura:Menu' %}">Información general</a></li>
+  <li class="dropdown">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Instituciones <b class="caret"></b></a>
+    <ul class="dropdown-menu">
+      <li ><a href="{% url 'AsignaYasegura:Adquisicion_datos' %}">Registrar Instituciones</a></li>
+      <li ><a href="{% url 'AsignaYasegura:Instituciones' %}">Ver Información Instituciones</a></li>
+      <li><a href="{% url 'AsignaYasegura:Institucion_eliminar' %}">Eliminar Instituciones</a></li>
+    </ul>
+  </li>
+  <li class="dropdown active">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Estudiantes <b class="caret"></b></a>
+    <ul class="dropdown-menu">
+      <li><a href="{% url 'AsignaYasegura:Registrar_PPFF' %}">Registrar Representante</a></li>
+      <li class="active"><a href="{% url 'AsignaYasegura:Registrar_estudiante' %}">Registrar estudiantes</a></li>
+    </ul>
+  </li> 
+
 {% endblock %}
 
 {%block encabezadotablas%}
@@ -34,6 +39,7 @@
         <th>Correo</th>
         <th>Registrar estudiantes</th>
 {% endblock %}
+
 {%block elementostablas%}
         <td>{{ forloop.counter   }}</td>
         <td>{{ registro.ci      }}</td>
@@ -47,20 +53,20 @@
 
 {% if mjsexitoso %}
   <div class="modal fade" id="mostrarmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-   <div class="modal-dialog" role="document">
+    <div class="modal-dialog" role="document">
       <div class="modal-content">
-         <div class="modal-header">
+        <div class="modal-header">
           <button href="{% url 'AsignaYasegura:digitador_registrar' %}" type="button" class="close" data-dismiss="modal" aria-label="close"><span aria-hidden="true">&times;</span></button>
-            <h3 class="modal-title" id="myModalLabel">Estado registro estudiante</h3>
-      </div>
-      <div class="modal-body">
-            <h4>  {{mjsexitoso|capfirst}}</h4>   
-      </div>
-      <div class="modal-footer">
+          <h3 class="modal-title" id="myModalLabel">Estado registro estudiante</h3>
+        </div>
+        <div class="modal-body">
+          <h4>  {{mjsexitoso|capfirst}}</h4>   
+        </div>
+        <div class="modal-footer">
           <a data-dismiss="modal" class="btn btn-danger">Cerrar</a>
+        </div>
       </div>
-     </div>
-   </div>
+    </div>
   </div>
 {% endif %}
 

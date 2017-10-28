@@ -129,7 +129,7 @@
 				        <table>
 							<tr>
 								<td>Nombre de la Institución:</td>
-								<td><input type=text name=nombreescuela size="37"></td>
+								<td><input type=text name=nombreescuela pattern="[a-zA-Z0-9]{6,36}" size="37"></td>
 							</tr>
 				        	<tr>
 				        		<td>Distrito:</td>
@@ -167,15 +167,15 @@
 		            <table>
 		            	<tr><td>Nombres de el/la director/a:</td><td><input type=text name=nombrerector size="40" required></td></tr>
 		            	<tr><td>Apellidos de el/la director/a:</td><td><input type=text name=apellidorector size="40" required></td></tr>
-		                <tr><td>Número de cédula:</td><td><input type=text name=cedularector required></td></tr>
-		                <tr><td>Número de teléfono:</td><td><input type=text name=numerorector required></td></tr>
-		                <tr><td>Correo electrónico:</td><td><input type=text name=correorector size="40" required></td></tr>
+		                <tr><td>Número de cédula:</td><td><input type=text pattern="[0-9]{10}"name=cedularector required></td></tr>
+		                <tr><td>Número de teléfono:</td><td><input type=tel name=numerorector required></td></tr>
+		                <tr><td>Correo electrónico:</td><td><input type=email name=correorector size="40" required></td></tr>
 		            </table>
 		        </div> 
 	        	<div id=complementaria>
 			    	<br><font color="#CC0000"><strong>Información complementaria</strong></font><br><br>
 			        <table>
-			        	<tr><td>Número de aulas disponibles:</td><td><input type=value name=aulas required></td></tr>
+			        	<tr><td>Número de aulas disponibles:</td><td><input type=number min=1 step=1 name=aulas required></td></tr>
 			            <tr><td>Jornadas</td><td>Matutina<input id="matutina" type="checkbox" name="jornadas" value="matutina" >
 				            	Vespertina <input id="vespertina" type="checkbox" name="jornadas" value="vespertina"></td></tr>
 			        </table>

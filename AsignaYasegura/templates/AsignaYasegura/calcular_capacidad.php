@@ -7,24 +7,26 @@
 {% endblock %}
 
 {% block menu%}
-      <li ><a href="{% url 'AsignaYasegura:Menu' %}">Información general</a></li>
-      <li  class="dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Instituciones <b class="caret"></b></a>
-        <ul class="dropdown-menu">
-           <li class="active"><a href="{% url 'AsignaYasegura:Adquisicion_datos' %}">Registrar Instituciones</a></li>
-           <li><a href="{% url 'AsignaYasegura:Instituciones' %}">Ver Informacion Instituciones</a></li>
-          <li><a href="{% url 'AsignaYasegura:Institucion_eliminar' %}">Eliminar Instituciones</a></li>
-        </ul>
-      </li>
-      <li class="dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Estudiantes <b class="caret"></b></a>
-        <ul class="dropdown-menu">
-           <li><a href="{% url 'AsignaYasegura:Registrar_PPFF' %}">Registrar Representante</a></li>
-           <li><a href="{% url 'AsignaYasegura:Registrar_estudiante' %}">Registrar estudiantes</a></li>
-        </ul>
-      </li>
+	<li ><a href="{% url 'AsignaYasegura:Menu' %}">Información general</a></li>
+	<li  class="dropdown">
+		<a href="#" class="dropdown-toggle" data-toggle="dropdown">Instituciones <b class="caret"></b></a>
+		<ul class="dropdown-menu">
+	   		<li class="active"><a href="{% url 'AsignaYasegura:Adquisicion_datos' %}">Registrar Instituciones</a></li>
+	   		<li><a href="{% url 'AsignaYasegura:Instituciones' %}">Ver Informacion Instituciones</a></li>
+	  		<li><a href="{% url 'AsignaYasegura:Institucion_eliminar' %}">Eliminar Instituciones</a></li>
+		</ul>
+	</li>
+	<li class="dropdown">
+		<a href="#" class="dropdown-toggle" data-toggle="dropdown">Estudiantes <b class="caret"></b></a>
+		<ul class="dropdown-menu">
+	   		<li><a href="{% url 'AsignaYasegura:Registrar_PPFF' %}">Registrar Representante</a></li>
+	   		<li><a href="{% url 'AsignaYasegura:Registrar_estudiante' %}">Registrar estudiantes</a></li>
+		</ul>
+	</li>
 {% endblock %}
+
 {% block contenttitle %} Calcular capacidad {% endblock %}
+
 {% block content %}
 	<div class="row">
 		<div clas="col-md-8 col-md-offset-2" >
@@ -48,8 +50,8 @@
 					{%for i in numaulas %}
 						<tr>
 							<td>{{i|add:1}}</td>
-							<td><input type=text name="longitud{{i|add:1}}" size="5" required></td>
-							<td><input type=text name="amplitud{{i|add:1}}" size="5" required></td>
+							<td><input type=number name="longitud{{i|add:1}}" size="5" min=3 max=30 step="0.1" required></td>
+							<td><input type=number name="amplitud{{i|add:1}}" size="5" min=3 step="0.1" max=30 required></td>
 							{% if matutina %}
 								<td><select  class="text-left" name="curso1-{{i|add:1}}">
 									{%for j in instruccion %}
@@ -97,11 +99,11 @@
             <a type="button" href="{% url 'AsignaYasegura:Adquisicion_datos' %}" class="btn btn-primary btn-danger">Atrás</a>
             </center>
             <input name="infoadd"  value="{{infoadd}}" style="display: none" readonly >
-
         </div>
 			</form>
 		</div>
 	</div>
+
 {% if mjsregistroinfinstituto %}
     <div class="modal fade" id="mjsregistroinfinstituto" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
        <div class="modal-dialog" role="document">
@@ -120,6 +122,7 @@
        </div>
     </div>
 {% endif %}           
+
 <script>
 $(document).ready(function(){
     $("#mjsregistroinfinstituto").modal("show");
@@ -127,4 +130,5 @@ $(document).ready(function(){
 
 });
 </script>
+
 {% endblock %}

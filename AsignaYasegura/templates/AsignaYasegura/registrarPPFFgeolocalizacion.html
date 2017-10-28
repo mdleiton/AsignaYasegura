@@ -1,16 +1,17 @@
 {% extends "AsignaYasegura/base_digitadores.html" %}
 {% load static %}
+
 {% block title %} Registro de estudiante {% endblock %} 
 
 {% block menu%}
 <li ><a href="{% url 'AsignaYasegura:Menu' %}">Información general</a></li>
 <li class="dropdown">
-<a href="#" class="dropdown-toggle" data-toggle="dropdown">Instituciones <b class="caret"></b></a>
-<ul class="dropdown-menu">
-  <li><a href="{% url 'AsignaYasegura:Adquisicion_datos' %}">Registrar Instituciones</a></li>
-  <li><a href="{% url 'AsignaYasegura:Instituciones' %}">Ver Informacion Instituciones</a></li>
-  <li><a href="{% url 'AsignaYasegura:Institucion_eliminar' %}">Eliminar Instituciones</a></li>
-</ul>
+	<a href="#" class="dropdown-toggle" data-toggle="dropdown">Instituciones <b class="caret"></b></a>
+	<ul class="dropdown-menu">
+	  <li><a href="{% url 'AsignaYasegura:Adquisicion_datos' %}">Registrar Instituciones</a></li>
+	  <li><a href="{% url 'AsignaYasegura:Instituciones' %}">Ver Informacion Instituciones</a></li>
+	  <li><a href="{% url 'AsignaYasegura:Institucion_eliminar' %}">Eliminar Instituciones</a></li>
+	</ul>
 </li>
 <li class="dropdown active">
 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Estudiantes <b class="caret"></b></a>
@@ -77,8 +78,8 @@ var ubicacion = {
         "location": document.getElementById('direccion').value,
     }],
 };
+
 ubicacion.sitio[0].location=document.getElementById('direccion').value;	
-console.log(ubicacion.sitio[0].location);
 
 </script> <script src = "{% static 'js/helper.js'  %}" > </script>
 

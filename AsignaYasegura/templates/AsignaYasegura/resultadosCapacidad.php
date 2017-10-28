@@ -1,5 +1,6 @@
 <{% extends "AsignaYasegura/base_digitadores.html" %}
 {% load static %}
+
 {% block title %} Resultados {% endblock %} 
 
 {% block extra-style%}
@@ -7,25 +8,27 @@
 {% endblock %}
 
 {% block menu%}
-      <li ><a href="{% url 'AsignaYasegura:Menu' %}">Información general</a></li>
-      <li  class="dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Instituciones <b class="caret"></b></a>
-        <ul class="dropdown-menu">
-           <li class="active"><a href="{% url 'AsignaYasegura:Adquisicion_datos' %}">Registrar Instituciones</a></li>
-           <li><a href="{% url 'AsignaYasegura:Instituciones' %}">Ver Informacion Instituciones</a></li>
-          <li><a href="#">Eliminar Instituciones</a></li>
-        </ul>
-      </li>
-      <li class="active"><a href="#">Registrar capacidad institución</a></li>
-      <li class="dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Estudiantes <b class="caret"></b></a>
-        <ul class="dropdown-menu">
-           <li><a href="{% url 'AsignaYasegura:Registrar_PPFF' %}">Registrar Representante</a></li>
-          <li><a href="{% url 'AsignaYasegura:Registrar_estudiante' %}">Registrar estudiantes</a></li>
-        </ul>
-      </li>
+	<li ><a href="{% url 'AsignaYasegura:Menu' %}">Información general</a></li>
+	<li  class="dropdown">
+		<a href="#" class="dropdown-toggle" data-toggle="dropdown">Instituciones <b class="caret"></b></a>
+		<ul class="dropdown-menu">
+			<li class="active"><a href="{% url 'AsignaYasegura:Adquisicion_datos' %}">Registrar Instituciones</a></li>
+			<li><a href="{% url 'AsignaYasegura:Instituciones' %}">Ver Informacion Instituciones</a></li>
+			<li><a href="#">Eliminar Instituciones</a></li>
+		</ul>
+	</li>
+	<li class="active"><a href="#">Registrar capacidad institución</a></li>
+	<li class="dropdown">
+		<a href="#" class="dropdown-toggle" data-toggle="dropdown">Estudiantes <b class="caret"></b></a>
+		<ul class="dropdown-menu">
+			<li><a href="{% url 'AsignaYasegura:Registrar_PPFF' %}">Registrar Representante</a></li>
+			<li><a href="{% url 'AsignaYasegura:Registrar_estudiante' %}">Registrar estudiantes</a></li>
+		</ul>
+	</li>
 {% endblock %}
+
 {% block contenttitle %} Resultados {% endblock %}
+
 {% block content %}
 	<br><br><br>
 	<table border=10 align=center class="text-center">
@@ -120,12 +123,14 @@
        </div>
     </div>
 {% endif %}  
+
 <script>
 $(document).ready(function(){
     $("#mostrarmodal").modal("show");
 	$(".modal-dialog").attr("style","height: 378px; z-index: 2;")
 });
 </script>   
+
 {% endblock %}
 
  

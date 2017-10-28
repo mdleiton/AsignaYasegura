@@ -1,11 +1,11 @@
 from django.shortcuts import render,render_to_response,get_object_or_404,redirect
-from .models import *
+from AsignaYasegura.models import *
 from django.contrib.auth import login as auth_login,logout as auth_logout,authenticate
-from .forms import *
+from AsignaYasegura.forms import *
 from django.db.models import Sum
 import datetime
 from datetime import timedelta, date
-from .funcionesadicionales import *
+from AsignaYasegura.funcionesadicionales import *
 
 #--------------------------------------------------------VISTAS DIGITADOR-----------------------------------------------
 #permite registrar la informacion general de las instituciones
@@ -54,6 +54,8 @@ def Registrar_geoInstitucion(request):
     if request.user.username:
         usuario=Usuario.objects.filter(usuario=request.user)[0]
         if(request.user.is_superuser and validarpermiso(usuario,"Registrar instituciones") and request.user.is_authenticated and "digitador"==Usuariorol.objects.filter(usuario=usuario)[0].rol.rol):
+            secundaria=None
+            primaria=None
             if request.method=='POST':
                 instituto = get_object_or_404(Institucion, pk=request.POST['infoadd'])
                 instituto.latitud=request.POST['latitud']
@@ -84,7 +86,7 @@ def Calcular_capacidad(request):
             if request.method=='POST':
                 instituto = get_object_or_404(Institucion, pk=request.POST['infoadd'])
                 for j in range(instituto.naulas):
-                    capacidadpotencial=(int(request.POST["longitud"+str(j+1)])-2)*int(request.POST["amplitud"+str(j+1)])
+                    capacidadpotencial=int(float(request.POST["longitud"+str(j+1)])-2)*float(request.POST["amplitud"+str(j+1)])
                     aula=Aula(capacidadmax=capacidadpotencial,capacidadpupitres=capacidadpotencial,longitud=request.POST['longitud'+str(j+1)],amplitud=request.POST['amplitud'+str(j+1)],institucion=instituto)
                     aula.save()     
                     for i in instituto.jornada.all():

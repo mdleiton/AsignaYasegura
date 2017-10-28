@@ -31,18 +31,18 @@
      <ul class="nav navbar-nav">
     </ul>
     <ul class="nav navbar-nav navbar-right">
-    <li><label >  <p class="encabezado">aYa {% if user.is_authenticated %}
-                                                Bienvenido 
-                                            {% endif %}</p>
+    <li><label><p class="encabezado">aYa {% if user.is_authenticated %}
+                                            Bienvenido 
+                                        {% endif %}</p>
         </label>
     </li>
       <li class="dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-         <u>{{user.username|capfirst}}</u><b class="caret"></b>
+            <u>{{user.username|capfirst}}</u><b class="caret"></b>
         </a>
         <ul class="dropdown-menu">
             <li><a href="#">Editar información</a></li>
-          <li><a class="nombre" href="/logout/"> login out</a></li:
+            <li><a class="nombre" href="/logout/"> login out</a></li>
         </ul>
       </li>
     </ul>
@@ -96,19 +96,20 @@
 			{% csrf_token %}
 			<h1 class="form-signin-heading">Iniciar Sesión</h1>
             <br/>
-            <label for="inputEmail" class="sr-only">Usuario</label>
-			<input type="text" name="username"   id="user" class="form-control" placeholder="Usuario" required>
+            <label for="inputName" class="sr-only">Usuario</label>
+			<input type="text" name="username"  pattern="[a-zA-Z]*[a-zA-Z0-9]{6,15}" id="user" class="form-control" placeholder="Usuario" required>
 			<br />
 			<label for="inputPassword"  class="sr-only">Contraseña</label>
 			<input type="password" name="password" id="pass" class="form-control" placeholder="Contraseña" required>
             <br/>
 			<div class="right-block text-right">
-                <label class="col-md-4 col-xs-11 radio-inline block-center" style="font-weight: bold;">
-                    <input name="tipologin" type="radio" value="administrador" checked="checked">Administrador </label>
-                <label class="col-md-2 col-xs-11 radio-inline block-center " style="font-weight: bold;">
-                    <input name="tipologin" type="radio" value="digitador">Digitador       </label>
-                <label class="col-md-5 col-xs-11 radio-inline  block-center" style="font-weight: bold;">
-                    <input name="tipologin" type="radio" value="padre">Representante</label>
+                <label class="col-md-4 col-xs-11 radio-inline block-center" >
+                    <input name="tipologin" type="radio" value="administrador" checked="checked"><strong>Administrador</strong> </label>
+                <label class="col-md-2 col-xs-11 radio-inline block-center " >
+                    <input name="tipologin" type="radio" value="digitador"><strong>Digitador  </strong></label>
+                <label class="col-md-5 col-xs-11 radio-inline  block-center" > 
+                <input name="tipologin" type="radio" value="padre"><strong>
+                        Representante</strong></label>
             </div>
             <br/>
             <br/>

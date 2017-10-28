@@ -3,21 +3,20 @@
 
 {% block title %} Lista de digitadores{% endblock %} 
 {% block contenttitle %}Digitadores{% endblock %}
-{% block tipo %}<h3 class="bock-center text-center" style="font-weight: bold;">Digitadores</h3>{% endblock %}
+{% block tipo %}<h3 class="bock-center text-center"><strong>Digitadores</strong></h3>{% endblock %}
 
 {% block menu%}
-      <li ><a href="{% url 'AsignaYasegura:Menu' %}">Avance de Procesos</a></li>
-      <li class="dropdown">
+    <li ><a href="{% url 'AsignaYasegura:Menu' %}">Avance de Procesos</a></li>
+    <li class="dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Digitadores <b class="caret"></b></a>
         <ul class="dropdown-menu">
-           <li><a href="{% url 'AsignaYasegura:digitador_registrar' %}">Registrar Digitador</a></li>
+            <li><a href="{% url 'AsignaYasegura:digitador_registrar' %}">Registrar Digitador</a></li>
             <li class="active"><a href="/verdigitador/">Ver Información/permisos digitadores</a></li>
             <li><a href="{% url 'AsignaYasegura:digitador_editar' %}" >Editar Información/permisos digitadores</a></li>
             <li><a href="{% url 'AsignaYasegura:digitador_eliminar' %}">Eliminar digitador</a></li>
         </ul>
-      </li>
-      <li><a href="{% url 'AsignaYasegura:Admin_ejecutar' %}">Ejecutar Asignación de cupos</a></li>
-  
+    </li>
+    <li><a href="{% url 'AsignaYasegura:Admin_ejecutar' %}">Ejecutar Asignación de cupos</a></li>
     <li><a href="{% url 'AsignaYasegura:Admin_problemasasignacion' %}">Problemas asociados a la asignación</a></li>
 {% endblock %}
 
@@ -27,20 +26,20 @@
         <th>Nombres</th>
         <th>Apellidos</th>
         <th>Dirección</th>
-        <th>Teléfono</th>
+        <th >Teléfono</th>
         <th>Registrar padres/estudiantes</th>
         <th>Registrar instituciones</th>
         <th>Inspecciones</th>
 {% endblock %}
+
 {%block elementostablas%}
         <td>{{ forloop.counter   }}</td>
         <td>{{ registro.ci      }}</td>
         <td>{{ registro.nombre   }}</td>
         <td>{{ registro.apellidos}}</td>
         <td>{{ registro.direccion}}</td >
-        <td>{{ registro.telefono }}</td>
+        <td class="text-right">{{ registro.telefono }}</td>
         <td>{{ registro.padres_estudiantes}}</td>
         <td>{{ registro.Registrar_instituciones}}</td >
         <td>{{ registro.Inspecciones }}</td>
-
-        {% endblock %}
+{% endblock %}

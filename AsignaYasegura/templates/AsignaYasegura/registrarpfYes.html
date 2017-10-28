@@ -1,10 +1,12 @@
 {% extends "AsignaYasegura/base_digitadores.html" %}
 {% load static %}
+
 {% block title %} Registro representante {% endblock %} 
 
 {% block extra-style %}
 <link href="{% static 'css/formulario.css'  %}" rel="stylesheet">
 {% endblock %}
+
 {% block menu%}
   <li ><a href="{% url 'AsignaYasegura:Menu' %}">Información general</a></li>
   <li class="dropdown">
@@ -23,7 +25,9 @@
     </ul>
   </li>
 {% endblock %}
+
 {% block contenttitle %}Registro representante {% endblock %}
+
 {% block content %} 
 <div class="container">
   <div class="text-center" >
@@ -92,6 +96,7 @@
     </div>
   </form>  
 </div>
+
 <script>
 $(document).ready(function(){
   $("#mostrarmodalestadoOK").modal("show");

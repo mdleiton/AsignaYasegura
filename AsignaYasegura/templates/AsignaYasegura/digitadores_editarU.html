@@ -1,12 +1,15 @@
 {% extends "AsignaYasegura/base.html" %}
 {% load static %}
+
 {% block title %} Editar {{tipo_objeto}} {% endblock %} 
+
 {% block extra-style %}
-<link href="{% static 'css/formulario.css'  %}" rel="stylesheet">
+    <link href="{% static 'css/formulario.css'  %}" rel="stylesheet">
 {% endblock %}
+
 {% block menu%}
-      <li ><a href="{% url 'AsignaYasegura:Menu' %}">Avance de Procesos</a></li>
-      <li class="dropdown">
+    <li ><a href="{% url 'AsignaYasegura:Menu' %}">Avance de Procesos</a></li>
+    <li class="dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Digitadores <b class="caret"></b></a>
         <ul class="dropdown-menu">
            <li><a href="{% url 'AsignaYasegura:digitador_registrar' %}">Registrar Digitador</a></li>
@@ -14,12 +17,13 @@
             <li class="active" ><a href="{% url 'AsignaYasegura:digitador_editar' %}">Editar Información/permisos digitadores</a></li>
             <li><a href="{% url 'AsignaYasegura:digitador_eliminar' %}">Eliminar digitador</a></li>
         </ul>
-      </li>
-      <li><a hhref="{% url 'AsignaYasegura:Admin_ejecutar' %}">Ejecutar Asignación de cupos</a></li>
-   
+    </li>
+    <li><a hhref="{% url 'AsignaYasegura:Admin_ejecutar' %}">Ejecutar Asignación de cupos</a></li>
     <li><a href="{% url 'AsignaYasegura:Admin_problemasasignacion' %}">Problemas asociados a la asignación</a></li>
 {% endblock %}
+
 {% block contenttitle %} Actualizar registro de {{tipo_objeto}} {% endblock %}
+
 {% block content %} 
 <div class="container">
     <form class="form-signin" method="post">
@@ -28,15 +32,14 @@
                 {{mjs|capfirst}}
             {% endif %}
         </div>	
-             <div class="row">
-        <div class="col-lg-offset-3 col-lg-6 ">
-        <div id="formulario" >
-            {% csrf_token %}
-            {{ form.as_p }}
-        </div>
-      </div>
-    </div>              
-      
+        <div class="row">
+            <div class="col-lg-offset-3 col-lg-6 ">
+                <div id="formulario" >
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                </div>
+            </div>
+        </div>                    
         <div class="row">
             <div class="col-lg-12 text-center" >
                 <input class="btn btn-primary" type="submit" value="Actualizar datos" />
@@ -48,4 +51,5 @@
         {% endif %} 
     </form>
 </div>
+
 {% endblock %}
