@@ -74,7 +74,7 @@
               <u>{{user.username|capfirst}}</u><b class="caret"></b>
             </a>
             <ul class="dropdown-menu">
-              <li><a type="button"  data-toggle="modal" data-target="#myModal">Editar información</a></li>
+              <li><a type="button"  data-toggle="modal" data-target="#myModal" onClick="control(this)">Editar información</a></li>
               <li><a type="button"  data-toggle="modal" data-target="#myModal2">Cambiar contraseña</a></li>
               <li><a class="nombre" href="/logout/"> Cerrar Sesión</a></li>
             </ul>
@@ -94,8 +94,8 @@
         <div class="modal-body">
           <form class="form-signin" method="post" action="{% url 'AsignaYasegura:Admin_editarInfo' %}">
             <div class="row">
-              <div class="col-lg-offset-3 col-lg-6 ">
-                <div id="formulariomodel">
+              <div id="formulariomodel" class=" col-lg-offset-3 col-lg-6 ">
+                <div class="info_usuario" >
                   {% csrf_token %}
                   {{ usuarioform.as_p }}
                 </div>
@@ -175,4 +175,18 @@
 	{% endblock %}
 </body>
 
+
+<script>
+$(document).ready(function(){
+  $("#mjsregistroinfinstituto").modal("show");
+  $(".modal-dialog").attr("style","height: 378px; z-index: 2;");
+  
+});
+</script>
+<script>
+  function control(f){
+  $(".info_usuario #id_ci").attr("readonly","");
+
+  }
+</script>    
 </html>

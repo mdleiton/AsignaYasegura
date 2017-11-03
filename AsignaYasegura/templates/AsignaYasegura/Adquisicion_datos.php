@@ -129,7 +129,7 @@
 				        <table>
 							<tr>
 								<td>Nombre de la Institución:</td>
-								<td><input type=text name=nombreescuela pattern="[a-zA-Z0-9]{6,36}" size="37"></td>
+								<td><input pattern="[A-Z a-z0-9]{5,36}" type=text name=nombreescuela  size="37"></td>
 							</tr>
 				        	<tr>
 				        		<td>Distrito:</td>
@@ -167,7 +167,7 @@
 		            <table>
 		            	<tr><td>Nombres de el/la director/a:</td><td><input type=text name=nombrerector size="40" required></td></tr>
 		            	<tr><td>Apellidos de el/la director/a:</td><td><input type=text name=apellidorector size="40" required></td></tr>
-		                <tr><td>Número de cédula:</td><td><input type=text pattern="[0-9]{10}"name=cedularector required></td></tr>
+		                <tr><td>Número de cédula:</td><td><input type=text pattern="[0-9]{10}"name=cedularector maxlength=10 required></td></tr>
 		                <tr><td>Número de teléfono:</td><td><input type=tel name=numerorector required></td></tr>
 		                <tr><td>Correo electrónico:</td><td><input type=email name=correorector size="40" required></td></tr>
 		            </table>
