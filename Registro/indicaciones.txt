@@ -11,15 +11,20 @@ git commit -m "describir lo que se agrego"
 git push origin master
 /*escribir su user y password de su cuenta de git*/
 
-
-
 1. borrar el archivo AsignaYasegura.sql
-2. python3.6 manage.py migrate
-3. python manage.py createsuperuser --username=mauricio --email=mdleiton@espol.edu.ec
-4. ejecutar .sql de registros
-sqlite3 INEC.sqlite3 < registros.sql
-sqlite3 AsignaYasegura.sqlite3 < registros.sql
+2. en la carpeta AsignaYasegura/AsignaYasegura/migrations/ borrar todo, EXCEPTO el archivo "__init__.py"
+3. python3 manage.py makemigrations
+4. python3 manage.py migrate
+5. python3 manage.py createsuperuser --username=mauricio --email=mdleiton@espol.edu.ec
+password:a1234567
+password(again):a1234567clear
 
+5. ejecutar .sql de registros
+sqlite3 AsignaYasegura.sqlite3 < registros.sql
+sqlite3 AsignaYasegura.sqlite3 < registrosinstituciones.sql
+
+inicializar el servidor 
+	python3 manage.py runserver
 pueden visualizar la base de datos con
 https://sqliteonline.com/#
 agregar el .sqlite3 en esa pagina
