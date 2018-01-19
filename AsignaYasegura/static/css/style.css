@@ -33,11 +33,11 @@ h1{
   padding: 15px;
   margin: 5% auto 0% auto;
   border-radius: 3%;
-  border: 6px solid red;
+  border: 6px solid #465e83;
 }
 
 .form-signin h1{
-	color: red;
+	color: #465e83;
 	font-weight: bold;
 }
 .form-signin .form-signin-heading,

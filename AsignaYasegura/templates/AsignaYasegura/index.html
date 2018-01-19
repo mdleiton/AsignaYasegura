@@ -97,10 +97,10 @@
 			<h1 class="form-signin-heading">Iniciar Sesión</h1>
             <br/>
             <label for="inputName" class="sr-only">Usuario</label>
-			<input type="text" name="username"  pattern="[a-zA-Z]*[a-zA-Z0-9]{6,15}" id="user" class="form-control" placeholder="Usuario" required>
+			<input type="text" name="username"  pattern="[a-zA-Z]*[a-zA-Z0-9]{6,15}" id="user" class="form-control" placeholder="Usuario" onInput=habilitarIngresar() required >
 			<br />
 			<label for="inputPassword"  class="sr-only">Contraseña</label>
-			<input type="password" name="password" id="pass" class="form-control" placeholder="Contraseña" required>
+			<input type="password" name="password" id="pass" class="form-control" placeholder="Contraseña" onInput=habilitarIngresar() required >
             <br/>
 			<div class="right-block text-right">
                 <label class="col-md-4 col-xs-11 radio-inline block-center" >
@@ -115,7 +115,7 @@
             <br/>
             <div class="row">
                 <div class="col-md-4">
-                <button class="btn btn-danger btn-block btn-sm" type="submit">Ingresar</button>
+                <button class="btn btn-danger btn-block btn-sm" id="btnIngresar" type="submit">Ingresar</button>
                 </div>
                 <div class="col-md-8">
                 <a  class="btn btn-primary btn-block btn-sm" href="{% url 'AsignaYasegura:Registrar_PPFFinicio' %}" >Registrarse</a>
@@ -159,6 +159,16 @@ $(document).ready(function(){
     document.getElementById("pass").value="";
 
 });
+</script>
+<script>
+    function habilitarIngresar() {
+        if(!document.getElementById("user").value.value=="" || !document.getElementById("pass").value==""){
+            document.getElementById("btnIngresar").className = "btn btn-primary btn-block btn-sm";
+            
+        }else{
+            document.getElementById("btnIngresar").className = "btn btn-danger btn-block btn-s"
+                    }
+    }
 </script>
 
 </body>
