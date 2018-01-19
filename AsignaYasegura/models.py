@@ -7,7 +7,7 @@ class Usuario(models.Model):
     ci= models.CharField(max_length=10,primary_key=True)
     nombre = models.CharField(max_length=35)
     apellidos = models.CharField(max_length=35)
-    usuario = models.OneToOneField(User)
+    usuario = models.OneToOneField(User,on_delete=models.CASCADE)
     direccion=models.CharField(max_length=100)
     telefono=models.CharField(max_length=13)
     correo=models.EmailField()
@@ -20,7 +20,7 @@ class PadreInfo(models.Model):
 	condicionp=models.CharField(max_length=100)
 	registropropiedad=models.CharField(max_length=100)
 	parentescop=models.CharField(max_length=100)
-	usuario=models.ForeignKey('Usuario')
+	usuario=models.ForeignKey('Usuario',on_delete=models.CASCADE)
 	codigoluz=models.CharField(max_length=100)
 	direccion=models.CharField(max_length=100)
 	latitud=models.FloatField(null=True,blank=True)
@@ -39,8 +39,8 @@ class Roles(models.Model):
 
 class Usuariorol(models.Model):
 	id_usuario_rol=models.AutoField(primary_key=True)
-	usuario=models.ForeignKey('Usuario')
-	rol=models.ForeignKey('Roles')
+	usuario=models.ForeignKey('Usuario',on_delete=models.CASCADE)
+	rol=models.ForeignKey('Roles',on_delete=models.CASCADE)
 
 	def __str__(self):
 		return 'UsuarioRol: {}:{}'.format(self.rol, self.usuario)
@@ -55,8 +55,8 @@ class Permiso(models.Model):
 
 class Usuariopermisos(models.Model):
 	id_usuario_permiso=models.AutoField(primary_key=True)
-	usuario=models.ForeignKey('Usuario')
-	permiso=models.ForeignKey('Permiso')
+	usuario=models.ForeignKey('Usuario',on_delete=models.CASCADE)
+	permiso=models.ForeignKey('Permiso',on_delete=models.CASCADE)
 
 	def __str__(self):
 		return 'UsuarioPermiso: {}:{}'.format(self.permiso, self.usuario)
@@ -67,8 +67,8 @@ class Estudiante(models.Model):
 	nombre = models.CharField(max_length=35)
 	apellidos = models.CharField(max_length=35)
 	direccion=models.CharField(max_length=100)
-	representante=models.ForeignKey('Usuario')
-	curso=models.ForeignKey('Curso')
+	representante=models.ForeignKey('Usuario',on_delete=models.CASCADE)
+	curso=models.ForeignKey('Curso',on_delete=models.CASCADE)
 	parentescorepresentante=models.CharField(max_length=100)
 
 	def __str__(self):
@@ -76,8 +76,8 @@ class Estudiante(models.Model):
 
 class Registro(models.Model):
 	id_registro=models.AutoField(primary_key=True)
-	estudiante=models.ForeignKey('Estudiante')
-	aulajornadacurso=models.ForeignKey('AulajornadaCurso')
+	estudiante=models.ForeignKey('Estudiante',on_delete=models.CASCADE)
+	aulajornadacurso=models.ForeignKey('AulajornadaCurso',on_delete=models.CASCADE)
 
 	def __str__(self):
 		return 'Estudiante-Aula-Jornada-Curso: {}:{}'.format(self.estudiante, self.aulajornadacurso)
@@ -86,7 +86,7 @@ class Discapacidad(models.Model):
 	codigo=models.CharField(max_length=10,primary_key=True)
 	discapacidad=models.CharField(max_length=35)
 	porcentaje= models.FloatField()
-	estudiante=models.OneToOneField('Estudiante')
+	estudiante=models.OneToOneField('Estudiante',on_delete=models.CASCADE)
 
 	def __str__(self):
 		return 'Discapacidad: {}:{}'.format(self.estudiante, self.discapacidad) 
@@ -135,9 +135,9 @@ class CarrerasTecnicas(models.Model):
 class Institucion(models.Model):
 	id_institucion= models.AutoField(primary_key=True)
 	nombre=models.CharField(max_length=50)
-	distrito = models.ForeignKey('Distrito')
+	distrito = models.ForeignKey('Distrito',on_delete=models.CASCADE)
 	direccion = models.CharField(max_length=100)
-	representante=models.OneToOneField('Director')
+	representante=models.OneToOneField('Director',on_delete=models.CASCADE)
 	naulas=models.IntegerField()
 	ofertaacademica=models.ManyToManyField('OfertaAcademica')
 	instruccion=models.ManyToManyField('Instruccion')
@@ -166,17 +166,17 @@ class Nivel(models.Model):
 class Curso(models.Model):
 	id_curso=models.AutoField(primary_key=True)
 	curso=models.CharField(max_length=35)
-	nivel=models.ForeignKey('Nivel')
-	instruccion=models.ForeignKey('Instruccion')
+	nivel=models.ForeignKey('Nivel',on_delete=models.CASCADE)
+	instruccion=models.ForeignKey('Instruccion',on_delete=models.CASCADE)
 	
 	def __str__(self):
 		return 'curso: {}:{}'.format(self.id_curso, self.curso)
 
 class AulajornadaCurso(models.Model):
 	id_aulacurso=models.AutoField(primary_key=True)
-	aula=models.ForeignKey('Aula')
-	jornada=models.ForeignKey('Jornada')
-	curso=models.ForeignKey('Curso')
+	aula=models.ForeignKey('Aula',on_delete=models.CASCADE)
+	jornada=models.ForeignKey('Jornada',on_delete=models.CASCADE)
+	curso=models.ForeignKey('Curso',on_delete=models.CASCADE)
 	capacidad=models.IntegerField()
 	paralelo=models.CharField(max_length=35)
 	cupos=models.IntegerField()
@@ -190,7 +190,7 @@ class Aula(models.Model):
 	capacidadpupitres=models.IntegerField()
 	longitud=models.FloatField()
 	amplitud=models.FloatField()
-	institucion=models.ForeignKey('Institucion')
+	institucion=models.ForeignKey('Institucion',on_delete=models.CASCADE)
 	
 	def __str__(self):
 		return 'Aula: {}:{}'.format(self.id_aula, self.capacidadmax)
@@ -198,14 +198,14 @@ class Aula(models.Model):
 class CapacidadEstandar(models.Model):
 	id_capacidad=models.AutoField(primary_key=True)
 	capacidad=models.IntegerField()
-	nivel=models.ForeignKey('Nivel')
+	nivel=models.ForeignKey('Nivel',on_delete=models.CASCADE)
 
 	def __str__(self):
 		return 'CapacidadEstandar: {}:{}'.format(self.nivel, self.capacidad)
 
 class ProblemasAsignacion(models.Model):
 	id_problemas=models.AutoField(primary_key=True)
-	estudiante=models.ForeignKey('Estudiante')
+	estudiante=models.ForeignKey('Estudiante',on_delete=models.CASCADE)
 	problema=models.CharField(max_length=40)	
 
 	def __str__(self):

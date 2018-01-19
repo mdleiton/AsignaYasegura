@@ -4,6 +4,8 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from AsignaYasegura import views
 
+app_name="AsignaYasegura"
+
 urlpatterns = [
     #vistas generales
     url(r'^$', views.login, name="login"),url(r'^login/$', views.login),
