@@ -13,4 +13,5 @@ INSERT INTO AsignaYasegura_estudiante(ci,curso_id,nombre,apellidos,direccion,rep
 -- si el estudiante posee alguna discapacidad
 INSERT INTO AsignaYasegura_discapacidad(codigo,discapacidad,porcentaje,estudiante_id) VALUES ('0985745','sindrome down',45.5,'0943223S89');
 
+INSERT INTO AsignaYasegura_estudiantepostulacion(estudiante_id,opcion_id) values(1,1);
 -- estudiante id 3

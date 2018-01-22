@@ -74,6 +74,14 @@ class Estudiante(models.Model):
 	def __str__(self):
 		return 'Estudiante: {}:{}'.format(self.ci, self.nombre)    
 
+class EstudiantePostulacion(models.Model):
+	id_postulacion=models.AutoField(primary_key=True)
+	estudiante=models.ForeignKey('Estudiante',on_delete=models.CASCADE)
+	opcion=models.ForeignKey('Institucion',on_delete=models.CASCADE)
+	
+	def __str__(self):
+		return 'Estudiante : {}:{}'.format(self.id_postulacion, self.estudiante)    
+
 class Registro(models.Model):
 	id_registro=models.AutoField(primary_key=True)
 	estudiante=models.ForeignKey('Estudiante',on_delete=models.CASCADE)
@@ -91,14 +99,15 @@ class Discapacidad(models.Model):
 	def __str__(self):
 		return 'Discapacidad: {}:{}'.format(self.estudiante, self.discapacidad) 
 
-class Distrito(models.Model):
+class Circuito(models.Model):
 	codigo= models.CharField(primary_key=True,max_length=35)
 	nombre = models.CharField(max_length=35)
 	zona = models.CharField(max_length=35)
+	distrito = models.CharField(max_length=35)
 	cantidadinstituciones=models.IntegerField()
 	
 	def __str__(self):
-		return 'Distrito: {}:{}'.format(self.codigo, self.nombre)
+		return 'Circuito: {}:{}'.format(self.codigo, self.nombre)
 
 class Instruccion(models.Model):
 	id_instruccion= models.AutoField(primary_key=True)
@@ -135,7 +144,7 @@ class CarrerasTecnicas(models.Model):
 class Institucion(models.Model):
 	id_institucion= models.AutoField(primary_key=True)
 	nombre=models.CharField(max_length=50)
-	distrito = models.ForeignKey('Distrito',on_delete=models.CASCADE)
+	circuito = models.ForeignKey('Circuito',on_delete=models.CASCADE)
 	direccion = models.CharField(max_length=100)
 	representante=models.OneToOneField('Director',on_delete=models.CASCADE)
 	naulas=models.IntegerField()
@@ -147,7 +156,7 @@ class Institucion(models.Model):
 	longitud=models.FloatField(null=True,blank=True)
 
 	def __str__(self):
-		return 'Institucion: {}:{}'.format(self.nombre, self.distrito)
+		return 'Institucion: {}:{}'.format(self.nombre, self.circuito)
 
 class Jornada(models.Model):
 	idjornada=models.AutoField(primary_key=True)
